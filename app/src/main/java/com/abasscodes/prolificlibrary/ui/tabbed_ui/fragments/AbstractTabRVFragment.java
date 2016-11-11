@@ -41,20 +41,32 @@ public abstract class AbstractTabRVFragment extends Fragment{
     private static AbstractTabRVFragment Instance;
     @Bind(R.id.empty_view)
     View emptyView;
+    private List<Book> books;
 
 
+    public static AbstractTabRVFragment newInstance(ArrayList<Book> books){
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("BOOKS", books); //fixme
+        AbstractTabRVFragment fragment = new AllBooksFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        fetchBooks();
+//        fetchBooks();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        rvAdapter = new BookAdapter(getActivity());
+        Bundle args = getArguments();
+        if (args != null) {
+            books = args.getParcelableArrayList("BOOKS");
+        }
+        rvAdapter = new BookAdapter(getActivity(), books);
     }
 
     @Nullable
@@ -88,35 +100,8 @@ public abstract class AbstractTabRVFragment extends Fragment{
             }
         });
 
-        fetchBooks();
+//        fetchBooks();
     }
-
-    public void fetchBooks(){
-            final Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
-            call.enqueue(new Callback<ArrayList<Book>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-                    if (response.body() == null)  {
-                        Log.d(TAG, "Empty response");
-                    }
-                    else{
-                        Log.d(TAG, response.body().toString());
-                        List<Book> books = response.body();
-                        setupAdapter(books);
-                        Log.d(TAG,"books size " + books.size());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-                    Log.d(TAG,"failure  " + t);
-                }
-            });
-
-
-
-    }
-
 
 
 

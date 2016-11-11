@@ -82,37 +82,41 @@ public class DetailFragment extends Fragment {
         ButterKnife.bind(this, view);
         bookId = getArguments().getInt(BOOK_ARG_ID);
         initRetrofit(bookId);
-//        checkoutBar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showCheckoutDialog(book);
-//            }
-//        });
+//
         return view;
     }
 
 
     public void initRetrofit(int bookId) {
-        APIClient.getInstance().getBook(bookId);
-//        service.getBook(bookId, new Callback<Book>() {
-//            @Override
-//            public void success(Book book, Response response) {
-//                bindBook(book);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.d(TAG, "Error retrofitting " + error.getMessage() + error.getUrl());
-//            }
-//        });
+        Call<Book> call = APIClient.getInstance().getBook(bookId);
+        call.enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+                bindBook(book);
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+                Log.d(TAG, "Error retrofitting " + t);
+            }
+
+        });
     }
 
     public void bindBook(Book book) {
         this.book = book;
-        titleTV.setText(book.getTitle());
-        authorTV.setText(book.getAuthor());
-        if(book.getPublisher() != null)
-        detailsTV.setText(book.getPublisher());
+        if(book == null) return;;
+        String title = book.getTitle() == null ? "" : book.getTitle();
+        Log.d(TAG, title);
+        String author = book.getAuthor() == null ? "" : book.getAuthor();
+        Log.d(TAG, author);
+        titleTV.setText(title);
+        authorTV.setText(author);
+        try {
+            detailsTV.setText(book.display());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
     }

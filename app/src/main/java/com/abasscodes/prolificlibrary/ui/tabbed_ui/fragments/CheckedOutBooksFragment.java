@@ -19,8 +19,5 @@ public class CheckedOutBooksFragment extends AbstractTabRVFragment {
         return new CheckedOutBooksFragment();
     }
 
-    @Override
-    public void fetchBooks() {
-        Call<ArrayList<Book>> call = APIClient.getInstance().listCheckedOuttBooks();
-    }
+
 }

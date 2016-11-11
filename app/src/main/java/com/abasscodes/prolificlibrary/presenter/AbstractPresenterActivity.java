@@ -9,6 +9,7 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.detail.DetailActivity;
 import com.abasscodes.prolificlibrary.ui.detail.DetailFragment;
 import com.abasscodes.prolificlibrary.ui.editor.EditActivity;
+import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -22,10 +23,10 @@ public abstract class AbstractPresenterActivity extends AppCompatActivity implem
     abstract void hostFragmentInTab(TabAdapter.TabType type);
 
 
-    @Override
-    public void showAllBooks() {
-        hostFragmentInTab(TabAdapter.TabType.AllBooksTab);
-    }
+//    @Override
+//    public void showAllBooks() {
+//        hostFragmentInTab(TabAdapter.TabType.AllBooksTab);
+//    }
 
     @Override
     public void showBookDetail(Book book) {

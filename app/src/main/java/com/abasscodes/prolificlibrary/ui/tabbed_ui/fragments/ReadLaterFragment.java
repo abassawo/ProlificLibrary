@@ -11,9 +11,5 @@ public class ReadLaterFragment extends AbstractTabRVFragment {
     public static CompletedBooksFragment newInstance() {
         return new CompletedBooksFragment();
     }
-
-    @Override
-    public void fetchBooks() {
-
-    }
+    
 }

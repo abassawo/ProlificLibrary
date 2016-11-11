@@ -9,14 +9,24 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AbstractPresenterActivity {
 
@@ -36,7 +46,7 @@ public class MainActivity extends AbstractPresenterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        showAllBooks();
+        fetchBooks();
     }
 
     @Override
@@ -51,17 +61,42 @@ public class MainActivity extends AbstractPresenterActivity {
         mDrawerLayout.setForegroundGravity(Gravity.LEFT);
         setupNavBar(navView);
         setupActionBar();
-        if (viewPager != null) {
-            setupViewPager(viewPager);
-            tabs.setupWithViewPager(viewPager);
+    }
 
-        }
+    public void fetchBooks(){
+        final Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
+        call.enqueue(new Callback<ArrayList<Book>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+                if (response.body() == null)  {
+                    Log.d(TAG, "Empty response");
+                }
+                else{
+                    Log.d(TAG, response.body().toString());
+                    ArrayList<Book> books = response.body();
+                    if (viewPager != null) {
+                        setupViewPager(books, viewPager);
+                        tabs.setupWithViewPager(viewPager);
+                    }
+                    Log.d(TAG,"books size " + books.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                Log.d(TAG,"failure  " + t);
+            }
+        });
+
 
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        adapter = new TabAdapter(this, viewPager);
+
+
+
+    private void setupViewPager(ArrayList<Book> books, ViewPager viewPager) {
+        adapter = new TabAdapter(books, this, viewPager);
     }
 
 
@@ -147,7 +182,7 @@ public class MainActivity extends AbstractPresenterActivity {
             mDrawerLayout.closeDrawers();
         } else {
             if((currentFragment instanceof AllBooksFragment)){
-                showAllBooks();
+//                showAllBooks();
             }
             else super.onBackPressed();
         }

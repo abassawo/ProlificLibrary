@@ -53,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
             viewPager.setAdapter(new FragmentPagerAdapter(fm) {
                 @Override
                 public Fragment getItem(int position) {
+
                     return DetailFragment.newInstance(bookId);
                 }
 

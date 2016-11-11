@@ -31,7 +31,6 @@ public class AllBooksFragment extends AbstractTabRVFragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchBooks();
     }
 
 
