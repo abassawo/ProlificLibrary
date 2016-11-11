@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">ProlificLibrary</string>
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="delete_all">Delete All</string>
+    <string name="save">Save</string>
+    <string name="title_edit">Edit Title</string>
+    <string name="checkout_book">Check out</string>
+    <string name="dialog_msg">Enter your first name to checkout</string>
+    <string name="faves">Favorites</string>
+    <string name="deleted_books">Deleted</string>
+    <string name="book_title_hint">Title</string>
+    <string name="book_author_hint">Author</string>
+    <string name="book_publisher_hint">Publisher</string>
+    <string name="book_categories_hint">Categories</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="share">Share</string>
+    <string name="edit_this">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
