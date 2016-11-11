@@ -1,7 +1,9 @@
 package com.abasscodes.prolificlibrary.api;
 
+import android.database.Observable;
 import com.abasscodes.prolificlibrary.model.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,26 +22,23 @@ import retrofit2.http.Path;
 
 public interface BookAPI {
 
-    @GET("/books/")
-    public Call<List<Book>> listBooks();
+    @GET("books")
+    Call<ArrayList<Book>> listBooks();
 
-    @GET("/books/")
-    public Call<List<Book>> listCurrentlyReadingBooks();
+    @POST("books")
+    Call<Book> addBook(@Body Book book);
 
+    @GET("books/{id}/")
+    Call<Book> getBook(@Path("id") int bookId);
 
-    @GET("/books/{id}")
-    public Call<Book> getBook(@Path("id") Integer id);
+    @DELETE("books/{id}/")
+    Call<Book> deleteBook(@Path("id") int bookId);
 
-    @DELETE("/books/{id}/")
-    public Call<Book> deleteBook(@Path("id") Integer id);
+    @PUT("books/{id}/")
+    Call<Book> updateBook(@Path("id") int bookId, @Body Book book);
 
-    @DELETE("/books/{id}/")
-    public Call<List<Book>> deleteAllBooks(@Path("id") Integer id);
-
-
-    @PUT("/books/{id}/")
-    public Call<Book>  updateBook(@Path("id") Integer id, @Body Book book);
-
+    @DELETE("clean/")
+    Call<Void> deleteAll();
 
     @FormUrlEncoded
     @POST("/books/")

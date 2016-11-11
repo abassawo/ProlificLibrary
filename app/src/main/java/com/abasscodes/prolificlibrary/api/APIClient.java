@@ -1,12 +1,16 @@
 package com.abasscodes.prolificlibrary.api;
 
 import com.abasscodes.prolificlibrary.model.Book;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+//import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -16,29 +20,41 @@ public class APIClient {
 
     public static final String API_URL = "http://prolific-interview.herokuapp.com/5697d53d18f8ff000917b40b/";
     private static APIClient instance;
-    private final BookAPI api;
+    private static BookAPI api;
+
+
+
 
     private APIClient(){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        api = retrofit.create(BookAPI.class);
+        if(api == null) {
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(API_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            api = retrofit.create(BookAPI.class);
+        }
 
     }
 
-    public static APIClient getInstance(){
+//
+
+    public static synchronized APIClient getInstance(){
         if(instance == null){
             instance = new APIClient();
         }
         return  instance;
     }
 
-    public Call<List<Book>> getBooks(){
+    public Call<ArrayList<Book>> getBooks(){
         return api.listBooks();
     }
 
-    public Call<List<Book>> listCheckedOuttBooks(){
-        return api.listCurrentlyReadingBooks();
+    public Call<ArrayList<Book>> listCheckedOuttBooks(){
+        return api.listBooks();
     }
 
 

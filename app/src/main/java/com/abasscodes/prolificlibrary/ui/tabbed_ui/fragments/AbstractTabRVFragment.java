@@ -33,15 +33,11 @@ import retrofit2.Response;
  * Created by C4Q on 11/11/16.
  */
 
-public class AbstractTabRVFragment extends Fragment implements Callback<List<Book>> {
+public abstract class AbstractTabRVFragment extends Fragment{
     private static final String TAG = AbstractTabRVFragment.class.getSimpleName();
-
-    private static String TAB_TYPE_TAG = "tab_tag_filter";
-    protected boolean checkedOutOnly = false;
-    public APIClient client;
     private BookAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     private static AbstractTabRVFragment Instance;
     @Bind(R.id.empty_view)
     View emptyView;
@@ -59,7 +55,6 @@ public class AbstractTabRVFragment extends Fragment implements Callback<List<Boo
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         rvAdapter = new BookAdapter(getActivity());
-        fetchBooks();
     }
 
     @Nullable
@@ -83,6 +78,8 @@ public class AbstractTabRVFragment extends Fragment implements Callback<List<Boo
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(rvAdapter);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +87,34 @@ public class AbstractTabRVFragment extends Fragment implements Callback<List<Boo
                 RegisterActivity.presenterActivity.fillOutNewBookForm();
             }
         });
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         fetchBooks();
     }
 
     public void fetchBooks(){
-        Call<List<Book>> call = APIClient.getInstance().getBooks();
-        call.enqueue(this);
+            final Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
+            call.enqueue(new Callback<ArrayList<Book>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+                    if (response.body() == null)  {
+                        Log.d(TAG, "Empty response");
+                    }
+                    else{
+                        Log.d(TAG, response.body().toString());
+                        List<Book> books = response.body();
+                        setupAdapter(books);
+                        Log.d(TAG,"books size " + books.size());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                    Log.d(TAG,"failure  " + t);
+                }
+            });
+
+
+
     }
 
 
@@ -118,29 +136,20 @@ public class AbstractTabRVFragment extends Fragment implements Callback<List<Boo
 
 
     protected void setupAdapter(List<Book> books){
+        Log.d(TAG, "Payload size " + books.size());
         rvAdapter.setBooks(books);
         rvAdapter.notifyDataSetChanged();
         if(rvAdapter.getItemCount() == 0){
-            recyclerView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
-        }else {
-            recyclerView.setAdapter(rvAdapter);
-            recyclerView.scrollToPosition(0);
+        }else{
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.INVISIBLE);
         }
+        mRecyclerView.setAdapter(rvAdapter);
+        mRecyclerView.scrollToPosition(0);
 
     }
-
-    @Override
-    public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-        setupAdapter(response.body());
-    }
-
-    @Override
-    public void onFailure(Call<List<Book>> call, Throwable t) {
-        Log.d(TAG, "Failure " + t);
-    }
-
-
 
 
 }

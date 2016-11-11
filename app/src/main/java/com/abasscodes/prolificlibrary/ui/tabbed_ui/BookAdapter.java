@@ -18,17 +18,16 @@ import java.util.List;
  */
 
 public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
-    private List<Book> mBooks;
+    private List<Book> books;
     private Context mContext;
 
     public BookAdapter(Context context, List<Book> books){
-        mBooks = books;
+        this.books = books;
         mContext = context;
     }
 
     public BookAdapter(Context context){
         mContext = context;
-
     }
 
     @Override
@@ -40,18 +39,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
-        Book book = mBooks.get(position);
+        Book book = books.get(position);
         holder.bindBook(book);
     }
 
     @Override
     public int getItemCount() {
-        if(mBooks == null) return 0;
-        return mBooks.size();
+        if(books == null) return 0;
+        else return books.size();
     }
 
     public void setBooks(List<Book> books){
-        mBooks = books;
+        this.books = books;
     }
 
 

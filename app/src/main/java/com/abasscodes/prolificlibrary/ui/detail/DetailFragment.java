@@ -111,11 +111,9 @@ public class DetailFragment extends Fragment {
         this.book = book;
         titleTV.setText(book.getTitle());
         authorTV.setText(book.getAuthor());
-        try {
-            detailsTV.setText(book.display());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        if(book.getPublisher() != null)
+        detailsTV.setText(book.getPublisher());
+
 
     }
 
@@ -151,7 +149,9 @@ public class DetailFragment extends Fragment {
     }
 
     public void checkOut(final Book book, String name) {
-        book.setLastCheckedOut(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        Date date = new Date();
+        String dateFormatStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
+        book.setLastCheckedOut(dateFormatStr);
         book.setLastCheckedOutBy(name);
         Call<Book> call = client.updateBook(book.getId(), book);
         call.enqueue(new Callback<Book>() {

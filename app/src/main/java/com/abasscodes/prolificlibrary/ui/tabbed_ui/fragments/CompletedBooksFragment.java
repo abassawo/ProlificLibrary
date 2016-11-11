@@ -26,25 +26,25 @@ public class CompletedBooksFragment extends AbstractTabRVFragment {
 
     @Override
     public void fetchBooks() {
-        Call<List<Book>> call = APIClient.getInstance().getBooks();
-        call.enqueue(new Callback<List<Book>>() {
+        Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
+        call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
-            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
                 List<Book> books = new ArrayList();
                 if (books != null && books.size() > 0) {
 
 
-                    for (Book book : response.body()) {
-                        if (!book.isCompleted) {
-                            books.remove(book);
-                        }
-                    }
+//                    for (Book book : response.body()) {
+//                        if (!book.isCompleted) {
+//                            books.remove(book);
+//                        }
+//                    }
                     setupAdapter(books);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Book>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
                 Log.d(TAG, "error " + t);
             }
         });

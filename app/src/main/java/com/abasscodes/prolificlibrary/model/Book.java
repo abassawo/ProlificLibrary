@@ -1,16 +1,20 @@
 package com.abasscodes.prolificlibrary.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
- * Created by C4Q on 11/11/16.
+ * Class representing a book
  */
-
 public class Book {
 
     @SerializedName("id")
@@ -44,8 +48,6 @@ public class Book {
     @SerializedName("url")
     @Expose
     private String url;
-
-    public transient boolean isCompleted = false;
 
 
     public String getAuthor() {
@@ -122,8 +124,7 @@ public class Book {
         String pub = this.publisher == null? "" : publisher;
         String tags = this.categories == null? "": categories;
 
-        String checkoutStatus = "";
-        //If book is not checked out by, print empty text.
+        String checkoutStatus = ""; //If book is not checked out by, print empty text.
 
         String dateOut = "";
         if(this.lastCheckedOut != null) {
@@ -141,4 +142,3 @@ public class Book {
 
     }
 }
-

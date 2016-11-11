@@ -3,6 +3,7 @@ package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
 import com.abasscodes.prolificlibrary.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +21,6 @@ public class CheckedOutBooksFragment extends AbstractTabRVFragment {
 
     @Override
     public void fetchBooks() {
-        Call<List<Book>> call = APIClient.getInstance().listCheckedOuttBooks();
+        Call<ArrayList<Book>> call = APIClient.getInstance().listCheckedOuttBooks();
     }
 }
