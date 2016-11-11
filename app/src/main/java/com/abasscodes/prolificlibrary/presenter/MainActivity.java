@@ -14,19 +14,15 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
+import com.abasscodes.prolificlibrary.data.BookRepository;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AbstractPresenterActivity {
 
@@ -46,7 +42,7 @@ public class MainActivity extends AbstractPresenterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        fetchBooks();
+        BookRepository.fetchBooks();
     }
 
     @Override
@@ -61,35 +57,6 @@ public class MainActivity extends AbstractPresenterActivity {
         mDrawerLayout.setForegroundGravity(Gravity.LEFT);
         setupNavBar(navView);
         setupActionBar();
-    }
-
-    public void fetchBooks(){
-        final Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
-        call.enqueue(new Callback<ArrayList<Book>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-                if (response.body() == null)  {
-                    Log.d(TAG, "Empty response");
-                }
-                else{
-                    Log.d(TAG, response.body().toString());
-                    ArrayList<Book> books = response.body();
-                    if (viewPager != null) {
-                        setupViewPager(books, viewPager);
-                        tabs.setupWithViewPager(viewPager);
-                    }
-                    Log.d(TAG,"books size " + books.size());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-                Log.d(TAG,"failure  " + t);
-            }
-        });
-
-
-
     }
 
 
@@ -209,4 +176,18 @@ public class MainActivity extends AbstractPresenterActivity {
     }
 
 
+    @Override
+    public void onAllBooksLoaded(ArrayList<Book> books) {
+        if (books == null || books.size() == 0)  {
+            Log.d(TAG, "Empty response");
+        }
+        else{
+            Log.d(TAG, books.toString());
+            if (viewPager != null) {
+                setupViewPager(books, viewPager);
+                tabs.setupWithViewPager(viewPager);
+            }
+            Log.d(TAG,"books size " + books.size());
+        }
+    }
 }
