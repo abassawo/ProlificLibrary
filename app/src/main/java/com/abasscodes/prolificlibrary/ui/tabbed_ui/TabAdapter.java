@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.abasscodes.prolificlibrary.data.BookRepository;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CheckedOutBooksFragment;
@@ -25,16 +27,24 @@ public class TabAdapter extends FragmentPagerAdapter
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
 
+    public TabAdapter(ArrayList<Book> allBooks, ViewPager viewPager){
+        this(allBooks, RegisterActivity.presenterActivity, viewPager);
+    }
 
-    public TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity, ViewPager pager) {
+
+    private TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity, ViewPager pager) {
         super(activity.getSupportFragmentManager());
         this.viewPager = pager;
         addFragment(AllBooksFragment.newInstance(allBooks), "Library");
+        filterAndAddTabs(allBooks);
+        viewPager.setAdapter(this);
+        viewPager.addOnPageChangeListener(this);
+    }
+
+    public void filterAndAddTabs(ArrayList<Book> allBooks){
         addFragment(CheckedOutBooksFragment.newInstance(allBooks), "Reading");
         addFragment(CompletedBooksFragment.newInstance(allBooks), "\u2713");
         addFragment(ReadLaterFragment.newInstance(allBooks), "Read Later");
-        viewPager.setAdapter(this);
-        viewPager.addOnPageChangeListener(this);
     }
 
 

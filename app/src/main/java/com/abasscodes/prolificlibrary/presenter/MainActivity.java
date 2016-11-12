@@ -42,7 +42,7 @@ public class MainActivity extends AbstractPresenterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        BookRepository.fetchBooks();
+        new BookRepository(this).fetchBooks();
     }
 
     @Override
@@ -61,11 +61,11 @@ public class MainActivity extends AbstractPresenterActivity {
 
 
 
-
     private void setupViewPager(ArrayList<Book> books, ViewPager viewPager) {
-        adapter = new TabAdapter(books, this, viewPager);
+        adapter = new TabAdapter(books, viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(adapter);
     }
-
 
 
     @Override

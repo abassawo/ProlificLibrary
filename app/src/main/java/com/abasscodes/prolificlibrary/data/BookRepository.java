@@ -8,6 +8,7 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.Presenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,15 +21,20 @@ import retrofit2.Response;
 public class BookRepository {
 
     private static final String TAG = BookRepository.class.getSimpleName() ;
+    private static ArrayList<Book> allBooks = null;
+    private Presenter presenter;
 
-    public static void fetchBooks(){
+    public BookRepository(Presenter presenter){
+        this.presenter = presenter;
+    }
+
+    public void fetchBooks(){
         final Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
         call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
             public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-                Presenter presenter = RegisterActivity.presenterActivity;
-                ArrayList<Book> books = response.body();
-                presenter.onAllBooksLoaded(books);
+                allBooks = response.body();
+                presenter.onAllBooksLoaded(allBooks);
             }
 
             @Override
@@ -38,4 +44,8 @@ public class BookRepository {
         });
 
     }
+
+
+
+
 }
