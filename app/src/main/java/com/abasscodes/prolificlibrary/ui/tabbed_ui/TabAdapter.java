@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.abasscodes.prolificlibrary.data.BookFilterer;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CheckedOutBooksFragment;
@@ -16,36 +18,24 @@ import java.util.List;
 
 /**
  * Created by C4Q on 11/11/16.
+ *
+ * TabAdapter Class - Designed to Adapt a collection of books into 4 tabs
+ * representing different filters of the original data.
  */
-public class TabAdapter extends FragmentPagerAdapter
-        implements ViewPager.OnPageChangeListener{
-
-    private ViewPager viewPager;
+public class TabAdapter extends FragmentPagerAdapter implements BookFilterer.FiltersReadyListener {
 
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
 
-
-    public TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity, ViewPager pager) {
-        super(activity.getSupportFragmentManager());
-        this.viewPager = pager;
-        addFragment(AllBooksFragment.newInstance(allBooks), "Library");
-        addFragment(CheckedOutBooksFragment.newInstance(allBooks), "Reading");
-        addFragment(CompletedBooksFragment.newInstance(allBooks), "\u2713");
-        addFragment(ReadLaterFragment.newInstance(allBooks), "Read Later");
-        viewPager.setAdapter(this);
-        viewPager.addOnPageChangeListener(this);
+    public TabAdapter(ArrayList<Book> allBooks) {
+        this(allBooks, RegisterActivity.presenterActivity);
     }
 
 
-    public int indexOf(TabType type) {
-        switch(type){
-            case AllBooksTab: return 0;
-            case ToReadTab: return 1;
-            case ReadTab: return 2;
-            case ReadLaterTab: return 3;
-            default: return -1;
-        }
+    private TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity) {
+        super(activity.getSupportFragmentManager());
+        addFragment(AllBooksFragment.newInstance(allBooks), "Library");
+        new BookFilterer(this).filter(allBooks);
     }
 
 
@@ -70,22 +60,21 @@ public class TabAdapter extends FragmentPagerAdapter
         return out;
     }
 
+
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    public void setCompletedBooks(ArrayList<Book> completedBooks) {
+        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "Reading");
 
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
+        addFragment(CompletedBooksFragment.newInstance(checkedOutBooks), "\u2713");
 
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    public enum TabType {
-        AllBooksTab, ToReadTab, ReadTab, ReadLaterTab
+    public void setArchivedBooks(ArrayList<Book> archivedBooks) {
+        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
     }
 }

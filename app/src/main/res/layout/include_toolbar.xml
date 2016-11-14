@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed"
-    app:theme="@style/ActionBarThemeOverlay"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" />
 

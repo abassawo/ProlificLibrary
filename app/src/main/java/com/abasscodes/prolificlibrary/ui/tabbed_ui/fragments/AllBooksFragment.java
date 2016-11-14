@@ -27,6 +27,11 @@ import retrofit2.Response;
 public class AllBooksFragment extends AbstractTabRVFragment {
     public final static String TAG = "AllBooks";
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.fab).setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onResume() {

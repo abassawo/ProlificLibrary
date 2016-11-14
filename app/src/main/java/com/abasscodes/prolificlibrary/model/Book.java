@@ -15,6 +15,16 @@ import java.util.Date;
 /**
  * Class representing a book
  */
+/**
+ "author": "Jason Morris",
+ "categories": "interface, ui, android",
+ "lastCheckedOut": null,
+ "lastCheckedOutBy": null,
+ "publisher": "Dummy Publishing",
+ "title": "Android User Interface Development: Beginner's Guide",
+ "url": "/books/1"
+ */
+
 public class Book implements Parcelable, Comparable<Book> {
 
     public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
@@ -24,15 +34,6 @@ public class Book implements Parcelable, Comparable<Book> {
         }
     };
 
-    /**
-     "author": "Jason Morris",
-     "categories": "interface, ui, android",
-     "lastCheckedOut": null,
-     "lastCheckedOutBy": null,
-     "publisher": "Dummy Publishing",
-     "title": "Android User Interface Development: Beginner's Guide",
-     "url": "/books/1"
-     */
 
     @SerializedName("id")
     private Integer id;
@@ -57,6 +58,8 @@ public class Book implements Parcelable, Comparable<Book> {
 
     @SerializedName("url")
     private String url;
+    private boolean isComplete = false;
+    transient boolean archived;
 
     public Book() {
     }
@@ -140,7 +143,7 @@ public class Book implements Parcelable, Comparable<Book> {
         });
     }
 
-    public String display() throws ParseException {
+    public String display() {
         String pub = this.publisher == null? "" : publisher;
         String tags = this.categories == null? "": categories;
 
@@ -152,7 +155,12 @@ public class Book implements Parcelable, Comparable<Book> {
             String restFormat = "yyyy-MM-dd h:mm:ss";
             String humanFormat = "EEE, MMM d, yyyy";
             SimpleDateFormat df = new SimpleDateFormat(restFormat);
-            Date date = df.parse(lastCheckedOut);
+            Date date = null;
+            try {
+                date = df.parse(lastCheckedOut);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             df.applyPattern(humanFormat);
             dateOut = " @ " + df.format(date);
         }
@@ -241,5 +249,17 @@ public class Book implements Parcelable, Comparable<Book> {
     @Override
     public int compareTo(Book book) {
         return title.compareTo(book.getTitle());
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public boolean isCheckedOut() {
+        return lastCheckedOut != null;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 }

@@ -6,6 +6,6 @@
     <color name="colorAccent">#7C4DFF</color>
     <color name="black">#000000</color>
     <color name="text_color">#5BC0BE</color>
-    <!--<color name="window_background">#C5EFF7</color>-->
+    <color name="window_background">#000000</color>
     <color name="blueish_grey">#67809F</color>
 </resources>

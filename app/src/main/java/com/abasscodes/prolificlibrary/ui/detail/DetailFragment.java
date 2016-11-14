@@ -39,17 +39,6 @@ import retrofit2.Response;
  */
 public class DetailFragment extends Fragment {
 
-    private APIClient client;
-    private String TAG = "DetailFragment";
-
-    //Extras to be passed onto Edit Activity
-    public static final String BOOK_ARG_ID = "book_id";
-    public static final String BOOK_TITLE = "title";
-    public static final String BOOK_AUTHOR = "author";
-    public static final String BOOK_TAGS = "tags";
-    public static final String BOOK_PUBS = "pubs";
-    private int bookId;
-    private Book book;
 
     @Bind(R.id.detail_textview)
     TextView detailsTV;
@@ -57,6 +46,15 @@ public class DetailFragment extends Fragment {
     TextView titleTV;
     @Bind(R.id.book_author)
     TextView authorTV;
+
+    private Book book;
+
+    private APIClient client;
+    private String TAG = "DetailFragment";
+
+    //Extra for Detail Fragment Book AND for passing book onto Edit Activity
+    public static final String BOOK_KEY = "book_detail";
+
 
 
     @Override
@@ -66,9 +64,9 @@ public class DetailFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public static DetailFragment newInstance(Integer id) {
+    public static DetailFragment newInstance(Book book) {
         Bundle args = new Bundle();
-        args.putInt(BOOK_ARG_ID, id);
+        args.putParcelable(BOOK_KEY, book);
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -80,28 +78,11 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
-        bookId = getArguments().getInt(BOOK_ARG_ID);
-        initRetrofit(bookId);
-//
+        book = getArguments().getParcelable(BOOK_KEY);
+//        initRetrofit(bookId);
         return view;
     }
 
-
-    public void initRetrofit(int bookId) {
-        Call<Book> call = APIClient.getInstance().getBook(bookId);
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                bindBook(book);
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d(TAG, "Error retrofitting " + t);
-            }
-
-        });
-    }
 
     public void bindBook(Book book) {
         this.book = book;
@@ -112,13 +93,7 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, author);
         titleTV.setText(title);
         authorTV.setText(author);
-        try {
-            detailsTV.setText(book.display());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-
+        detailsTV.setText(book.display());
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -181,7 +156,7 @@ public class DetailFragment extends Fragment {
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         switch (item.getItemId()) {
             case R.id.delete_book:
-                deleteBook(bookId);
+                deleteBook(book);
                 startActivity(homeIntent);
                 break;
             case android.R.id.home:
@@ -197,19 +172,19 @@ public class DetailFragment extends Fragment {
     }
 
     public void goToEditBookForm(Book book) {
-        Intent intent = new Intent(getActivity(), EditActivity.class);
-        intent.putExtra(DetailFragment.BOOK_ARG_ID, bookId);   //Send original id to the hosting activity.
-        intent.putExtra(DetailFragment.BOOK_AUTHOR, book.getAuthor());   //Send original id to the hosting activity.
-        intent.putExtra(DetailFragment.BOOK_TITLE, book.getTitle());   //Send original id to the hosting activity.
-        intent.putExtra(DetailFragment.BOOK_TAGS, book.getCategories());   //Send original id to the hosting activity.
-        intent.putExtra(DetailFragment.BOOK_PUBS, book.getPublisher());   //Send original id to the hosting activity.
+        if(book == null) try {
+            throw new Exception("Must bind book first");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Intent intent = EditActivity.maKeEditIntent(getActivity(), book);
         startActivity(intent);
     }
 
 
-    public void deleteBook(int id) {
+    public void deleteBook(Book book) {
         final String title = book.getTitle();
-        Call<Book> call = client.deleteBook(id);
+        Call<Book> call = client.deleteBook(book.getId());
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
