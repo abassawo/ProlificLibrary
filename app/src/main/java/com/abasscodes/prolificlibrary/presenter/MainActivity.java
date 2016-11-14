@@ -1,9 +1,6 @@
 package com.abasscodes.prolificlibrary.presenter;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,25 +10,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
 import com.abasscodes.prolificlibrary.data.BookRepository;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
+import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.view.TabAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AbstractPresenterActivity {
 
+    private static final String BOOKS_SAV = "books_key";
+    private TabAdapter adapter;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view)
@@ -41,21 +38,27 @@ public class MainActivity extends AbstractPresenterActivity {
     @Bind(R.id.viewpager)
     ViewPager viewPager;
     private String TAG = MainActivity.class.getSimpleName();
-    private TabAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        updateUI();
+        if(savedInstanceState != null){
+            ArrayList<Book> books = savedInstanceState.getParcelableArrayList(BOOKS_SAV);
+            onAllBooksLoaded(books);
+        }else{
+            requestData();
+        }
+
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        requestData();
     }
     
 
@@ -82,17 +85,27 @@ public class MainActivity extends AbstractPresenterActivity {
 
     @Override
     public void onAllBooksLoaded(ArrayList<Book> books) {
-        if (books == null)  {
-            Log.d(TAG, "Empty response");
+        if(books == null) {
+            showNetworkSettings();
             return;
         }
-        adapter = new TabAdapter(books);
+        adapter = new TabAdapter(this, books);
         if (viewPager != null) {
-            setupViewPager(books);
+            setupViewPager();
         }
     }
 
-    public void setupViewPager(ArrayList<Book> books){
+
+    public void requestData(){
+        if(ConnectionUtil.isConnected()) {
+            new BookRepository().fetchBooks();
+        } else{
+            onConnectionFailure();
+        }
+    }
+
+
+    public void setupViewPager(){
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
     }

@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
+package com.abasscodes.prolificlibrary.view.tab_fragments;
 
 /**
  * Created by C4Q on 11/11/16.

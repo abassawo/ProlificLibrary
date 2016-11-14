@@ -1,17 +1,14 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui;
+package com.abasscodes.prolificlibrary.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.abasscodes.prolificlibrary.data.BookFilterer;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CheckedOutBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CompletedBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.ReadLaterFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +25,14 @@ public class TabAdapter extends FragmentPagerAdapter implements BookFilterer.Fil
     private final List<String> fragmentTitles = new ArrayList<>();
 
     public TabAdapter(ArrayList<Book> allBooks) {
-        this(allBooks, RegisterActivity.presenterActivity);
+        this(RegisterActivity.presenterActivity, allBooks);
     }
 
 
-    private TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity) {
+    public TabAdapter(AppCompatActivity activity, ArrayList<Book> allBooks) {
         super(activity.getSupportFragmentManager());
         addFragment(AllBooksFragment.newInstance(allBooks), "Library");
-        new BookFilterer(this).filter(allBooks);
+//        new BookFilterer(this).filter(allBooks);
     }
 
 
@@ -63,18 +60,18 @@ public class TabAdapter extends FragmentPagerAdapter implements BookFilterer.Fil
 
     @Override
     public void setCompletedBooks(ArrayList<Book> completedBooks) {
-        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "Reading");
+//        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "✓");
 
     }
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        addFragment(CompletedBooksFragment.newInstance(checkedOutBooks), "\u2713");
+        addFragment(CheckedOutBooksFragment.newInstance(checkedOutBooks), "Checked Out");
 
     }
 
     @Override
     public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
+//        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
     }
 }

@@ -177,7 +177,7 @@ public class DetailFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Intent intent = EditActivity.maKeEditIntent(getActivity(), book);
+        Intent intent = EditActivity.createEditIntent(getActivity(), book);
         startActivity(intent);
     }
 
