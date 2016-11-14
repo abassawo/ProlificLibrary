@@ -2,11 +2,10 @@
     <string name="app_name">Prolific Library</string>
     <string name="search">Search</string>
     <string name="add">Add</string>
-    <string name="add_book">Add Book</string>
     <string name="delete_all">Delete All</string>
     <string name="save">Save</string>
     <string name="title_edit">Edit Title</string>
-    <string name="checkout_book">Check-out</string>
+    <string name="checkout_book">Check out</string>
     <string name="dialog_msg">Enter your first name to checkout</string>
     <string name="faves">Favorites</string>
     <string name="deleted_books">Deleted</string>

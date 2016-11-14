@@ -1,12 +1,24 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
+import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.ui.tabbed_ui.BookAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -18,19 +30,16 @@ public class AllBooksFragment extends AbstractTabRVFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterActivity.presenterActivity.fillOutNewBookForm();
-            }
-        });
+        view.findViewById(R.id.fab).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
     }
+
+
+
 
 
 }

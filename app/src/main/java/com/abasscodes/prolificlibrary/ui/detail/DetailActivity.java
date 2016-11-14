@@ -11,21 +11,27 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenterActivity;
+import com.abasscodes.prolificlibrary.presenter.Presenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity{
     private String TAG = "DetailActivity";
     private ActionBar mActionBar;
     private Fragment fragment = null;
@@ -34,8 +40,7 @@ public class DetailActivity extends AppCompatActivity {
     private ShareActionProvider actionProvider;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.detail_pager)
-    ViewPager viewPager;
+    private Book book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +49,24 @@ public class DetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         mActionBar =  getSupportActionBar();
-        FragmentManager fm = getSupportFragmentManager();
-        final Book book = getIntent().getParcelableExtra(DetailFragment.BOOK_KEY);
-        bookTitle = getIntent().getStringExtra(AbstractPresenterActivity.BOOK_TITLE);
+        book = getIntent().getParcelableExtra(AbstractPresenterActivity.BOOK_KEY);
+        if(book == null) {
+            bookId = getIntent().getIntExtra(AbstractPresenterActivity.BOOK_ID, 0);
+            initRetrofit(bookId);
+        }
         setupActionBar(mActionBar, getResources().getString(R.string.app_name));
         if(savedInstanceState == null) {
-            fragment = DetailFragment.newInstance(book);
-            viewPager.setAdapter(new FragmentPagerAdapter(fm) {
-                @Override
-                public Fragment getItem(int position) {
-                    return DetailFragment.newInstance(book);
-                }
-
-                @Override
-                public int getCount() {
-                    return 1;
-                }
-            });
-//            fm.beginTransaction().replace(R.id.main_container, fragment).commit();
+            //fixme
         }
+        if(book != null){
+            fragment = DetailFragment.newInstance(book);
+            hostFragment(fragment);
+
+        }
+    }
+
+    public void hostFragment(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.detail_container, fragment).commit();
     }
 
     public void setupActionBar(ActionBar ab, String title) {
@@ -71,6 +75,25 @@ public class DetailActivity extends AppCompatActivity {
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE |
                 ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
     }
+
+    public void initRetrofit(final int bookId) {
+        Call<Book> call = APIClient.getInstance().getBook(bookId);
+        call.enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+                book = response.body();
+                hostFragment(DetailFragment.newInstance(book));
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+                Log.d(TAG, "Error retrofitting " + t);
+            }
+
+        });
+    }
+
+
 
 
     @Override

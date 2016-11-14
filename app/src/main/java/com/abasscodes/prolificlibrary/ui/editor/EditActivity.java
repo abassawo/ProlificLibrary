@@ -19,30 +19,18 @@ public class EditActivity extends AppCompatActivity {
 
     private static final String BOOK_KEY = "book_key";
     private static final String NEW_BOOK = "new_book_bool";
-    private ActionBar actionBar;
-
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_activity);
         setupToolbar();
         Intent intent = getIntent();
-        if(intent.getBooleanExtra(NEW_BOOK, false)){
-            actionBar.setTitle(getResources().getString(R.string.add_book));
+        if(intent.getBooleanExtra(NEW_BOOK, true)){
             hostFragment(new AddBookFragment());
         }else{
-            actionBar.setTitle(getResources().getString(R.string.title_edit));
             Book book = intent.getParcelableExtra(BOOK_KEY);
             hostFragment(EditFragment.newInstance(book));
         }
-    }
-
-
-    public void setupToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
     }
 
     public void hostFragment(Fragment fragment){
@@ -50,8 +38,14 @@ public class EditActivity extends AppCompatActivity {
         fm.beginTransaction().replace(R.id.main_container, fragment).commit();
     }
 
+    public void setupToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getResources().getString(R.string.title_edit));
+    }
 
-    public static Intent createEditIntent(Context context, Book book){
+    public static Intent createEditIntent(Context context, int id, Book book){
         return new Intent(context, EditActivity.class).putExtra(BOOK_KEY, book)
                 .putExtra(NEW_BOOK, false);
     }

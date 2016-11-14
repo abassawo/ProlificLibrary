@@ -1,5 +1,7 @@
 package com.abasscodes.prolificlibrary.helpers;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenterActivity;
 
 /**
@@ -9,6 +11,7 @@ import com.abasscodes.prolificlibrary.presenter.AbstractPresenterActivity;
 public class RegisterActivity {
 
     public static AbstractPresenterActivity presenterActivity = null;
+
 
 }
 

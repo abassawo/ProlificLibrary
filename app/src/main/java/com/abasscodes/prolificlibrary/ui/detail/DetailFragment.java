@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.MainActivity;
 import com.abasscodes.prolificlibrary.ui.editor.EditActivity;
@@ -46,9 +47,7 @@ public class DetailFragment extends Fragment {
     TextView titleTV;
     @Bind(R.id.book_author)
     TextView authorTV;
-
     private Book book;
-
     private APIClient client;
     private String TAG = "DetailFragment";
 
@@ -56,10 +55,10 @@ public class DetailFragment extends Fragment {
     public static final String BOOK_KEY = "book_detail";
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        client = APIClient.getInstance();
         setRetainInstance(true);
         setHasOptionsMenu(true);
     }
@@ -79,14 +78,23 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
         book = getArguments().getParcelable(BOOK_KEY);
-//        initRetrofit(bookId);
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (book == null) {
+            Toast.makeText(getActivity(), " null book ", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getActivity(), "book is " + book.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void bindBook(Book book) {
         this.book = book;
-        if(book == null) return;;
+        if (book == null) return;
+        ;
         String title = book.getTitle() == null ? "" : book.getTitle();
         Log.d(TAG, title);
         String author = book.getAuthor() == null ? "" : book.getAuthor();
@@ -101,8 +109,6 @@ public class DetailFragment extends Fragment {
         String title = getResources().getString(R.string.checkout_book) + " " + book.getTitle() + "?";
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final EditText edittext = new EditText(getActivity());
-
-
         builder.setTitle(title)
                 .setMessage(getResources().getString(R.string.dialog_msg));
         builder.setView(edittext);
@@ -156,8 +162,7 @@ public class DetailFragment extends Fragment {
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         switch (item.getItemId()) {
             case R.id.delete_book:
-                deleteBook(book);
-                startActivity(homeIntent);
+                RegisterActivity.presenterActivity.deleteBook(book);
                 break;
             case android.R.id.home:
                 startActivity(homeIntent);
@@ -172,12 +177,12 @@ public class DetailFragment extends Fragment {
     }
 
     public void goToEditBookForm(Book book) {
-        if(book == null) try {
+        if (book == null) try {
             throw new Exception("Must bind book first");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Intent intent = EditActivity.createEditIntent(getActivity(), book);
+        Intent intent = EditActivity.createEditIntent(getActivity(), book.getId(), book);
         startActivity(intent);
     }
 

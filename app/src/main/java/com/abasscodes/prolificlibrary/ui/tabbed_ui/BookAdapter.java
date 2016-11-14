@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view;
+package com.abasscodes.prolificlibrary.ui.tabbed_ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.ui.BookViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,22 +19,22 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     private List<Book> books;
-    private int resLayout;
+    private Context mContext;
 
-    public BookAdapter(List<Book> books){
-        this.resLayout = R.layout.book_item;
+    public BookAdapter(Context context, List<Book> books){
         this.books = books;
+        mContext = context;
     }
 
-
-    private BookAdapter(int resLayout, List<Book> books){
-        this.resLayout = resLayout;
-        this.books = books;
+    public BookAdapter(Context context){
+        mContext = context;
     }
 
     @Override
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new BookViewHolder(resLayout, parent);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.book_item, parent, false);
+        return new BookViewHolder(view);
     }
 
     @Override

@@ -1,4 +1,12 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
+
+import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.Book;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * Created by C4Q on 11/11/16.

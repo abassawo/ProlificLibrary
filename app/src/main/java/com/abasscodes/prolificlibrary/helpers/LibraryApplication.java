@@ -38,7 +38,7 @@ public class LibraryApplication  extends Application implements Application.Acti
     @Override
     public void onActivityPaused(Activity activity) {
         if(activity instanceof AbstractPresenterActivity)
-            RegisterActivity.presenterActivity = null;
+            RegisterActivity.presenterActivity = (AbstractPresenterActivity) activity;
     }
 
     @Override
