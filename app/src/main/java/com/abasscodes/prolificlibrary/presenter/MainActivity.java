@@ -1,9 +1,13 @@
 package com.abasscodes.prolificlibrary.presenter;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
@@ -20,6 +25,7 @@ import com.abasscodes.prolificlibrary.data.BookRepository;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,14 +48,29 @@ public class MainActivity extends AbstractPresenterActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        new BookRepository(this).fetchBooks();
+        updateUI();
     }
 
+
     @Override
-    void hostFragmentInTab(TabAdapter.TabType type) {
-        int position = adapter.indexOf(type);
-        adapter.onPageSelected(position);
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
+    
+
+    @Override
+    public void onConnectionFailure() {
+        onAllBooksLoaded(new ArrayList<Book>());
+        View view = findViewById(R.id.main_content);
+        Snackbar.make(view, "Internet is not on ", Snackbar.LENGTH_INDEFINITE).setAction("Connect", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNetworkSettings();
+            }
+        }).show();
+    }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     public void initializeViews(){
@@ -59,18 +80,21 @@ public class MainActivity extends AbstractPresenterActivity {
         setupActionBar();
     }
 
-
-
-    private void setupViewPager(ArrayList<Book> books, ViewPager viewPager) {
-        adapter = new TabAdapter(books, viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(adapter);
+    @Override
+    public void onAllBooksLoaded(ArrayList<Book> books) {
+        if (books == null)  {
+            Log.d(TAG, "Empty response");
+            return;
+        }
+        adapter = new TabAdapter(books);
+        if (viewPager != null) {
+            setupViewPager(books);
+        }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public void setupViewPager(ArrayList<Book> books){
+        viewPager.setAdapter(adapter);
+        tabs.setupWithViewPager(viewPager);
     }
 
 
@@ -98,60 +122,10 @@ public class MainActivity extends AbstractPresenterActivity {
     }
 
 
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
-//        mDrawerLayout =(DrawerLayout) findViewById(R.id.drawer_layout);
-//        final MenuItem menuitem = menu.findItem(R.id.nav_switch);
-////        SwitchCompat toggle = (SwitchCompat) MenuItemCompat.getActionView(menuitem);
-////        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////            @Override
-////            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//////                setupAdapter(books, checkedOutOnly);
-//////                presenter.showBooksOnlyCheckedOut();
-////            }
-////        });
-//
-//
-//        final MenuItem searchItem = menu.findItem(R.id.menu_item_search);
-//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String query) {
-////                String temp = "";
-////                if(query.length() > temp.length()) {
-////                    final List<Book> filteredBooks = filter(books, query);
-////                    rvAdapter.setBooks(filteredBooks);
-////                    rvAdapter.notifyDataSetChanged();
-////                    mRecyclerView.scrollToPosition(0);
-////                    temp = query;
-////                } else if(query.length()<= 0){
-////                    rvAdapter.setBooks(books);
-////                    rvAdapter.notifyDataSetChanged();
-////                    mRecyclerView.scrollToPosition(0);
-////                }
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
-
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
             mDrawerLayout.closeDrawers();
-        } else {
-            if((currentFragment instanceof AllBooksFragment)){
-//                showAllBooks();
-            }
-            else super.onBackPressed();
         }
     }
 
@@ -176,18 +150,5 @@ public class MainActivity extends AbstractPresenterActivity {
     }
 
 
-    @Override
-    public void onAllBooksLoaded(ArrayList<Book> books) {
-        if (books == null || books.size() == 0)  {
-            Log.d(TAG, "Empty response");
-        }
-        else{
-            Log.d(TAG, books.toString());
-            if (viewPager != null) {
-                setupViewPager(books, viewPager);
-                tabs.setupWithViewPager(viewPager);
-            }
-            Log.d(TAG,"books size " + books.size());
-        }
-    }
+
 }

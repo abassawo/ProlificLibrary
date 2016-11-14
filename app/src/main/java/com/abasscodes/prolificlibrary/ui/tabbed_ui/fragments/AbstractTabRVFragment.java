@@ -92,6 +92,7 @@ public abstract class AbstractTabRVFragment extends Fragment{
         ButterKnife.bind(this, view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(rvAdapter);
+        setupAdapter(books);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,6 @@ public abstract class AbstractTabRVFragment extends Fragment{
             }
         });
 
-//        fetchBooks();
     }
 
 

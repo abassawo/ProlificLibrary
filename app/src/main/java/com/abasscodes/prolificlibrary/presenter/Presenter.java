@@ -11,7 +11,10 @@ import java.util.List;
 public interface Presenter{
 
     void showBookDetail(Book book);
-    void editBook(int id, String title, String author, String pub, String tags);
+    void editBook(int id, Book book);
     void fillOutNewBookForm();
     void onAllBooksLoaded(ArrayList<Book> books);
+    void updateUI();
+    void onConnectionFailure();
+    void showNetworkSettings();
 }

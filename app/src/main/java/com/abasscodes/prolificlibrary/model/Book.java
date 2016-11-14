@@ -59,6 +59,7 @@ public class Book implements Parcelable, Comparable<Book> {
     @SerializedName("url")
     private String url;
     private boolean isComplete = false;
+    transient boolean archived;
 
     public Book() {
     }
@@ -142,7 +143,7 @@ public class Book implements Parcelable, Comparable<Book> {
         });
     }
 
-    public String display() throws ParseException {
+    public String display() {
         String pub = this.publisher == null? "" : publisher;
         String tags = this.categories == null? "": categories;
 
@@ -154,7 +155,12 @@ public class Book implements Parcelable, Comparable<Book> {
             String restFormat = "yyyy-MM-dd h:mm:ss";
             String humanFormat = "EEE, MMM d, yyyy";
             SimpleDateFormat df = new SimpleDateFormat(restFormat);
-            Date date = df.parse(lastCheckedOut);
+            Date date = null;
+            try {
+                date = df.parse(lastCheckedOut);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             df.applyPattern(humanFormat);
             dateOut = " @ " + df.format(date);
         }
@@ -247,5 +253,13 @@ public class Book implements Parcelable, Comparable<Book> {
 
     public boolean isComplete() {
         return isComplete;
+    }
+
+    public boolean isCheckedOut() {
+        return lastCheckedOut != null;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 }

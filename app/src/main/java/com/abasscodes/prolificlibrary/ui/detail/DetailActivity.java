@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenterActivity;
 
 import butterknife.Bind;
@@ -44,17 +45,15 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mActionBar =  getSupportActionBar();
         FragmentManager fm = getSupportFragmentManager();
-
-        bookId = getIntent().getIntExtra(AbstractPresenterActivity.BOOK_EXTRA_KEY, 0);
+        final Book book = getIntent().getParcelableExtra(DetailFragment.BOOK_KEY);
         bookTitle = getIntent().getStringExtra(AbstractPresenterActivity.BOOK_TITLE);
         setupActionBar(mActionBar, getResources().getString(R.string.app_name));
         if(savedInstanceState == null) {
-            fragment = DetailFragment.newInstance(bookId);
+            fragment = DetailFragment.newInstance(book);
             viewPager.setAdapter(new FragmentPagerAdapter(fm) {
                 @Override
                 public Fragment getItem(int position) {
-
-                    return DetailFragment.newInstance(bookId);
+                    return DetailFragment.newInstance(book);
                 }
 
                 @Override

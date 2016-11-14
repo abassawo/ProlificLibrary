@@ -19,6 +19,8 @@ import com.abasscodes.prolificlibrary.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.MainActivity;
 
+import java.text.ParseException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -48,27 +50,23 @@ public class EditFragment extends Fragment {
 
     //Arguments for fragment
     public static final String BOOK_ID = "id";
-    private static final String BOOK_ARG_ID = "book_id";
-    private static final String BOOK_ARGS_TITLE = "title";
-    private static final String BOOK_ARGS_AUTHOR = "author";
-    private static final String BOOK_ARGS_TAGS = "tags";
-    private static final String BOOK_ARGS_PUBS = "pubs";
+    public static final String BOOK_KEY = "book_key";
     private static int bookId;
     private static EditFragment sFragment = null;
     private String TAG = "EditFragment";
     private Book book;
 
 
-    public static EditFragment newInstance(int id, String title, String author, String pub, String tags){ //Edit an existing book
+    public static EditFragment newInstance(Book book) { //Edit an existing book
         Bundle args = new Bundle();
-        args.putInt(BOOK_ID, id);
-        args.putString(BOOK_ARGS_TITLE, title);
-        args.putString(BOOK_ARGS_AUTHOR, author);
-        args.putString(BOOK_ARGS_PUBS, pub);
-        args.putString(BOOK_ARGS_TAGS, tags);
+        args.putParcelable(BOOK_ID, book);
         sFragment = new EditFragment();
         sFragment.setArguments(args);
         return sFragment;
+    }
+
+    public static EditFragment newInstance() {
+        return new EditFragment();
     }
 
     @Override
@@ -77,19 +75,26 @@ public class EditFragment extends Fragment {
         setRetainInstance(true);
         setHasOptionsMenu(true);
         client = APIClient.getInstance();
-        if(getArguments() != null) {
-            bookId = getArguments().getInt(BOOK_ID);
-            bindBook(bookId);
+        if (getArguments() != null) {
+           book = getArguments().getParcelable(BOOK_KEY);
+
         }
 
     }
 
-    public void bindBook(int id) {
-        Call<Book> call = client.getBook(id);
+    @Override
+    public void onResume() {
+        super.onResume();
+        bindBook(book);
+    }
+
+    public void bindBook(Book book) {
+        Call<Book> call = client.getBook(book.getId());
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
-                book =response.body();
+                //fixme - check if changes between online version of book and current.
+//                book = response.body();
 
             }
 
@@ -101,15 +106,14 @@ public class EditFragment extends Fragment {
     }
 
 
-    public void bindEditFields(Bundle args){ //For existing books
-        title = args.getString(BOOK_ARGS_TITLE);
-        author = args.getString(BOOK_ARGS_AUTHOR);
-        tags = args.getString(BOOK_ARGS_TAGS);
-        pubs = args.getString(BOOK_ARGS_PUBS);
-        titleField.setText(title);
-        authorField.setText(author);
-        categoryField.setText(tags);
-        publisherField.setText(pubs);
+    public void bindEditFields(Bundle args) { //For existing books
+        book = (Book) args.get(BOOK_KEY);
+        String disp = book.display();
+        Log.d(TAG, disp);
+        titleField.setText(book.getTitle());
+        authorField.setText(book.getAuthor());
+        categoryField.setText(book.getCategories());
+        publisherField.setText(book.getPublisher());
     }
 
 
@@ -118,8 +122,9 @@ public class EditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_fragment, container, false);
         ButterKnife.bind(this, view);
-        if(getArguments() != null)
+        if (getArguments() != null) {
             bindEditFields(getArguments());
+        }
         return view;
     }
 
@@ -134,15 +139,15 @@ public class EditFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_book:
-                if(fieldsValid()) {
+                if (fieldsValid()) {
                     if (bookId < 0) {
                         addBook(title, author, pubs, tags);
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), "Please fill out the forms above", Toast.LENGTH_SHORT).show();
                 }
-            case android.R.id.home: startActivity(new Intent(getActivity(), MainActivity.class));
+            case android.R.id.home:
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
 
 
@@ -159,7 +164,7 @@ public class EditFragment extends Fragment {
         return editText.getText().length() > 0;
     }
 
-    public void updateBook(){
+    public void updateBook() {
         int id = book.getId();
         book.setAuthor(authorField.getText().toString());
         book.setTitle(titleField.getText().toString());
@@ -183,7 +188,7 @@ public class EditFragment extends Fragment {
 
     }
 
-    public void addBook(String title,String author, String publisher,String categories) {
+    public void addBook(String title, String author, String publisher, String categories) {
         Call<Book> call = client.addBook(title, author, publisher, categories);
         call.enqueue(new Callback<Book>() {
             @Override
