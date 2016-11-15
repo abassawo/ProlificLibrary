@@ -68,24 +68,6 @@ public class EditFragment extends AddBookFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        bindBook(book);
-    }
-
-    public void bindBook(Book bookForEdit) {
-        Call<Book> call = client.getBook(bookForEdit.getId());
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                //fixme - check if changes between online version of book and current.
-                book = response.body();
-
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d(TAG, "error retrieving record " + t);
-            }
-        });
     }
 
 

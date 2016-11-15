@@ -58,10 +58,6 @@ public class APIClient {
     }
 
 
-    public void listCompletedBooks() {
-//        return api.listBooks();
-    }
-
     public Call<Book> getBook(int bookId) {
         return api.getBook(bookId);
     }
