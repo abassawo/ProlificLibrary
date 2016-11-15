@@ -5,14 +5,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.abasscodes.prolificlibrary.data.BookFilterer;
+import com.abasscodes.prolificlibrary.model.BookFilterer;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AbstractTabRVFragment;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CheckedOutBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CompletedBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.ReadLaterFragment;
 
 import java.util.ArrayList;
 import java.util.List;

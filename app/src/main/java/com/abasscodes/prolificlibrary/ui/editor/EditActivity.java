@@ -19,6 +19,7 @@ public class EditActivity extends AppCompatActivity {
 
     private static final String BOOK_KEY = "book_key";
     private static final String NEW_BOOK = "new_book_bool";
+    private ActionBar actionBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +28,12 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getBooleanExtra(NEW_BOOK, true)){
             hostFragment(new AddBookFragment());
+            actionBar.setTitle("Add Book");
+
         }else{
             Book book = intent.getParcelableExtra(BOOK_KEY);
             hostFragment(EditFragment.newInstance(book));
+            actionBar.setTitle(getResources().getString(R.string.title_edit));
         }
     }
 
@@ -41,8 +45,7 @@ public class EditActivity extends AppCompatActivity {
     public void setupToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getResources().getString(R.string.title_edit));
+        actionBar = getSupportActionBar();
     }
 
     public static Intent createEditIntent(Context context, int id, Book book){

@@ -25,8 +25,6 @@ public interface BookAPI {
     @GET("books")
     Call<ArrayList<Book>> listBooks();
 
-    @POST("books")
-    Call<Book> addBook(@Body Book book);
 
     @GET("books/{id}/")
     Call<Book> getBook(@Path("id") int bookId);
@@ -40,8 +38,12 @@ public interface BookAPI {
     @DELETE("clean/")
     Call<Void> deleteAll();
 
+
+    @POST("books")
+    Call<Book> addBook(@Body Book book);
+
     @FormUrlEncoded
-    @POST("/books/")
+    @POST("books")
     public Call<Book> addBook(@Field("title") String title,
                               @Field("author") String author,
                               @Field("publisher") String publisher,

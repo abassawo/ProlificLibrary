@@ -1,10 +1,7 @@
 package com.abasscodes.prolificlibrary.presenter;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -22,11 +19,8 @@ import android.view.View;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
-import com.abasscodes.prolificlibrary.data.BookRepository;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
