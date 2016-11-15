@@ -144,6 +144,7 @@ public class EditFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Please fill out the forms above", Toast.LENGTH_SHORT).show();
                 }
+                break;
             case android.R.id.home:
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 break;

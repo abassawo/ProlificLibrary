@@ -64,19 +64,19 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void setCompletedBooks(ArrayList<Book> completedBooks) {
-        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "Reading");
+        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "Checked Out");
 
     }
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        addFragment(CompletedBooksFragment.newInstance(checkedOutBooks), "\u2713");
+//        addFragment(CompletedBooksFragment.newInstance(checkedOutBooks), "\u2713");
 
     }
 
     @Override
     public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
+//        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
     }
 
     @Override
