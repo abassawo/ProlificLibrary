@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
+package com.abasscodes.prolificlibrary.view.fragments;
 
 import android.support.v4.app.Fragment;
 import android.util.Log;

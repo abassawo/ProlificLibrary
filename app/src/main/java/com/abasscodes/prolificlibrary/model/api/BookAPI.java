@@ -1,10 +1,8 @@
-package com.abasscodes.prolificlibrary.api;
+package com.abasscodes.prolificlibrary.model.api;
 
-import android.database.Observable;
 import com.abasscodes.prolificlibrary.model.Book;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

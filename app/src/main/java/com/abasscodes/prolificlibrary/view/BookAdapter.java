@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui;
+package com.abasscodes.prolificlibrary.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.BookViewHolder;
+import com.abasscodes.prolificlibrary.view.BookViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

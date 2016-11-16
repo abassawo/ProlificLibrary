@@ -2,9 +2,9 @@ package com.abasscodes.prolificlibrary.model;
 
 import android.util.Log;
 
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainPresenter;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.presenter.Presenter;
 
 import java.util.ArrayList;
 
@@ -20,15 +20,15 @@ public class BookRepository {
 
     private static final String TAG = BookRepository.class.getSimpleName();
     private static ArrayList<Book> allBooks = null;
-    private Presenter presenter;
+    private MainPresenter presenter;
 
 
-    private BookRepository(Presenter presenter) {
+    private BookRepository(MainPresenter presenter) {
         this.presenter = presenter;
     }
 
     public BookRepository() {
-        this(RegisterActivity.presenterActivity);
+        this((MainPresenter) RegisterActivity.basePresenterActivity.getPresenter());
     }
 
 

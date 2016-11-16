@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui;
+package com.abasscodes.prolificlibrary.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,6 +37,6 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        RegisterActivity.presenterActivity.showBookDetail(book);
+        RegisterActivity.basePresenterActivity.showBookDetail(book);
     }
 }

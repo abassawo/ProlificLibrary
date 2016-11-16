@@ -1,12 +1,9 @@
-package com.abasscodes.prolificlibrary.ui.detail;
+package com.abasscodes.prolificlibrary.interactions.show_book_detail;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -17,10 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.presenter.AbstractPresenterActivity;
-import com.abasscodes.prolificlibrary.presenter.Presenter;
+import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,9 +45,9 @@ public class DetailActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         mActionBar =  getSupportActionBar();
-        book = getIntent().getParcelableExtra(AbstractPresenterActivity.BOOK_KEY);
+        book = getIntent().getParcelableExtra(BasePresenterActivity.BOOK_KEY);
         if(book == null) {
-            bookId = getIntent().getIntExtra(AbstractPresenterActivity.BOOK_ID, 0);
+            bookId = getIntent().getIntExtra(BasePresenterActivity.BOOK_ID, 0);
             initRetrofit(bookId);
         }
         setupActionBar(mActionBar, getResources().getString(R.string.app_name));

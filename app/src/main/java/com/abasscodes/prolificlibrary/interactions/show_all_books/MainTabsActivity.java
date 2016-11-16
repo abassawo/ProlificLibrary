@@ -1,31 +1,26 @@
-package com.abasscodes.prolificlibrary.presenter;
+package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.TabAdapter;
-
+import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.abasscodes.prolificlibrary.view.TabAdapter;
 import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AbstractPresenterActivity {
+public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -35,66 +30,50 @@ public class MainActivity extends AbstractPresenterActivity {
     TabLayout tabs;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-    private String TAG = MainActivity.class.getSimpleName();
+    private String TAG = MainTabsActivity.class.getSimpleName();
     private TabAdapter adapter;
+
+
+    @Override
+    public TabPresenter getPresenter() {
+        return TabPresenter.getInstance(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        updateUI();
+        getPresenter().updateUI();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
-            case DELETED_ITEM_CODE: updateUI();
+        switch (resultCode) {
+            case DELETED_ITEM_CODE:
+                getPresenter().updateUI();
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        getPresenter().updateUI();
     }
-    
 
-    @Override
-    public void onConnectionFailure() {
-        onAllBooksLoaded(new ArrayList<Book>());
-        View view = findViewById(R.id.main_content);
-        Snackbar.make(view, "Internet is not on ", Snackbar.LENGTH_INDEFINITE).setAction("Connect", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showNetworkSettings();
-            }
-        }).show();
-    }
 
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void initializeViews(){
+    public void initializeViews() {
         ButterKnife.bind(this);
         mDrawerLayout.setForegroundGravity(Gravity.LEFT);
         setupNavBar(navView);
         setupActionBar();
     }
 
-    @Override
-    public void onAllBooksLoaded(ArrayList<Book> books) {
-        if (books == null)  {
-            Log.d(TAG, "Empty response");
-            return;
-        }
-        adapter = new TabAdapter(books);
-        if (viewPager != null) {
-            setupViewPager(books);
-        }
-    }
 
-    public void setupViewPager(ArrayList<Book> books){
+    public void setupViewPager(ArrayList<Book> books) {
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
     }
@@ -136,21 +115,20 @@ public class MainActivity extends AbstractPresenterActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(mDrawerLayout == null) return false;
+                if (mDrawerLayout == null) return false;
                 else if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
                     mDrawerLayout.closeDrawers();
                 } else
 //                    mDrawerLayout.openDrawer(GravityCompat.START);
                     break;
             case R.id.menu_item_add:
-                fillOutNewBookForm();
+                getPresenter().fillOutNewBookForm();
                 break;
             case R.id.menu_item_deleteAll:
                 break;
         }
         return true;
     }
-
 
 
 }
