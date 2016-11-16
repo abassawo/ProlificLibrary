@@ -2,6 +2,8 @@ package com.abasscodes.prolificlibrary.interactions.show_book_detail;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,8 +19,10 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 public class DetailPresenter extends AbstractPresenter implements Presenter {
 
     private static DetailPresenter instance;
+    private static DetailActivity detailActivity;
 
     public static DetailPresenter getInstance(BasePresenterActivity activity) {
+        detailActivity = (DetailActivity) activity;
         if (instance == null) {
             instance = new DetailPresenter(activity);
         }
@@ -31,6 +35,7 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
 
     @Override
     public void showBookDetail(View view, Book book) {
+        setToolbarTitle(book);
         TextView title = (TextView) view.findViewById(R.id.book_title);
         TextView author = (TextView) view.findViewById(R.id.book_author);
         TextView pubTV = (TextView) view.findViewById(R.id.book_publisher);
@@ -47,6 +52,13 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
         if (book.getLastCheckedOut() != null) {
             checkOutStatusTV.append(book.getLastCheckedOut());
         }
+    }
+
+    public void setToolbarTitle(Book book){
+        ActionBar ab = activity.getSupportActionBar();
+        ab.setTitle(book.getTitle());
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        toolbar.setTitle(book.getTitle());
     }
 
     @Override

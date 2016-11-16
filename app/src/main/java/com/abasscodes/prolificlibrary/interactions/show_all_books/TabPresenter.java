@@ -1,9 +1,11 @@
 package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
+import android.app.Activity;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import com.abasscodes.prolificlibrary.R;
@@ -46,22 +48,44 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
     }
 
     @Override
-    public void onAllBooksLoaded(ArrayList<Book> books) {
+    public void onAllBooksLoaded(Activity activity, ArrayList<Book> books) {
         if (books == null)  {
             Log.d(TAG, "Empty response");
             return;
         }
-
-            adapter  = new TabAdapter(books);
-            viewPager = (ViewPager) presenterActivity.findViewById(R.id.viewpager);
-            tabs = (TabLayout) presenterActivity.findViewById(R.id.tabs);
-            if (viewPager != null) {
-                viewPager.setAdapter(adapter);
-                tabs.setupWithViewPager(viewPager);
-            }
-
+        adapter  = new TabAdapter(books, (AppCompatActivity) activity);
+        viewPager = (ViewPager) activity.findViewById(R.id.viewpager);
+        tabs = (TabLayout) activity.findViewById(R.id.tabs);
+        if (viewPager != null) {
+            viewPager.setAdapter(adapter);
+            tabs.setupWithViewPager(viewPager);
+        }
 
 //        adapter.onPageSelected(0);
+    }
+
+    @Override
+    public void onAllBooksLoaded(View view, ArrayList<Book> books) {
+//        if (books == null)  {
+//            Log.d(TAG, "Empty response");
+//            return;
+//        }
+//        adapter  = new TabAdapter(books, (AppCompatActivity) activity);
+//        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+//        tabs = (TabLayout) view.findViewById(R.id.tabs);
+//        if (viewPager != null) {
+//            viewPager.setAdapter(adapter);
+//            tabs.setupWithViewPager(viewPager);
+//        }
+
+//        adapter.onPageSelected(0);
+    }
+
+    public void onAllBooksLoaded(ArrayList<Book> books){
+        if(adapter == null) {
+            adapter = new TabAdapter(books, activity);
+        }
+        onAllBooksLoaded(activity, books);
     }
 
 
@@ -81,7 +105,7 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
 
     @Override
     public void onConnectionFailure() {
-        onAllBooksLoaded(new ArrayList<Book>());
+        onAllBooksLoaded(adapter.getItem(0).getView(), new ArrayList<Book>());
         View view = presenterActivity.findViewById(R.id.main_content);
         Snackbar.make(view, "Internet is not on ", Snackbar.LENGTH_INDEFINITE).setAction("Connect", new View.OnClickListener() {
             @Override

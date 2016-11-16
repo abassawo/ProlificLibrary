@@ -3,6 +3,7 @@ package com.abasscodes.prolificlibrary.model;
 import android.util.Log;
 
 import com.abasscodes.prolificlibrary.interactions.show_all_books.Presenter;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.TabPresenter;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 
@@ -20,11 +21,11 @@ public class BookRepository {
 
     private static final String TAG = BookRepository.class.getSimpleName();
     private static ArrayList<Book> allBooks = null;
-    private Presenter presenter;
+    private TabPresenter presenter;
 
 
     private BookRepository(Presenter presenter) {
-        this.presenter = presenter;
+        this.presenter = (TabPresenter) presenter;
     }
 
     public BookRepository() {

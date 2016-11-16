@@ -26,12 +26,8 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
 
-    public TabAdapter(ArrayList<Book> allBooks) {
-        this(allBooks, RegisterActivity.basePresenterActivity);
-    }
 
-
-    private TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity) {
+    public TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity) {
         super(activity.getSupportFragmentManager());
         addFragment(AllBooksFragment.newInstance(allBooks), "Library");
         new BookFilterer(this).filter(allBooks);

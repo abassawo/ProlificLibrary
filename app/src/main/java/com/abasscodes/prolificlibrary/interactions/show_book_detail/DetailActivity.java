@@ -29,7 +29,7 @@ import retrofit2.Response;
  */
 public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
     private String TAG = "DetailActivity";
-    private ActionBar mActionBar;
+    private ActionBar actionBar;
     private Fragment fragment = null;
     private Integer bookId;
     private ShareActionProvider actionProvider;
@@ -39,7 +39,7 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
 
 
    public static final String BOOK_ID = "Book_id";
-   public static final String BOOK_KEY = "Book_TItle";
+   public static final String BOOK_KEY = "Book";
     private String bookTitle;
 
     @Override
@@ -53,18 +53,21 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
         setContentView(R.layout.detail_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        mActionBar =  getSupportActionBar();
+        actionBar =  getSupportActionBar();
         book = getIntent().getParcelableExtra(BOOK_KEY);
         if(book == null) {
             bookId = getIntent().getIntExtra(BOOK_ID, 0);
             initRetrofit(bookId);
         }
-        setupActionBar(mActionBar, getResources().getString(R.string.app_name));
+
         if(savedInstanceState == null) {
             //fixme
         }
         if(book != null){
+            setupActionBar(actionBar);
             bookTitle = book.getTitle();
+            getPresenter().setToolbarTitle(book);
+
             fragment = DetailFragment.newInstance(book);
             hostFragment(fragment);
 
@@ -75,11 +78,11 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
         getSupportFragmentManager().beginTransaction().replace(R.id.detail_container, fragment).commit();
     }
 
-    public void setupActionBar(ActionBar ab, String title) {
-        ab.setTitle(title);
+    public void setupActionBar(ActionBar ab) {
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE |
                 ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
+        ab.setTitle(book.getTitle());
     }
 
     public void initRetrofit(final int bookId) {
@@ -157,7 +160,7 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
     public static Intent makeIntent(Context context, Book book) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(BOOK_ID, book.getId());
-        intent.putExtra(BOOK_KEY, book.getTitle());
+        intent.putExtra(BOOK_KEY, book);
         return intent;
     }
 }
