@@ -3,6 +3,8 @@ package com.abasscodes.prolificlibrary.helpers;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+
+import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 /**
@@ -52,7 +54,10 @@ public class LibraryApplication  extends Application implements Application.Acti
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if(activity instanceof BasePresenterActivity)
+        if(activity instanceof BasePresenterActivity) {
+            Mvp.Presenter presenter = RegisterActivity.basePresenterActivity.getPresenter();
+            presenter = null;
             RegisterActivity.basePresenterActivity = null;
+        }
     }
 }

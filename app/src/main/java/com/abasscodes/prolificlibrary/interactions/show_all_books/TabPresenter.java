@@ -24,7 +24,7 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
 
     private static final String TAG = TabPresenter.class.getSimpleName();
     private static TabPresenter instance;
-    private static BasePresenterActivity basePresenterActivity;
+    private static MainTabsActivity presenterActivity;
 
     public TabPresenter(BasePresenterActivity<AbstractPresenter> activity) {
         super(activity);
@@ -32,7 +32,7 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
 
 
     public static TabPresenter getInstance(BasePresenterActivity activity) {
-        basePresenterActivity = activity;
+        presenterActivity = (MainTabsActivity) activity;
          if(instance == null){
             instance = new TabPresenter(activity);
         }
@@ -46,9 +46,8 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
             return;
         }
         TabAdapter adapter  = new TabAdapter(books);
-
-        ViewPager viewPager = (ViewPager) basePresenterActivity.findViewById(R.id.viewpager);
-        TabLayout tabs = (TabLayout) basePresenterActivity.findViewById(R.id.tabs);
+        ViewPager viewPager = (ViewPager) presenterActivity.findViewById(R.id.viewpager);
+        TabLayout tabs = (TabLayout) presenterActivity.findViewById(R.id.tabs);
         if (viewPager != null) {
             viewPager.setAdapter(adapter);
             tabs.setupWithViewPager(viewPager);
@@ -68,7 +67,7 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
     @Override
     public void onConnectionFailure() {
         onAllBooksLoaded(new ArrayList<Book>());
-        View view = basePresenterActivity.findViewById(R.id.main_content);
+        View view = presenterActivity.findViewById(R.id.main_content);
         Snackbar.make(view, "Internet is not on ", Snackbar.LENGTH_INDEFINITE).setAction("Connect", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

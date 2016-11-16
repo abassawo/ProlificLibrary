@@ -10,7 +10,8 @@ import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
  */
 
 public abstract class AbstractPresenter implements Mvp.Presenter{
-    private BasePresenterActivity<AbstractPresenter> activity;
+    protected static BasePresenterActivity<AbstractPresenter> activity;
+
 
     public AbstractPresenter(BasePresenterActivity<AbstractPresenter> activity){
         this.activity = activity;

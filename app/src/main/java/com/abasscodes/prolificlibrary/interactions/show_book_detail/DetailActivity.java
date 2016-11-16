@@ -1,5 +1,6 @@
 package com.abasscodes.prolificlibrary.interactions.show_book_detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends AppCompatActivity{
+public class DetailActivity extends BasePresenterActivity<BookDetailPresenter>{
     private String TAG = "DetailActivity";
     private ActionBar mActionBar;
     private Fragment fragment = null;
@@ -38,6 +40,15 @@ public class DetailActivity extends AppCompatActivity{
     Toolbar toolbar;
     private Book book;
 
+
+   public static final String BOOK_ID = "Book_id";
+   public static final String BOOK_KEY = "Book_TItle";
+
+    @Override
+    public BookDetailPresenter getPresenter() {
+        return BookDetailPresenter.getInstance(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +56,9 @@ public class DetailActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         mActionBar =  getSupportActionBar();
-        book = getIntent().getParcelableExtra(BasePresenterActivity.BOOK_KEY);
+        book = getIntent().getParcelableExtra(BOOK_KEY);
         if(book == null) {
-            bookId = getIntent().getIntExtra(BasePresenterActivity.BOOK_ID, 0);
+            bookId = getIntent().getIntExtra(BOOK_ID, 0);
             initRetrofit(bookId);
         }
         setupActionBar(mActionBar, getResources().getString(R.string.app_name));
@@ -144,4 +155,10 @@ public class DetailActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    public static Intent makeIntent(Context context, Book book) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(BOOK_ID, book.getId());
+        intent.putExtra(BOOK_KEY, book.getTitle());
+        return intent;
+    }
 }

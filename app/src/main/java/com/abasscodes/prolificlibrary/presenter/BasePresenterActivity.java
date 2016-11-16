@@ -27,12 +27,11 @@ import retrofit2.Response;
 
 public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends AppCompatActivity{
 
-   public static final String BOOK_ID = "Book_id";
-   public static final String BOOK_KEY = "Book_TItle";
    private static final String TAG = BasePresenterActivity.class.getSimpleName() ;
    public static final int DELETED_ITEM_CODE = 999;
    public Fragment currentFragment;
    private BookRepository bookRepo;
+
 
    public abstract P getPresenter();
 
@@ -56,9 +55,7 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
 
 
    public void showBookDetail(Book book) {
-      Intent intent = new Intent(this, DetailActivity.class);
-      intent.putExtra(BOOK_ID, book.getId());
-      intent.putExtra(BOOK_KEY, book.getTitle());
+      Intent intent = DetailActivity.makeIntent(this, book);
       startActivity(intent);
    }
 
