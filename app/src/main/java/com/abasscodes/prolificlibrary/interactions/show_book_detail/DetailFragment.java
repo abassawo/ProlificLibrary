@@ -39,9 +39,6 @@ import retrofit2.Response;
  */
 public class DetailFragment extends Fragment {
 
-
-    @Bind(R.id.detail_textview)
-    TextView detailsTV;
     @Bind(R.id.book_title)
     TextView titleTV;
     @Bind(R.id.book_author)
@@ -52,12 +49,14 @@ public class DetailFragment extends Fragment {
 
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
     public static final String BOOK_KEY = "book_detail";
+    private DetailPresenter presenter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = APIClient.getInstance();
+        presenter = DetailPresenter.getInstance((DetailActivity)getActivity());
         setRetainInstance(true);
         setHasOptionsMenu(true);
     }
@@ -87,6 +86,11 @@ public class DetailFragment extends Fragment {
             Toast.makeText(getActivity(), " null book ", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getActivity(), "book is " + book.getTitle(), Toast.LENGTH_SHORT).show();
+            if(presenter == null){
+               Toast.makeText(getActivity(), "presenter is null " , Toast.LENGTH_SHORT).show();
+            }else{
+                presenter.showBookDetail(getView(), book);
+            }
         }
     }
 
@@ -100,7 +104,6 @@ public class DetailFragment extends Fragment {
         Log.d(TAG, author);
         titleTV.setText(title);
         authorTV.setText(author);
-        detailsTV.setText(book.display());
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

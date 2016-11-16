@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view.fragments;
+package com.abasscodes.prolificlibrary.view.tab_fragments;
 
 
 import android.os.Bundle;

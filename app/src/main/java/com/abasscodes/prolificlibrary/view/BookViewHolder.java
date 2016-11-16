@@ -1,11 +1,14 @@
 package com.abasscodes.prolificlibrary.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
+import com.abasscodes.prolificlibrary.interactions.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 
 /**
@@ -37,6 +40,8 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        RegisterActivity.basePresenterActivity.showBookDetail(book);
+        Context ctx = v.getContext();
+        Intent intent = DetailActivity.makeIntent(ctx, book);
+        ctx.startActivity(intent);
     }
 }

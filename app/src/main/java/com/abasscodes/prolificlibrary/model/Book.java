@@ -256,7 +256,7 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public boolean isCheckedOut() {
-        return lastCheckedOut != null;
+        return lastCheckedOut != null && !lastCheckedOut.equals("null");
     }
 
     public boolean isArchived() {

@@ -1,5 +1,7 @@
 package com.abasscodes.prolificlibrary.helpers;
 
+import com.abasscodes.prolificlibrary.Mvp;
+import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 /**
@@ -9,6 +11,7 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 public class RegisterActivity {
 
     public static BasePresenterActivity basePresenterActivity = null;
+    public static Mvp.Presenter presenter = basePresenterActivity == null ? null : basePresenterActivity.getPresenter();
 
 
 }

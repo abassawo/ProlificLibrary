@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by C4Q on 11/15/16.
  */
 
-public interface MainPresenter extends Mvp.Presenter {
+public interface Presenter extends Mvp.Presenter {
 
     void onAllBooksLoaded(ArrayList<Book> books);
     void showNetworkSettings();

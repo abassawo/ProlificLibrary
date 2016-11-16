@@ -11,7 +11,7 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
  * Created by C4Q on 11/11/16.
  */
 
-public class LibraryApplication  extends Application implements Application.ActivityLifecycleCallbacks{
+public class LibraryApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onCreate() {
@@ -21,8 +21,11 @@ public class LibraryApplication  extends Application implements Application.Acti
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if(activity instanceof BasePresenterActivity)
+        if (activity instanceof BasePresenterActivity) {
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
+            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
+        }
+
     }
 
     @Override
@@ -32,14 +35,15 @@ public class LibraryApplication  extends Application implements Application.Acti
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if(activity instanceof BasePresenterActivity)
+        if (activity instanceof BasePresenterActivity)
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
+            if(RegisterActivity.basePresenterActivity != null)
+            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        if(activity instanceof BasePresenterActivity)
-            RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
+
     }
 
     @Override
@@ -54,9 +58,8 @@ public class LibraryApplication  extends Application implements Application.Acti
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if(activity instanceof BasePresenterActivity) {
-            Mvp.Presenter presenter = RegisterActivity.basePresenterActivity.getPresenter();
-            presenter = null;
+        if (activity instanceof BasePresenterActivity) {
+            RegisterActivity.presenter = null;
             RegisterActivity.basePresenterActivity = null;
         }
     }

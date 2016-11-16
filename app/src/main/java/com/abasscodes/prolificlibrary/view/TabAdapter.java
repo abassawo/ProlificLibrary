@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.view.fragments.AbstractTabRVFragment;
-import com.abasscodes.prolificlibrary.view.fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.view.fragments.CheckedOutBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.AbstractTabRVFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,14 +62,12 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void setCompletedBooks(ArrayList<Book> completedBooks) {
-        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "Checked Out");
-
+//        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "\u2713");
     }
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-//        addFragment(CompletedBooksFragment.newInstance(checkedOutBooks), "\u2713");
-
+        addFragment(CheckedOutBooksFragment.newInstance(checkedOutBooks), "Checked out");
     }
 
     @Override
@@ -80,12 +78,13 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         AbstractTabRVFragment fragment = (AbstractTabRVFragment) fragments.get(position);
-        fragment.refresh();
+//        fragment.refresh();
     }
 
     @Override
     public void onPageSelected(int position) {
-
+//        AbstractTabRVFragment fragment = (AbstractTabRVFragment) fragments.get(position);
+//        fragment.refresh();
     }
 
     @Override

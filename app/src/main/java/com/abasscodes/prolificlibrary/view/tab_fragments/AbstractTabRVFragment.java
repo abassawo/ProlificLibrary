@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view.fragments;
+package com.abasscodes.prolificlibrary.view.tab_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
-import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
 
 import java.util.ArrayList;
@@ -35,12 +35,11 @@ import retrofit2.Response;
 
 public abstract class AbstractTabRVFragment extends Fragment{
     private static final String TAG = AbstractTabRVFragment.class.getSimpleName();
-    private BookAdapter rvAdapter;
+    public BookAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
-    RecyclerView mRecyclerView;
+    RecyclerView bookRecyclerView;
     private static AbstractTabRVFragment Instance;
-    @Bind(R.id.empty_view)
-    View emptyView;
+    @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
 
 
@@ -52,33 +51,35 @@ public abstract class AbstractTabRVFragment extends Fragment{
         return fragment;
     }
 
-    public void refresh(){
-        Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
-        call.enqueue(new Callback<ArrayList<Book>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-                books = response.body();
-                setupAdapter(books);
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-
-            }
-        });
-    }
+//    public void refresh(){
+//        Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
+//        call.enqueue(new Callback<ArrayList<Book>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+//                books = response.body();
+//                setupAdapter(books);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-//        fetchBooks();
+//        if(isAdded() && rvAdapter != null) {
+//            refresh();
+//        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+//        setRetainInstance(true);
         Bundle args = getArguments();
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
@@ -107,14 +108,15 @@ public abstract class AbstractTabRVFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(rvAdapter);
+        bookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        bookRecyclerView.setAdapter(rvAdapter);
         setupAdapter(books);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegisterActivity.basePresenterActivity.fillOutNewBookForm();
+                BasePresenterActivity activity = (BasePresenterActivity) getActivity();
+                activity.fillOutNewBookForm();
             }
         });
 
@@ -139,17 +141,22 @@ public abstract class AbstractTabRVFragment extends Fragment{
 
     protected void setupAdapter(List<Book> books){
         Log.d(TAG, "Payload size " + books.size());
-        rvAdapter.setBooks(books);
-        rvAdapter.notifyDataSetChanged();
-        if(rvAdapter.getItemCount() == 0){
-            mRecyclerView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }else{
-            mRecyclerView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.INVISIBLE);
+        if(rvAdapter == null) rvAdapter = new BookAdapter(getActivity(),books);
+        else {
+            rvAdapter.setBooks(books);
+            rvAdapter.notifyDataSetChanged();
         }
-        mRecyclerView.setAdapter(rvAdapter);
-        mRecyclerView.scrollToPosition(0);
+        if(bookRecyclerView != null) {
+            if (rvAdapter.getItemCount() == 0) {
+                bookRecyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                bookRecyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.INVISIBLE);
+            }
+            bookRecyclerView.setAdapter(rvAdapter);
+            bookRecyclerView.scrollToPosition(0);
+        }
 
     }
 

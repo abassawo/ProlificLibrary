@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.interactions.edit_book.AddBookFragment;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
@@ -47,14 +48,17 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
         getPresenter().updateUI();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case DELETED_ITEM_CODE:
-                getPresenter().updateUI();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode) {
+//            case DELETED_ITEM_CODE:
+//                getPresenter().updateUI();
+//                break;
+//            case AddBookFragment.ADD_BOOK_CODE:
+//                getPresenter().updateUI();
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -70,12 +74,6 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
         mDrawerLayout.setForegroundGravity(Gravity.LEFT);
         setupNavBar(navView);
         setupActionBar();
-    }
-
-
-    public void setupViewPager(ArrayList<Book> books) {
-        viewPager.setAdapter(adapter);
-        tabs.setupWithViewPager(viewPager);
     }
 
 

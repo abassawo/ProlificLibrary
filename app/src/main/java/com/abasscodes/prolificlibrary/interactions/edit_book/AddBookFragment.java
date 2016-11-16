@@ -33,6 +33,7 @@ public class AddBookFragment extends Fragment {
 
 
     private static final String TAG = AddBookFragment.class.getSimpleName();
+    public static final int ADD_BOOK_CODE = 101;
 
     @Bind(R.id.edittext_book_title)
     EditText titleField;
@@ -70,8 +71,12 @@ public class AddBookFragment extends Fragment {
     }
 
 
-    public void addBook(String title, String author, String publisher, String categories) {
-        Call<Book> call = client.addBook(title, author, publisher, categories);
+    public void addBook(EditText... editTexts) {
+        title =  editTexts[0].getText().toString();
+        author = editTexts[1].getText().toString();
+        pubs = editTexts[2].getText().toString();
+        tags = editTexts[3].getText().toString();
+        Call<Book> call = client.addBook(title, author, pubs, tags);
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
@@ -80,7 +85,7 @@ public class AddBookFragment extends Fragment {
                 if(book != null){
                     Toast.makeText(getActivity(), "New Book added : " + book.getTitle(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), MainTabsActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, ADD_BOOK_CODE);
                 }else{
                     Toast.makeText(getActivity(), "Error : ", Toast.LENGTH_SHORT).show();
 
@@ -95,13 +100,6 @@ public class AddBookFragment extends Fragment {
         });
     }
 
-    public void addTestBook(){
-        title = "test";
-        author = "test";
-        pubs = "test";
-        tags = "test";
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -114,9 +112,8 @@ public class AddBookFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_book:
-                addTestBook();
                 if (fieldsValid()) {
-                    addBook(title, author, pubs, tags);
+                    addBook(titleField, authorField, publisherField, categoryField);
                 } else {
                     Toast.makeText(getActivity(), "Please fill out the forms above", Toast.LENGTH_SHORT).show();
                 }

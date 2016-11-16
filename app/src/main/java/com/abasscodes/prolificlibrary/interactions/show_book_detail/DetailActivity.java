@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
@@ -29,11 +27,10 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends BasePresenterActivity<BookDetailPresenter>{
+public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
     private String TAG = "DetailActivity";
     private ActionBar mActionBar;
     private Fragment fragment = null;
-    private String bookTitle;
     private Integer bookId;
     private ShareActionProvider actionProvider;
     @Bind(R.id.toolbar)
@@ -43,10 +40,11 @@ public class DetailActivity extends BasePresenterActivity<BookDetailPresenter>{
 
    public static final String BOOK_ID = "Book_id";
    public static final String BOOK_KEY = "Book_TItle";
+    private String bookTitle;
 
     @Override
-    public BookDetailPresenter getPresenter() {
-        return BookDetailPresenter.getInstance(this);
+    public DetailPresenter getPresenter() {
+        return DetailPresenter.getInstance(this);
     }
 
     @Override
@@ -66,6 +64,7 @@ public class DetailActivity extends BasePresenterActivity<BookDetailPresenter>{
             //fixme
         }
         if(book != null){
+            bookTitle = book.getTitle();
             fragment = DetailFragment.newInstance(book);
             hostFragment(fragment);
 

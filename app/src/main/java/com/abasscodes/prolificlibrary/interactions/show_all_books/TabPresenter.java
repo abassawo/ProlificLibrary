@@ -2,17 +2,19 @@ package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.abasscodes.prolificlibrary.view.BookAdapter;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
+import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
 
 import java.util.ArrayList;
 
@@ -20,14 +22,18 @@ import java.util.ArrayList;
  * Created by C4Q on 11/15/16.
  */
 
-public class TabPresenter extends AbstractPresenter implements MainPresenter {
+public class TabPresenter extends AbstractPresenter implements Presenter {
 
     private static final String TAG = TabPresenter.class.getSimpleName();
     private static TabPresenter instance;
     private static MainTabsActivity presenterActivity;
+    private TabLayout tabs;
+    ViewPager viewPager;
+    private TabAdapter adapter;
 
     public TabPresenter(BasePresenterActivity<AbstractPresenter> activity) {
         super(activity);
+
     }
 
 
@@ -45,13 +51,17 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
             Log.d(TAG, "Empty response");
             return;
         }
-        TabAdapter adapter  = new TabAdapter(books);
-        ViewPager viewPager = (ViewPager) presenterActivity.findViewById(R.id.viewpager);
-        TabLayout tabs = (TabLayout) presenterActivity.findViewById(R.id.tabs);
-        if (viewPager != null) {
-            viewPager.setAdapter(adapter);
-            tabs.setupWithViewPager(viewPager);
-        }
+
+            adapter  = new TabAdapter(books);
+            viewPager = (ViewPager) presenterActivity.findViewById(R.id.viewpager);
+            tabs = (TabLayout) presenterActivity.findViewById(R.id.tabs);
+            if (viewPager != null) {
+                viewPager.setAdapter(adapter);
+                tabs.setupWithViewPager(viewPager);
+            }
+
+
+//        adapter.onPageSelected(0);
     }
 
 
@@ -62,6 +72,11 @@ public class TabPresenter extends AbstractPresenter implements MainPresenter {
         } else{
             onConnectionFailure();
         }
+    }
+
+    public void updateFragmentUI(AllBooksFragment fragment){
+        BookAdapter adapter = fragment.rvAdapter;
+        adapter.notifyDataSetChanged();
     }
 
     @Override
