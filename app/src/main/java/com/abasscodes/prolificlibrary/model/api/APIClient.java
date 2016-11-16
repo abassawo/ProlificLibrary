@@ -1,12 +1,16 @@
-package com.abasscodes.prolificlibrary.api;
+package com.abasscodes.prolificlibrary.model.api;
+
+import android.util.Log;
+import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.model.Book;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,7 +44,7 @@ public class APIClient {
 
     }
 
-//
+
 
     public static synchronized APIClient getInstance(){
         if(instance == null){
@@ -58,10 +62,6 @@ public class APIClient {
     }
 
 
-    public void listCompletedBooks() {
-//        return api.listBooks();
-    }
-
     public Call<Book> getBook(int bookId) {
         return api.getBook(bookId);
     }
@@ -76,5 +76,22 @@ public class APIClient {
 
     public Call<Book> deleteBook(int id) {
         return api.deleteBook(id);
+    }
+
+    public void deleteBook(Book book){
+        final String title = book.getTitle();
+        Call<Book> call = deleteBook(book.getId());
+        call.enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+
+                Log.d("Deleting Book", "failure " + t);
+            }
+        });
     }
 }

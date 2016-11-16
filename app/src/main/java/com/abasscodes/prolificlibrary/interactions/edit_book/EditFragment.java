@@ -1,28 +1,18 @@
-package com.abasscodes.prolificlibrary.ui.editor;
+package com.abasscodes.prolificlibrary.interactions.edit_book;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.presenter.MainActivity;
 
-import java.text.ParseException;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,24 +58,6 @@ public class EditFragment extends AddBookFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        bindBook(book);
-    }
-
-    public void bindBook(Book bookForEdit) {
-        Call<Book> call = client.getBook(bookForEdit.getId());
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                //fixme - check if changes between online version of book and current.
-                book = response.body();
-
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d(TAG, "error retrieving record " + t);
-            }
-        });
     }
 
 
@@ -109,7 +81,7 @@ public class EditFragment extends AddBookFragment {
                 }
                 return true;
             case android.R.id.home:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), MainTabsActivity.class));
         }
         return true;
 
@@ -129,7 +101,7 @@ public class EditFragment extends AddBookFragment {
             public void onResponse(Call<Book> call, Response<Book> response) {
                 Log.d(TAG, response.message());
                 Book bookPost = response.body();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), MainTabsActivity.class));
             }
 
             @Override

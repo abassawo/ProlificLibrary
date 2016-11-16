@@ -16,14 +16,14 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".presenter.MainActivity"
+            android:name=".interactions.show_all_books.MainTabsActivity"
             android:launchMode="singleTop"></activity>
         <activity
-            android:name=".ui.editor.EditActivity"
-            android:parentActivityName=".presenter.MainActivity"></activity>
+            android:name=".interactions.edit_book.EditActivity"
+            android:parentActivityName=".interactions.show_all_books.MainTabsActivity"></activity>
         <activity
-            android:name=".ui.detail.DetailActivity"
-            android:parentActivityName=".presenter.MainActivity"></activity>
+            android:name=".interactions.show_book_detail.DetailActivity"
+            android:parentActivityName=".interactions.show_all_books.MainTabsActivity"></activity>
         <activity
             android:name=".helpers.SplashActivity"
             android:theme="@style/SplashTheme">

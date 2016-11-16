@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.editor;
+package com.abasscodes.prolificlibrary.interactions.edit_book;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +15,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.presenter.MainActivity;
-
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -81,7 +79,7 @@ public class AddBookFragment extends Fragment {
                 book = response.body();
                 if(book != null){
                     Toast.makeText(getActivity(), "New Book added : " + book.getTitle(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), MainTabsActivity.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getActivity(), "Error : ", Toast.LENGTH_SHORT).show();
@@ -124,7 +122,7 @@ public class AddBookFragment extends Fragment {
                 }
                 break;
             case android.R.id.home:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), MainTabsActivity.class));
                 break;
 
 

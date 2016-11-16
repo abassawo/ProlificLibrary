@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments;
+package com.abasscodes.prolificlibrary.view.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,10 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.BookAdapter;
+import com.abasscodes.prolificlibrary.view.BookAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +78,7 @@ public abstract class AbstractTabRVFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
         Bundle args = getArguments();
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
@@ -113,7 +114,7 @@ public abstract class AbstractTabRVFragment extends Fragment{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegisterActivity.presenterActivity.fillOutNewBookForm();
+                RegisterActivity.basePresenterActivity.fillOutNewBookForm();
             }
         });
 

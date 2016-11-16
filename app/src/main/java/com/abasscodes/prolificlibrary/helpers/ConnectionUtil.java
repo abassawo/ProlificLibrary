@@ -14,7 +14,7 @@ public class ConnectionUtil {
     private static final String TAG = ConnectionUtil.class.getSimpleName();
 
     public static boolean isConnected(){
-        Context context = RegisterActivity.presenterActivity;
+        Context context = RegisterActivity.basePresenterActivity;
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             boolean connected = networkInfo == null ? false : networkInfo.isConnected();

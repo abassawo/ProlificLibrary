@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.detail;
+package com.abasscodes.prolificlibrary.interactions.show_book_detail;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -19,13 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.api.APIClient;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.presenter.MainActivity;
-import com.abasscodes.prolificlibrary.ui.editor.EditActivity;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -158,16 +157,15 @@ public class DetailFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent homeIntent = new Intent(getActivity(), MainActivity.class);
+        Intent homeIntent = new Intent(getActivity(), MainTabsActivity.class);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         switch (item.getItemId()) {
             case R.id.delete_book:
-                RegisterActivity.presenterActivity.deleteBook(book);
+                RegisterActivity.basePresenterActivity.deleteBook(book);
                 break;
             case android.R.id.home:
                 startActivity(homeIntent);
                 break;
-//
             case R.id.edit_this_book:
                 goToEditBookForm(book);
                 break;
@@ -186,20 +184,4 @@ public class DetailFragment extends Fragment {
         startActivity(intent);
     }
 
-
-    public void deleteBook(Book book) {
-        final String title = book.getTitle();
-        Call<Book> call = client.deleteBook(book.getId());
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                Toast.makeText(getActivity(), "1 item deleted : " + title, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d(TAG, "failure " + t);
-            }
-        });
-    }
 }

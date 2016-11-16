@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.tabbed_ui;
+package com.abasscodes.prolificlibrary.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AbstractTabRVFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.ui.tabbed_ui.fragments.CheckedOutBooksFragment;
+import com.abasscodes.prolificlibrary.view.fragments.AbstractTabRVFragment;
+import com.abasscodes.prolificlibrary.view.fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.fragments.CheckedOutBooksFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<String> fragmentTitles = new ArrayList<>();
 
     public TabAdapter(ArrayList<Book> allBooks) {
-        this(allBooks, RegisterActivity.presenterActivity);
+        this(allBooks, RegisterActivity.basePresenterActivity);
     }
 
 
