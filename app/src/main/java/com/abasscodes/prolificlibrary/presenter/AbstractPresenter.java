@@ -3,7 +3,9 @@ package com.abasscodes.prolificlibrary.presenter;
 import android.content.Intent;
 
 import com.abasscodes.prolificlibrary.Mvp;
+import com.abasscodes.prolificlibrary.interactions.checkout_book.CheckoutDialogFragment;
 import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 
 /**
@@ -32,4 +34,11 @@ public abstract class AbstractPresenter implements Mvp.Presenter{
     public void updateUI(BookRepository.BookCallback callback) {
 
     }
+
+    @Override
+    public void showCheckOutDialog(Book book) {
+        CheckoutDialogFragment fragment = CheckoutDialogFragment.newInstance(book);
+        fragment.show(activity.getSupportFragmentManager(), null);
+    }
+
 }

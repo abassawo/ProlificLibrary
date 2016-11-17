@@ -1,5 +1,6 @@
 package com.abasscodes.prolificlibrary;
 
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 
 /**
@@ -21,5 +22,6 @@ public interface Mvp {
         void updateUI(BookRepository.BookCallback callback);
         void onConnectionFailure();
         void showNetworkSettings();
+        void showCheckOutDialog(Book book);
     }
 }

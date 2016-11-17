@@ -168,6 +168,7 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter> imple
 
     @Override
     public void checkOut(Book book) {
+
         getPresenter().showCheckOutDialog(book);
     }
 

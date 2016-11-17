@@ -92,5 +92,15 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
     }
 
 
+    public  void toggleCheckOutStatus(Book book) {
+        if(!book.isCheckedOut()){
+            showCheckOutDialog(book);
+        }else{
+            showReturnDialog(book);
+        }
+    }
 
+    private void showReturnDialog(Book book) {
+        showCheckOutDialog(book); //fixme
+    }
 }

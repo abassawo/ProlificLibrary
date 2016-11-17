@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_book_detail;
+package com.abasscodes.prolificlibrary.interactions.checkout_book;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

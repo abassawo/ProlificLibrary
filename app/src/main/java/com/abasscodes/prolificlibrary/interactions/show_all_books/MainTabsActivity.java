@@ -22,6 +22,9 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
 import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.CompletedBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.ExplorerFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.ReadLaterFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +65,8 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
     public void initViewPager(ViewPager viewPager) {
         adapter = new TabAdapter(this);
         adapter.addFragment(new AllBooksFragment(), "Library");
-        adapter.addFragment(CheckedOutBooksFragment.newInstance(), "Checked Out");
-//        adapter.notifyDataSetChanged();
+        adapter.addFragment(ExplorerFragment.getInstance(), "Explore");
+        adapter.addFragment(AvailableOfflineFragment.getInstance(), "Offline");
         viewPager.setAdapter(adapter);
 
     }

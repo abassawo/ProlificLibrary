@@ -24,15 +24,19 @@ public class CheckedOutBooksFragment extends BaseTabFragment {
     private static CheckedOutBooksFragment instance;
     private ArrayList<Book> books;
 
-    public static CheckedOutBooksFragment newInstance() {
-        return new CheckedOutBooksFragment();
-    }
-
-    public static CheckedOutBooksFragment getInstance(ArrayList<Book> books) {
+    public static CheckedOutBooksFragment newInstance(ArrayList<Book> books)
+    {
         instance = new CheckedOutBooksFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("BOOKS", books);
         instance.setArguments(args);
+        return instance;
+    }
+
+    public static CheckedOutBooksFragment getInstance() {
+        if(instance == null){
+            instance = new CheckedOutBooksFragment();
+        }
         return instance;
     }
 
