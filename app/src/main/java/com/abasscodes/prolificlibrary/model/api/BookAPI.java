@@ -3,6 +3,7 @@ package com.abasscodes.prolificlibrary.model.api;
 import com.abasscodes.prolificlibrary.model.Book;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -48,5 +50,6 @@ public interface BookAPI {
                               @Field("categories") String categories);
 
 
-
+    @GET("books")
+    Call<List<Book>> getCheckedOutBooks(@Query("lastCheckedOutBy") String lastBy);
 }

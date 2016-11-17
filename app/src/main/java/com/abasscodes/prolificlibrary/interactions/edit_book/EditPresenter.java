@@ -1,5 +1,6 @@
 package com.abasscodes.prolificlibrary.interactions.edit_book;
 
+import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
@@ -13,8 +14,9 @@ public class EditPresenter extends AbstractPresenter {
         super(activity);
     }
 
+
     @Override
-    public void updateUI() {
+    public void updateUI(BookRepository.BookCallback callback) {
 
     }
 

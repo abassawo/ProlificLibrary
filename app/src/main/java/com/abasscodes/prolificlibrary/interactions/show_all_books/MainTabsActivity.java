@@ -9,19 +9,27 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.interactions.edit_book.AddBookFragment;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
+import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
+public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -32,7 +40,7 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
     @Bind(R.id.viewpager)
     ViewPager viewPager;
     private String TAG = MainTabsActivity.class.getSimpleName();
-    private TabAdapter adapter;
+    public TabAdapter adapter;
 
 
     @Override
@@ -45,27 +53,20 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        getPresenter().updateUI();
+        if (viewPager != null) {
+            initViewPager(viewPager);
+        }
+        tabs.setupWithViewPager(viewPager);
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case DELETED_ITEM_CODE:
-//                getPresenter().updateUI();
-//                break;
-//            case AddBookFragment.ADD_BOOK_CODE:
-//                getPresenter().updateUI();
-//        }
-//    }
+    public void initViewPager(ViewPager viewPager) {
+        adapter = new TabAdapter(this);
+        adapter.addFragment(new AllBooksFragment(), "Library");
+        adapter.addFragment(CheckedOutBooksFragment.newInstance(), "Checked Out");
+//        adapter.notifyDataSetChanged();
+        viewPager.setAdapter(adapter);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPresenter().updateUI();
     }
-
 
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -74,6 +75,7 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
         mDrawerLayout.setForegroundGravity(Gravity.LEFT);
         setupNavBar(navView);
         setupActionBar();
+
     }
 
 
@@ -105,6 +107,8 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
             mDrawerLayout.closeDrawers();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -129,4 +133,9 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> {
     }
 
 
+    @Override
+    public void setCheckedOutBooks(ArrayList<Book> books) {
+//        adapter.setCheckedOutBooks(books);
+        adapter.notifyDataSetChanged();
+    }
 }

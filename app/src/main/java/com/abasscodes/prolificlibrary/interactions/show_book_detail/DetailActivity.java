@@ -18,6 +18,8 @@ import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
+public class DetailActivity extends BasePresenterActivity<DetailPresenter> implements DetailFragment.DetailInteractionListener{
     private String TAG = "DetailActivity";
     private ActionBar actionBar;
     private Fragment fragment = null;
@@ -163,4 +165,10 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter>{
         intent.putExtra(BOOK_KEY, book);
         return intent;
     }
+
+    @Override
+    public void checkOut(Book book) {
+        getPresenter().showCheckOutDialog(book);
+    }
+
 }

@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
@@ -25,30 +24,29 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
  */
 
-public abstract class AbstractTabRVFragment extends Fragment{
-    private static final String TAG = AbstractTabRVFragment.class.getSimpleName();
+public abstract class BaseTabFragment extends Fragment{
+    private static final String TAG = BaseTabFragment.class.getSimpleName();
     public BookAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
     RecyclerView bookRecyclerView;
-    private static AbstractTabRVFragment Instance;
+    private static BaseTabFragment Instance;
     @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
 
 
-    public static AbstractTabRVFragment newInstance(ArrayList<Book> books){
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("BOOKS", books); //fixme
-        AbstractTabRVFragment fragment = new AllBooksFragment();
-        fragment.setArguments(args);
-        return fragment;
+
+
+    public void refresh(ArrayList<Book> books){
+        this.books = books;
+        if(isAdded() && isVisible()){
+            setupAdapter(books);
+        }
+
     }
 
 //    public void refresh(){
@@ -79,7 +77,7 @@ public abstract class AbstractTabRVFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        setRetainInstance(true);
+        setRetainInstance(true);
         Bundle args = getArguments();
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
@@ -110,7 +108,6 @@ public abstract class AbstractTabRVFragment extends Fragment{
         ButterKnife.bind(this, view);
         bookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookRecyclerView.setAdapter(rvAdapter);
-        setupAdapter(books);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

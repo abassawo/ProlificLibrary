@@ -7,14 +7,54 @@
 
     <include layout="@layout/coord_layout"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right|bottom"
         android:fitsSystemWindows="true"
+        android:visibility="invisible"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
+
+    <LinearLayout
+        android:id="@+id/toolbarselection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blueish_grey"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/return_book"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_delete"
+            android:tint="@color/cardview_light_background" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:src="@android:drawable/list_selector_background"/>
+
+        <ImageView
+            android:id="@+id/checkout_book"
+            android:clickable="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_send"
+            android:tint="@color/cardview_light_background"  />
+
+    </LinearLayout>
+
+    </RelativeLayout>
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public interface Presenter extends Mvp.Presenter {
 
     void onAllBooksLoaded(Activity activity, ArrayList<Book> books);
-    void onAllBooksLoaded(View view, ArrayList<Book> books);
     void showNetworkSettings();
     void fillOutNewBookForm();
 

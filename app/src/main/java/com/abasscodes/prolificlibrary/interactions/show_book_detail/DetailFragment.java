@@ -1,6 +1,7 @@
 package com.abasscodes.prolificlibrary.interactions.show_book_detail;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -14,16 +15,19 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,12 +41,14 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailFragment extends Fragment {
+public class DetailFragment extends Fragment implements View.OnClickListener {
 
     @Bind(R.id.book_title)
     TextView titleTV;
     @Bind(R.id.book_author)
     TextView authorTV;
+    @Bind(R.id.checkout_book)
+    ImageView checkoutBook;
     private Book book;
     private APIClient client;
     private String TAG = "DetailFragment";
@@ -50,15 +56,27 @@ public class DetailFragment extends Fragment {
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
     public static final String BOOK_KEY = "book_detail";
     private DetailPresenter presenter;
+    private DetailInteractionListener callback;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = APIClient.getInstance();
-        presenter = DetailPresenter.getInstance((DetailActivity)getActivity());
+        presenter = DetailPresenter.getInstance((DetailActivity) getActivity());
         setRetainInstance(true);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            callback = (DetailInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement DetailInteractionListener");
+        }
     }
 
     public static DetailFragment newInstance(Book book) {
@@ -82,16 +100,11 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (book == null) {
-            Toast.makeText(getActivity(), " null book ", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getActivity(), "book is " + book.getTitle(), Toast.LENGTH_SHORT).show();
-            if(presenter == null){
-               Toast.makeText(getActivity(), "presenter is null " , Toast.LENGTH_SHORT).show();
-            }else{
-                presenter.showBookDetail(getView(), book);
-            }
+        checkoutBook.setOnClickListener(this);
+        if (book != null && presenter != null) {
+            presenter.showBookDetail(getView(), book);
         }
+
     }
 
     public void bindBook(Book book) {
@@ -185,6 +198,20 @@ public class DetailFragment extends Fragment {
         }
         Intent intent = EditActivity.createEditIntent(getActivity(), book.getId(), book);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.checkout_book:
+                callback.checkOut(book);
+                break;
+        }
+
+    }
+
+    public interface DetailInteractionListener {
+        void checkOut(Book book);
     }
 
 }

@@ -38,20 +38,19 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
    @Override
    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
       super.onCreate(savedInstanceState, persistentState);
-      bookRepo = new BookRepository();
    }
 
-   @Override
-   public void onConfigurationChanged(Configuration newConfig) {
-      super.onConfigurationChanged(newConfig);
-      getPresenter().updateUI();
-   }
-
-   @Override
-   protected void onResume() {
-      super.onResume();
-      getPresenter().updateUI();
-   }
+//   @Override
+//   public void onConfigurationChanged(Configuration newConfig) {
+//      super.onConfigurationChanged(newConfig);
+//      getPresenter().updateUI(this);
+//   }
+//
+//   @Override
+//   protected void onResume() {
+//      super.onResume();
+//      getPresenter().updateUI(this);
+//   }
 
 
    public void showBookDetail(Book book) {

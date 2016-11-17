@@ -5,11 +5,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.view.tab_fragments.AbstractTabRVFragment;
+import com.abasscodes.prolificlibrary.model.CheckedOutFilterer;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.BaseTabFragment;
 import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.util.ArrayList;
@@ -17,30 +16,53 @@ import java.util.List;
 
 /**
  * Created by C4Q on 11/11/16.
- *
+ * <p>
  * TabAdapter Class - Designed to Adapt a collection of books into 4 tabs
  * representing different filters of the original data.
  */
-public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, BookFilterer.FiltersReadyListener {
+public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener, CheckedOutFilterer.FiltersReadyListener {
 
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
+    private ArrayList<Book> books;
+    private ArrayList<Book> checkedOutBooks;
 
 
-    public TabAdapter(ArrayList<Book> allBooks, AppCompatActivity activity) {
+    public TabAdapter(AppCompatActivity activity) {
         super(activity.getSupportFragmentManager());
-        addFragment(AllBooksFragment.newInstance(allBooks), "Library");
-        new BookFilterer(this).filter(allBooks);
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+        new CheckedOutFilterer(this).filter(books);
     }
 
 
-    public void addFragment(Fragment fragment, String title){
+    public void addFragment(Fragment fragment, String title) {
         fragments.add(fragment);
         fragmentTitles.add(title);
     }
 
+    public void addFragment(int index, Fragment fragment, String title) {
+        fragments.add(index, fragment);
+        fragmentTitles.add(index, title);
+    }
+
+
     @Override
     public Fragment getItem(int position) {
+        switch (position) {
+            case 0:
+                if (checkedOutBooks != null) {
+                    return CheckedOutBooksFragment.getInstance(checkedOutBooks);
+                }
+                break;
+            case 1:
+                if (books != null) {
+                    return AllBooksFragment.getInstance(books);
+                }
+                break;
+        }
         return fragments.get(position);
     }
 
@@ -55,36 +77,26 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
         return out;
     }
 
-
-    @Override
-    public void setCompletedBooks(ArrayList<Book> completedBooks) {
-//        addFragment(CheckedOutBooksFragment.newInstance(completedBooks), "\u2713");
-    }
-
-    @Override
-    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        addFragment(CheckedOutBooksFragment.newInstance(checkedOutBooks), "Checked out");
-    }
-
-    @Override
-    public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-//        addFragment(ReadLaterFragment.newInstance(archivedBooks), "Read Later");
-    }
-
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        AbstractTabRVFragment fragment = (AbstractTabRVFragment) fragments.get(position);
-//        fragment.refresh();
+
     }
 
     @Override
     public void onPageSelected(int position) {
-//        AbstractTabRVFragment fragment = (AbstractTabRVFragment) fragments.get(position);
-//        fragment.refresh();
+        BaseTabFragment fragment = (AllBooksFragment) fragments.get(position);
+        fragment.refresh(books);
+
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    @Override
+    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
+        this.checkedOutBooks = checkedOutBooks;
     }
 }

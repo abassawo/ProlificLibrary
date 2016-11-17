@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
@@ -63,13 +64,11 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
 
     @Override
     public void showCheckOutDialog(Book book) {
-
+        CheckoutDialogFragment fragment = CheckoutDialogFragment.newInstance(book);
+        fragment.show(activity.getSupportFragmentManager(), null);
     }
 
-    @Override
-    public void updateUI() {
 
-    }
 
     @Override
     public void onConnectionFailure() {
