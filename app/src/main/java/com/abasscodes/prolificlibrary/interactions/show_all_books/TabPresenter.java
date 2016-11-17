@@ -31,8 +31,6 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
     private static final String TAG = TabPresenter.class.getSimpleName();
     private static TabPresenter instance;
     private static MainTabsActivity presenterActivity;
-    private TabLayout tabs;
-    ViewPager viewPager;
     private TabAdapter adapter;
 
     public TabPresenter(BasePresenterActivity<AbstractPresenter> activity) {
@@ -71,16 +69,6 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
 
 
     @Override
-    public void updateUI(BookRepository.BookCallback callback){
-        if(ConnectionUtil.isConnected()) {
-            new BookRepository(callback).fetchBooks();
-        } else{
-            onConnectionFailure();
-        }
-    }
-
-
-    @Override
     public void onConnectionFailure() {
         View view = presenterActivity.findViewById(R.id.main_content);
         Snackbar.make(view, "Internet is not on ", Snackbar.LENGTH_INDEFINITE).setAction("Connect", new View.OnClickListener() {
@@ -91,14 +79,16 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
         }).show();
     }
 
-
-    public  void toggleCheckOutStatus(Book book) {
-        if(!book.isCheckedOut()){
-            showCheckOutDialog(book);
-        }else{
-            showReturnDialog(book);
+    @Override
+    public void updateUI() {
+        if(presenterActivity.adapter != null) {
+            adapter = presenterActivity.adapter;
+            AllBooksFragment fragment = (AllBooksFragment) adapter.getItem(0);
+            fragment.refresh();
         }
+
     }
+
 
     private void showReturnDialog(Book book) {
         showCheckOutDialog(book); //fixme

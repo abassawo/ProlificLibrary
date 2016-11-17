@@ -58,8 +58,8 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public boolean onLongClick(View v) {
-        FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-        CheckoutDialogFragment.newInstance(book).show(fm, null);
-        return true;
+            FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
+            CheckoutDialogFragment.newInstance(book).show(fm, null);
+            return true;
     }
 }

@@ -30,10 +30,6 @@ public abstract class AbstractPresenter implements Mvp.Presenter{
         activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
     }
 
-    @Override
-    public void updateUI(BookRepository.BookCallback callback) {
-
-    }
 
     @Override
     public void showCheckOutDialog(Book book) {

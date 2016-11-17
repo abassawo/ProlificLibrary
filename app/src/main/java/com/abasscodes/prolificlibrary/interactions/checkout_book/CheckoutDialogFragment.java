@@ -12,8 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,14 +32,25 @@ public class CheckoutDialogFragment extends DialogFragment{
     public static final String TAG = CheckoutDialogFragment.class.getSimpleName();
     private static final String BOOK = "BOOK";
     private static CheckoutDialogFragment instance;
+    private boolean returnBook;
     private Book book;
 
+    private String title, message, positiveBtn;
+    String name = "Abass"; //fixme
+
     public static CheckoutDialogFragment newInstance(Book book){
+            boolean returnBook = book.isCheckedOut();
+            return newInstance(book, returnBook);
+
+    }
+
+    private static CheckoutDialogFragment newInstance(Book book, boolean returnBook){
         if(instance == null){
             instance = new CheckoutDialogFragment();
         }
         Bundle args = new Bundle();
         args.putParcelable(BOOK, book);
+        args.putBoolean("RETURN", returnBook);
         instance.setArguments(args);
         return instance;
     }
@@ -46,24 +59,33 @@ public class CheckoutDialogFragment extends DialogFragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         book = (Book) getArguments().get(BOOK);
+        returnBook = getArguments().getBoolean("RETURN");
+        if(returnBook){
+            title = "Return " + book.getTitle() + "?";
+            message = "The book will no longer be checked out";
+            positiveBtn = "Return";
+        }else{
+            title =  getResources().getString(R.string.checkout_book) + " " + book.getTitle() + "?";
+            message = "Give me access";
+            positiveBtn = "Check out";
+        }
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String title = getResources().getString(R.string.checkout_book) + " " + book.getTitle() + "?";
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final EditText edittext = new EditText(getActivity());
 
         builder.setTitle(title)
-                .setMessage(getResources().getString(R.string.dialog_msg));
-        builder.setView(edittext);
-
-        builder.setPositiveButton("Checkout", new DialogInterface.OnClickListener() {
+                .setMessage(message);
+        builder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //Store the submitted name and check out book
-                String name = edittext.getText().toString();
-                checkOut(book, name);
+                if(!returnBook) {
+                    checkOut(book, name);
+                }else{
+                    returnBook(book);
+                }
             }
         });
 
@@ -81,11 +103,15 @@ public class CheckoutDialogFragment extends DialogFragment{
     public void checkOut(Book book, String name){
         book.setLastCheckedOut(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         book.setLastCheckedOutBy(name);
+        updateBookOnServer(book);
+    }
+
+    public void updateBookOnServer(Book book){
         Call<Book> call = APIClient.getInstance().updateBook(book.getId(), book);
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
-//                bindBook(response.body());
+                RegisterActivity.presenter.updateUI();
             }
 
             @Override
@@ -94,6 +120,12 @@ public class CheckoutDialogFragment extends DialogFragment{
                 Log.d(TAG, "failed to post " + t);
             }
         });
+    }
+
+    public void returnBook(Book book){
+        book.setLastCheckedOut(null);
+        book.setLastCheckedOutBy(null);
+        updateBookOnServer(book);
     }
 
 }

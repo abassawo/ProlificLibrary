@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.abasscodes.prolificlibrary.Mvp;
+import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 /**
@@ -30,7 +31,10 @@ public class LibraryApplication extends Application implements Application.Activ
 
     @Override
     public void onActivityStarted(Activity activity) {
-
+        if (activity instanceof BasePresenterActivity) {
+            RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
+            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
+        }
     }
 
     @Override
@@ -58,9 +62,6 @@ public class LibraryApplication extends Application implements Application.Activ
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if (activity instanceof BasePresenterActivity) {
-            RegisterActivity.presenter = null;
-            RegisterActivity.basePresenterActivity = null;
-        }
+
     }
 }

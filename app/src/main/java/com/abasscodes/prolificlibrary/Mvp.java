@@ -18,10 +18,9 @@ public interface Mvp {
     }
 
     public interface Presenter{
-//        void acceptCommand(Command command);
-        void updateUI(BookRepository.BookCallback callback);
         void onConnectionFailure();
         void showNetworkSettings();
         void showCheckOutDialog(Book book);
+        void updateUI();
     }
 }

@@ -99,4 +99,8 @@ public class APIClient {
     public Call<List<Book>> getCheckedOutBooks() {
         return api.getCheckedOutBooks("Abass");
     }
+
+    public Call<Void> deleteAll() {
+         return api.deleteAll();
+    }
 }

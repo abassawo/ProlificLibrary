@@ -16,12 +16,12 @@ public class EditPresenter extends AbstractPresenter {
 
 
     @Override
-    public void updateUI(BookRepository.BookCallback callback) {
+    public void onConnectionFailure() {
 
     }
 
     @Override
-    public void onConnectionFailure() {
+    public void updateUI() {
 
     }
 }

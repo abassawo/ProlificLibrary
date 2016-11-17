@@ -18,6 +18,7 @@ import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.interactions.edit_book.AddBookFragment;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
@@ -31,6 +32,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
 
@@ -68,7 +72,6 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
         adapter.addFragment(ExplorerFragment.getInstance(), "Explore");
         adapter.addFragment(AvailableOfflineFragment.getInstance(), "Offline");
         viewPager.setAdapter(adapter);
-
     }
 
 
@@ -130,6 +133,18 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
                 getPresenter().fillOutNewBookForm();
                 break;
             case R.id.menu_item_deleteAll:
+               Call<Void> call = APIClient.getInstance().deleteAll();
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
                 break;
         }
         return true;

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.api.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
 
@@ -24,6 +25,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -49,21 +53,21 @@ public abstract class BaseTabFragment extends Fragment{
 
     }
 
-//    public void refresh(){
-//        Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
-//        call.enqueue(new Callback<ArrayList<Book>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-//                books = response.body();
-//                setupAdapter(books);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-//
-//            }
-//        });
-//    }
+    public void refresh(){
+        Call<ArrayList<Book>> call = APIClient.getInstance().getBooks();
+        call.enqueue(new Callback<ArrayList<Book>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+                books = response.body();
+                setupAdapter(books);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     public void onResume() {
