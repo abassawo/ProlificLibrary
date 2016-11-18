@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.model.api;
+package com.abasscodes.prolificlibrary.model.prolific;
 
 import com.abasscodes.prolificlibrary.model.Book;
 

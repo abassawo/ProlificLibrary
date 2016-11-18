@@ -1,7 +1,6 @@
 package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,27 +9,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.interactions.edit_book.AddBookFragment;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookRepository;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CompletedBooksFragment;
 import com.abasscodes.prolificlibrary.view.tab_fragments.ExplorerFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.ReadLaterFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,7 +70,7 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
     public void initViewPager(ViewPager viewPager) {
         adapter = new TabAdapter(this);
         adapter.addFragment(new AllBooksFragment(), "Library");
-        adapter.addFragment(ExplorerFragment.getInstance(), "Explore");
+        adapter.addFragment(new ExplorerFragment(), "Explore");
         adapter.addFragment(AvailableOfflineFragment.getInstance(), "Offline");
         viewPager.setAdapter(adapter);
     }

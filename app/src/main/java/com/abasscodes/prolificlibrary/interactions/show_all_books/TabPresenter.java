@@ -2,25 +2,16 @@ package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
-import com.abasscodes.prolificlibrary.view.BookAdapter;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by C4Q on 11/15/16.
@@ -84,7 +75,7 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
         if(presenterActivity.adapter != null) {
             adapter = presenterActivity.adapter;
             AllBooksFragment fragment = (AllBooksFragment) adapter.getItem(0);
-            fragment.refresh();
+//            fixme fragment.refresh();
         }
 
     }

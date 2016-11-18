@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 
 import retrofit2.Call;

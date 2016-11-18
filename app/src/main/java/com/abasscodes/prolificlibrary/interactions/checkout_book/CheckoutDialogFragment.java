@@ -8,14 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

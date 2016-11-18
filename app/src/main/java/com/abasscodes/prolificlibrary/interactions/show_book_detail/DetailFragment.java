@@ -15,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +25,7 @@ import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

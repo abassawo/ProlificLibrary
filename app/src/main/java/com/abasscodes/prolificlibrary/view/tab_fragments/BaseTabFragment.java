@@ -2,7 +2,6 @@ package com.abasscodes.prolificlibrary.view.tab_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +15,7 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
-import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
 
 import java.util.ArrayList;
@@ -41,8 +39,6 @@ public abstract class BaseTabFragment extends Fragment{
     private static BaseTabFragment Instance;
     @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
-
-
 
 
     public void refresh(ArrayList<Book> books){
@@ -92,7 +88,7 @@ public abstract class BaseTabFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_all_books, container, false);
+        return inflater.inflate(R.layout.empty_recycler_view, container, false);
     }
 
 
@@ -110,8 +106,6 @@ public abstract class BaseTabFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        bookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bookRecyclerView.setAdapter(rvAdapter);
     }
 
 

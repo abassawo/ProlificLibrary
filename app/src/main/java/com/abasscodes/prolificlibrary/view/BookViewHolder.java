@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,14 +31,19 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private Book book;
     private ImageView checkedOutIV;
 
-    public BookViewHolder(View itemView) {
-        super(itemView);
+    public BookViewHolder(ViewGroup parent) {
+        super(inflateView(parent));
         titleTV = (TextView) itemView.findViewById(R.id.book_item_title);
         authorTV = (TextView) itemView.findViewById(R.id.book_item_author);
         checkedOutIV = (ImageView) itemView.findViewById(R.id.checkout_icon_imgview);
         itemView.setOnLongClickListener(this);
         titleTV.setOnLongClickListener(this);
         itemView.setOnClickListener(this);
+    }
+
+    public static View inflateView(ViewGroup parent){
+        LayoutInflater infl = LayoutInflater.from(parent.getContext());
+        return infl.inflate(R.layout.book_item, parent, false);
     }
 
     public void bindBook(Book book) {

@@ -1,7 +1,6 @@
 package com.abasscodes.prolificlibrary.presenter;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,7 @@ import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivi
 import com.abasscodes.prolificlibrary.interactions.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
-import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;

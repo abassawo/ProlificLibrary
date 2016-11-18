@@ -9,9 +9,6 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
 import com.abasscodes.prolificlibrary.view.tab_fragments.BaseTabFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CheckedOutBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.CompletedBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.ReadLaterFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +24,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
     private ArrayList<Book> books;
-    private ArrayList<Book> checkedOutBooks;
-    private ArrayList<Book> completedBooks;
-    private ArrayList<Book> archivedBooks;
+
 
 
     public TabAdapter(AppCompatActivity activity) {
@@ -61,20 +56,6 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
                     return AllBooksFragment.getInstance(books);
                 }
                 break;
-            case 1:
-                if (checkedOutBooks != null) {
-                    return CheckedOutBooksFragment.newInstance(checkedOutBooks);
-                }
-                break;
-            case 2:
-                if(completedBooks != null){
-                    return CompletedBooksFragment.newInstance(completedBooks);
-                }
-                break;
-            case 3:
-                if(archivedBooks != null){
-                    return ReadLaterFragment.newInstance(archivedBooks);
-                }
         }
         return fragments.get(position);
     }
@@ -97,8 +78,8 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-        BaseTabFragment fragment = (AllBooksFragment) fragments.get(position);
-        fragment.refresh(books);
+//        BaseTabFragment fragment = (AllBooksFragment) fragments.get(position);
+//        fragment.refresh(books);
 
     }
 
@@ -110,16 +91,16 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void setCompletedBooks(ArrayList<Book> completedBooks) {
-        this.completedBooks = completedBooks;
+//        this.completedBooks = completedBooks;
     }
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        this.checkedOutBooks = checkedOutBooks;
+//        this.checkedOutBooks = checkedOutBooks;
     }
 
     @Override
     public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-        this.archivedBooks = archivedBooks;
+//        this.archivedBooks = archivedBooks;
     }
 }

@@ -2,10 +2,9 @@ package com.abasscodes.prolificlibrary.model;
 
 import android.util.Log;
 
-import com.abasscodes.prolificlibrary.model.api.APIClient;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,7 +1,6 @@
-package com.abasscodes.prolificlibrary.model.api;
+package com.abasscodes.prolificlibrary.model.prolific;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.model.Book;
 import com.google.gson.Gson;
@@ -29,7 +28,6 @@ public class APIClient {
 
 
 
-
     private APIClient(){
         if(api == null) {
             Gson gson = new GsonBuilder()
@@ -47,7 +45,7 @@ public class APIClient {
 
 
 
-    public static synchronized APIClient getInstance(){
+    public static APIClient getInstance(){
         if(instance == null){
             instance = new APIClient();
         }
