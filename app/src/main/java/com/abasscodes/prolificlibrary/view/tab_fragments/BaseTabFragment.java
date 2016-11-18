@@ -112,15 +112,6 @@ public abstract class BaseTabFragment extends Fragment{
         ButterKnife.bind(this, view);
         bookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         bookRecyclerView.setAdapter(rvAdapter);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BasePresenterActivity activity = (BasePresenterActivity) getActivity();
-                activity.fillOutNewBookForm();
-            }
-        });
-
     }
 
 

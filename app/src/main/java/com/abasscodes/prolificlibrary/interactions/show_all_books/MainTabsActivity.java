@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.interactions.edit_book.AddBookFragment;
@@ -60,6 +62,13 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 fillOutNewBookForm();
+            }
+        });
         if (viewPager != null) {
             initViewPager(viewPager);
         }
