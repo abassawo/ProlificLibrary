@@ -71,7 +71,6 @@ public class AllBooksFragment extends BaseTabFragment implements BookRepository.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.fab).setVisibility(View.VISIBLE);
     }
 
     @Override
