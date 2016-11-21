@@ -17,4 +17,10 @@
     <string name="share">Share</string>
     <string name="edit_this">Edit</string>
     <string name="delete">Delete</string>
+    <string name="welcome_text">Looks like it\'s your first time using Prolific Library</string>
+    <string name="prompt_email">Email</string>
+    <string name="enter_user_name">Name</string>
+    <string name="action_submit">Submit</string>
+    <string name="prolific_description">Prolific Library allows users to curate a digital collection of books, record notes, and share with others.</string>
+    <string name="enter_info_prompt">Enter the name and email address that you want to associate with the Prolific Library app for checking out digital content.</string>
 </resources>

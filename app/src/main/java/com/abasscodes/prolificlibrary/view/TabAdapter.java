@@ -1,14 +1,17 @@
 package com.abasscodes.prolificlibrary.view;
 
+import android.content.pm.ResolveInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
+import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
 import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.BaseTabFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,8 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
     private ArrayList<Book> books;
+
+    private String currentFragmentTitle;
 
 
 
@@ -55,7 +60,10 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
                 if (books != null) {
                     return AllBooksFragment.getInstance(books);
                 }
+                RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
                 break;
+            case 1:
+            case 2: RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.INVISIBLE);
         }
         return fragments.get(position);
     }
@@ -78,8 +86,14 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-//        BaseTabFragment fragment = (AllBooksFragment) fragments.get(position);
-//        fragment.refresh(books);
+        currentFragmentTitle = fragmentTitles.get(position);
+        switch (position) {
+            case 0:
+                RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
+                break;
+            case 1:
+            case 2: RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+        }
 
     }
 

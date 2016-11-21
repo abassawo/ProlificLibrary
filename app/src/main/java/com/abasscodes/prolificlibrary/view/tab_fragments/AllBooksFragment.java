@@ -4,6 +4,7 @@ package com.abasscodes.prolificlibrary.view.tab_fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
@@ -30,13 +32,12 @@ import butterknife.ButterKnife;
 public class AllBooksFragment extends Fragment implements BookRepository.BookCallback {
 
     public final static String TAG = "AllBooks";
-    private static AllBooksFragment instance;
     private FragmentCommunication listener;
 
     public BookAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
     RecyclerView bookRecyclerView;
-    private static BaseTabFragment Instance;
+    private static AllBooksFragment instance;
     @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
 
@@ -54,10 +55,15 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
         setHasOptionsMenu(true);
         setRetainInstance(true);
         Bundle args = getArguments();
+        rvAdapter = new BookAdapter(getActivity());
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
+            setupAdapter(books);
+        }else{
+            if(getArguments() == null)
+                new BookRepository(this).fetchBooks();
         }
-        rvAdapter = new BookAdapter(getActivity(), books);
+
     }
 
 
@@ -84,12 +90,6 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
-        if(getArguments() == null) {
-            new BookRepository(this).fetchBooks();
-        }else{
-            ArrayList<Book> books = getArguments().getParcelableArrayList("BOOKS");
-            setupAdapter(books);
-        }
         return inflater.inflate(R.layout.empty_recycler_view, container, false);
     }
 
@@ -129,7 +129,7 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     }
     @Override
     public void onBooksReady(ArrayList<Book> books) {
-        if (isAdded()) {
+        if (isAdded() && isVisible()) {
             setupAdapter(books);
         }
         listener.setCheckedOutBooks(books);

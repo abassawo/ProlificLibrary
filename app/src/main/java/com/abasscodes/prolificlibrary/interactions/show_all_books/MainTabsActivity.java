@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.interactions.onboard_welcome.PreferenceWrapper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
@@ -75,6 +76,10 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @TargetApi(Build.VERSION_CODES.M)
     public void initializeViews() {
