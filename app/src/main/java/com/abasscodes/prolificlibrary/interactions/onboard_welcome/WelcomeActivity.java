@@ -1,91 +1,84 @@
 package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
 
-import android.content.Intent;
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
+import android.support.annotation.FloatRange;
+import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
-import com.redbooth.WelcomeCoordinatorLayout;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import agency.tango.materialintroscreen.MaterialIntroActivity;
+import agency.tango.materialintroscreen.MessageButtonBehaviour;
+import agency.tango.materialintroscreen.SlideFragment;
+import agency.tango.materialintroscreen.SlideFragmentBuilder;
+import agency.tango.materialintroscreen.animations.IViewTranslation;
 
 /**
  * Created by C4Q on 11/21/16.
  */
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends MaterialIntroActivity {
+    SlideFragmentBuilder builder = new SlideFragmentBuilder();
 
-
-    WelcomeCoordinatorLayout coordinatorLayout;
-    @Bind(R.id.next)
-    TextView nextButton;
-    @Bind(R.id.android_reading_icon)
-    @Nullable ImageView droidImg;
-    @Bind(R.id.submit_button)
-    Button submitButton;
-
-
-    private AutoCompleteTextView nameField, emailField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_main);
-        coordinatorLayout = (WelcomeCoordinatorLayout) findViewById(R.id.welcome_coordinator);
-        coordinatorLayout.addPage(R.layout.welcome_screen_one,
-                R.layout.welcome_screen_two);
-        ButterKnife.bind(this);
-//
-//        submitButton = (Button) findViewById(R.id.submit_button);
-    }
+        enableLastSlideAlphaExitTransition(true);
 
-
-    @OnClick(R.id.next)
-    void next() {
-        coordinatorLayout.setCurrentPage(coordinatorLayout.getNumOfPages() - 1, true);
-        nextButton.setVisibility(View.GONE);
-        submitButton = (Button) findViewById(R.id.submit_button);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nameField = (AutoCompleteTextView) findViewById(R.id.user_name);
-                emailField = (AutoCompleteTextView) findViewById(R.id.email);
-                submit();
-            }
-        });
-    }
-
-
-
-    void submit() {
-        if (readyToAdvance()) {
-            PreferenceWrapper.setUserName(this, nameField.getText().toString());
-            PreferenceWrapper.setEmail(this, emailField.getText().toString());
-            PreferenceWrapper.disableWelcome(this);
-            Intent intent = new Intent(this, MainTabsActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Please ensure both fields are filled out", Toast.LENGTH_LONG).show();
+        getBackButtonTranslationWrapper()
+                .setEnterTranslation(new IViewTranslation() {
+                    @Override
+                    public void translate(View view, @FloatRange(from = 0, to = 1.0) float percentage) {
+                        view.setAlpha(percentage);
+                    }
+                });
+        addOnboardSlide();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            addPermissionSlide();
         }
+        addSlide(new GenreChooserFragment());
 
     }
 
-    public boolean readyToAdvance() {
-        return TextUtilHelper.hasText(nameField) && TextUtilHelper.hasText(emailField);
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void addPermissionSlide() {
+        SlideFragment permissionSlide = builder
+                .backgroundColor(R.color.colorPrimary)
+                .buttonsColor(R.color.colorAccent)
+                .neededPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+                .image(agency.tango.materialintroscreen.R.drawable.ic_next)
+                .title("Grant Permissions")
+                .description("Get Started")
+                .build();
+        boolean hasPermissions = permissionSlide.hasNeededPermissionsToGrant();
+        permissionSlide.setAllowEnterTransitionOverlap(hasPermissions);
+        addSlide(permissionSlide,
+                new MessageButtonBehaviour(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMessage(getResources().getString(R.string.prolific_description));
+                    }
+                }, "Prolific Library"));
     }
+
+    public void addOnboardSlide() {
+        addSlide(builder.backgroundColor(R.color.colorPrimary)
+                        .buttonsColor(R.color.colorAccent)
+                        .image(agency.tango.materialintroscreen.R.drawable.ic_next)
+                        .title("Looks like it's your first time")
+                        .description(getResources().getString(R.string.join_prolific))
+                        .build(),
+                new MessageButtonBehaviour(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMessage(getResources().getString(R.string.prolific_description));
+                    }
+                }, "Prolific Library"));
+    }
+
 
 }

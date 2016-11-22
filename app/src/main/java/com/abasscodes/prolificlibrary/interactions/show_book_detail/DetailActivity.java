@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.interactions.SingleFragmentActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
@@ -27,7 +28,7 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends BasePresenterActivity<DetailPresenter> implements DetailFragment.DetailInteractionListener{
+public class DetailActivity extends BasePresenterActivity implements DetailFragment.DetailInteractionListener{
     private String TAG = "DetailActivity";
     private ActionBar actionBar;
     private Fragment fragment = null;
@@ -77,6 +78,7 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter> imple
     public void hostFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.detail_container, fragment).commit();
     }
+
 
     public void setupActionBar(ActionBar ab) {
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -166,7 +168,6 @@ public class DetailActivity extends BasePresenterActivity<DetailPresenter> imple
 
     @Override
     public void checkOut(Book book) {
-
         getPresenter().showCheckOutDialog(book);
     }
 

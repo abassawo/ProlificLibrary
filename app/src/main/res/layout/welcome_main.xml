@@ -4,14 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.redbooth.WelcomeCoordinatorLayout
-        android:id="@+id/welcome_coordinator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#68B7AB"
-        app:showIndicators="false"
-        app:indicatorUnselected="#99b7b7b7"
-        app:indicatorSelected="#bfb7b7b7"/>
+
 
     <Button
         style="?attr/borderlessButtonStyle"
