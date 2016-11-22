@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_book_detail;
+package com.abasscodes.prolificlibrary.ui.show_book_detail;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.interactions.checkout_book.CheckoutDialogFragment;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;

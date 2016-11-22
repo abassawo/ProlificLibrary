@@ -16,14 +16,14 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".interactions.show_all_books.MainTabsActivity"
+            android:name=".ui.show_all_books.MainTabsActivity"
             android:launchMode="singleTop"></activity>
         <activity
-            android:name=".interactions.edit_book.EditActivity"
-            android:parentActivityName=".interactions.show_all_books.MainTabsActivity"></activity>
+            android:name=".ui.edit_book.EditActivity"
+            android:parentActivityName=".ui.show_all_books.MainTabsActivity"></activity>
         <activity
-            android:name=".interactions.show_book_detail.DetailActivity"
-            android:parentActivityName=".interactions.show_all_books.MainTabsActivity"></activity>
+            android:name=".ui.show_book_detail.DetailActivity"
+            android:parentActivityName=".ui.show_all_books.MainTabsActivity"></activity>
         <activity
             android:name=".helpers.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -33,9 +33,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".interactions.onboard_welcome.WelcomeActivity"
+            android:name=".ui.onboard_welcome.WelcomeActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Intro" />
-        <activity android:name=".interactions.onboard_welcome.GenresActivity" />
+            android:theme="@style/Theme.Intro"/>
+        <activity android:name=".ui.onboard_welcome.genre_customizer.GenresActivity" />
     </application>
 </manifest>

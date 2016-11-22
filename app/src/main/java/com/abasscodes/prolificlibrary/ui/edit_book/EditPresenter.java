@@ -1,6 +1,5 @@
-package com.abasscodes.prolificlibrary.interactions.edit_book;
+package com.abasscodes.prolificlibrary.ui.edit_book;
 
-import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 

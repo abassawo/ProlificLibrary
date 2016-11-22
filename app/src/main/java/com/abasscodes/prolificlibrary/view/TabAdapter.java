@@ -1,6 +1,5 @@
 package com.abasscodes.prolificlibrary.view;
 
-import android.content.pm.ResolveInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,7 +10,7 @@ import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
         switch (position) {
             case 0:
                 if (books != null) {
-                    return AllBooksFragment.getInstance(books);
+                    return NotesFragment.getInstance(books);
                 }
                 RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
                 break;

@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_all_books;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.support.v4.app.Fragment;
 

@@ -4,7 +4,6 @@ package com.abasscodes.prolificlibrary.view.tab_fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.view.BookAdapter;
@@ -29,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by C4Q on 11/11/16.
  */
 
-public class AllBooksFragment extends Fragment implements BookRepository.BookCallback {
+public class NotesFragment extends Fragment implements BookRepository.BookCallback {
 
     public final static String TAG = "AllBooks";
     private FragmentCommunication listener;
@@ -37,11 +35,11 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     public BookAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
     RecyclerView bookRecyclerView;
-    private static AllBooksFragment instance;
+    private static NotesFragment instance;
     @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
 
-    public static AllBooksFragment getInstance(ArrayList<Book> books) {
+    public static NotesFragment getInstance(ArrayList<Book> books) {
         Bundle args = new Bundle();
         args.putParcelableArrayList("BOOKS", books);
         instance = getInstance();
@@ -67,9 +65,9 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     }
 
 
-    public static AllBooksFragment getInstance(){
+    public static NotesFragment getInstance(){
         if (instance == null) {
-            instance = new AllBooksFragment();
+            instance = new NotesFragment();
         }
         return instance;
     }

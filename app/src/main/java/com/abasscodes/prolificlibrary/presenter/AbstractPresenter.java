@@ -3,10 +3,9 @@ package com.abasscodes.prolificlibrary.presenter;
 import android.content.Intent;
 
 import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.interactions.checkout_book.CheckoutDialogFragment;
-import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.ui.checkout_book.CheckoutDialogFragment;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookRepository;
 
 /**
  * Created by C4Q on 11/15/16.

@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_all_books;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
@@ -9,7 +9,7 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
-import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
             MainTabsActivity tabsActivity = (MainTabsActivity) activity;
             if(tabsActivity != null){
                 adapter = tabsActivity.adapter;
-                adapter.addFragment(0, AllBooksFragment.getInstance(), "Library");
+                adapter.addFragment(0, NotesFragment.getInstance(), "Library");
                 adapter.notifyDataSetChanged();
             }
 
@@ -74,7 +74,7 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
     public void updateUI() {
         if(presenterActivity.adapter != null) {
             adapter = presenterActivity.adapter;
-            AllBooksFragment fragment = (AllBooksFragment) adapter.getItem(0);
+            NotesFragment fragment = (NotesFragment) adapter.getItem(0);
 //            fixme fragment.refresh();
         }
 

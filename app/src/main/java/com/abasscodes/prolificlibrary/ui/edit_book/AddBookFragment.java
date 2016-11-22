@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.edit_book;
+package com.abasscodes.prolificlibrary.ui.edit_book;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 

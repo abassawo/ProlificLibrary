@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_book_detail;
+package com.abasscodes.prolificlibrary.ui.show_book_detail;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -22,8 +22,8 @@ import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 

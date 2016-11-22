@@ -22,9 +22,10 @@
     <string name="enter_user_name">Name</string>
     <string name="action_submit">Submit</string>
     <string name="prolific_description">Prolific Library helps you curate a digital collection of books, record notes, and share with others.</string>
-    <string name="enter_info_prompt">Sign up for Prolific Library</string>
+    <string name="enter_info_prompt">Looks like it\'s your first time \n Sign up for Prolific Library</string>
     <string name="join_prolific">Join Prolific Library!</string>
     <string name="error_message">Error</string>
     <string name="select_genre_prompt">Select your genres of interest</string>
     <string name="check_input_prompt">Make sure you have filled out all necessary fields.</string>
+    <!--<string name="first_run">Looks like it\'s your first time </string>-->
 </resources>

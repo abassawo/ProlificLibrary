@@ -1,7 +1,6 @@
-package com.abasscodes.prolificlibrary.interactions.show_all_books;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,13 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.interactions.onboard_welcome.PreferenceWrapper;
-import com.abasscodes.prolificlibrary.interactions.onboard_welcome.WelcomeActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
-import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
 import com.abasscodes.prolificlibrary.view.tab_fragments.ExplorerFragment;
 
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
+public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements NotesFragment.FragmentCommunication {
 
     private static final int FIRST_RUN = 718;
     @Bind(R.id.drawer_layout)
@@ -74,9 +71,9 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
 
     public void initViewPager(ViewPager viewPager) {
         adapter = new TabAdapter(this);
-        adapter.addFragment(new AllBooksFragment(), "Library");
+        adapter.addFragment(new NotesFragment(), "Library");
         adapter.addFragment(new ExplorerFragment(), "Explore");
-        adapter.addFragment(AvailableOfflineFragment.getInstance(), "Offline");
+        adapter.addFragment(NotesFragment.getInstance(), "Notes");
         viewPager.setAdapter(adapter);
     }
 

@@ -1,22 +1,35 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
+package com.abasscodes.prolificlibrary.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.abasscodes.prolificlibrary.R;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by C4Q on 11/21/16.
  */
 
-public class PreferenceWrapper {
+public class PreferenceHelper {
 
     private static String onboard_key = "onboard?";
     private static String username_key = "username";
     private static String email_key = "email";
+    private static Map<String, Boolean> potentialGenres = new HashMap<>();
 
 
     public static boolean isFirstRun(Context context){
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(onboard_key, true);
+        boolean firstRun = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(onboard_key, true);
+        if(firstRun) {
+            initializePotentialGenres(context);
+        }
+        return firstRun;
     }
 
     public static void disableWelcome(Context context) {
@@ -36,5 +49,23 @@ public class PreferenceWrapper {
 
     public static void setEmail(Context context, String email) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(email_key, email);
+    }
+
+    private static void initializePotentialGenres(Context context ) {
+        for(String genre : context.getResources().getStringArray(R.array.genres)){
+            potentialGenres.put(genre, false);
+        }
+    }
+
+    public static void setSelectGenre(String genre, boolean select){
+            potentialGenres.put(genre, select);
+    }
+
+    public static Set<String> recordGenrePrefsSubset(){
+        for(String key : potentialGenres.keySet()){
+            if(potentialGenres.get(key) == false)
+                potentialGenres.remove(key);
+        }
+        return potentialGenres.keySet();
     }
 }

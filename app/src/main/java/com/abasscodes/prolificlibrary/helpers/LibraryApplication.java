@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 /**

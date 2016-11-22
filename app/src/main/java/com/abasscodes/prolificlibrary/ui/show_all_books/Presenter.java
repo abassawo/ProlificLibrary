@@ -1,7 +1,6 @@
-package com.abasscodes.prolificlibrary.interactions.show_all_books;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.app.Activity;
-import android.view.View;
 
 import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.model.Book;

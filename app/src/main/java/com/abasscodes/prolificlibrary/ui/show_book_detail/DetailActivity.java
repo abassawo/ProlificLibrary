@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.show_book_detail;
+package com.abasscodes.prolificlibrary.ui.show_book_detail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.interactions.SingleFragmentActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;

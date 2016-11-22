@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
+package com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

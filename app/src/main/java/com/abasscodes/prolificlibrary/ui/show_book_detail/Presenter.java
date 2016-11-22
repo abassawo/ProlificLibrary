@@ -1,6 +1,5 @@
-package com.abasscodes.prolificlibrary.interactions.show_book_detail;
+package com.abasscodes.prolificlibrary.ui.show_book_detail;
 
-import android.content.Context;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.Mvp;

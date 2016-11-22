@@ -1,11 +1,8 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
+package com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
-import com.abasscodes.prolificlibrary.BaseRecyclerAdapter;
-import com.abasscodes.prolificlibrary.R;
 
 import java.util.List;
 

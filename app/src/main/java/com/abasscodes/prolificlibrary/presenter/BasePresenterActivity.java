@@ -9,9 +9,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
-import com.abasscodes.prolificlibrary.interactions.show_book_detail.DetailActivity;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.ui.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;

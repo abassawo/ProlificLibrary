@@ -1,20 +1,8 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+package com.abasscodes.prolificlibrary.ui.onboard_welcome;
 
 import com.abasscodes.prolificlibrary.R;
 
-import java.util.Arrays;
-
 import agency.tango.materialintroscreen.SlideFragment;
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by C4Q on 11/22/16.

@@ -1,23 +1,18 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
+package com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.ui.onboard_welcome.BaseSlideFragment;
 
 import java.util.Arrays;
-import java.util.List;
 
-import agency.tango.materialintroscreen.SlideFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -25,25 +20,8 @@ import butterknife.ButterKnife;
  * Created by C4Q on 11/21/16.
  */
 
-public class GenreChooserFragment extends BaseSlideFragment{
+public class GenrePickerSlide extends BaseSlideFragment {
     @Bind(R.id.genre_recycler_view) RecyclerView recyclerView;
-    private Callback listener;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        listener.allowMainContentTransition(true);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try{
-            this.listener = (Callback) getActivity();
-        }catch (ClassCastException e){
-            throw new ClassCastException("Host Activity must implement Callback");
-        }
-    }
 
 
     @Nullable
@@ -68,7 +46,5 @@ public class GenreChooserFragment extends BaseSlideFragment{
         recyclerView.setAdapter(new GenreAdapter(getActivity(), Arrays.asList(genreArr)));
     }
 
-    public interface Callback{
-       void allowMainContentTransition(boolean allow);
-    }
+
 }

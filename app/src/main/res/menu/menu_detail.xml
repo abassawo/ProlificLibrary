@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".interactions.show_book_detail.DetailActivity">
+    tools:context=".ui.show_book_detail.DetailActivity">
 
     <item android:id="@+id/share_book"
         android:title="@string/share"

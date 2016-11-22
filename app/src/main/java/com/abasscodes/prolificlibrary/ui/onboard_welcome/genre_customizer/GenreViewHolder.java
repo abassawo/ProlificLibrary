@@ -1,9 +1,8 @@
-package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
+package com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.BaseViewHolder;

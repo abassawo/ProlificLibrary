@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.interactions.checkout_book;
+package com.abasscodes.prolificlibrary.ui.checkout_book;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
