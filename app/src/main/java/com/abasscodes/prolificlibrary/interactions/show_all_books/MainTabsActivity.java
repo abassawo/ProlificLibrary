@@ -1,6 +1,7 @@
 package com.abasscodes.prolificlibrary.interactions.show_all_books;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.interactions.onboard_welcome.PreferenceWrapper;
+import com.abasscodes.prolificlibrary.interactions.onboard_welcome.WelcomeActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
@@ -33,6 +35,7 @@ import retrofit2.Response;
 
 public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
 
+    private static final int FIRST_RUN = 718;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     @Bind(R.id.nav_view)
@@ -54,6 +57,7 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
         initializeViews();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

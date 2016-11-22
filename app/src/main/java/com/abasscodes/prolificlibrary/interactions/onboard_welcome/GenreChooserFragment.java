@@ -1,10 +1,12 @@
 package com.abasscodes.prolificlibrary.interactions.onboard_welcome;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +25,26 @@ import butterknife.ButterKnife;
  * Created by C4Q on 11/21/16.
  */
 
-public class GenreChooserFragment extends SlideFragment implements View.OnClickListener {
-    private boolean canMoveFurther = false;
+public class GenreChooserFragment extends BaseSlideFragment{
     @Bind(R.id.genre_recycler_view) RecyclerView recyclerView;
+    private Callback listener;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener.allowMainContentTransition(true);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            this.listener = (Callback) getActivity();
+        }catch (ClassCastException e){
+            throw new ClassCastException("Host Activity must implement Callback");
+        }
+    }
+
 
     @Nullable
     @Override
@@ -37,34 +56,19 @@ public class GenreChooserFragment extends SlideFragment implements View.OnClickL
     }
 
     @Override
-    public int backgroundColor() {
-        return R.color.colorPrimary;
-    }
-
-
-    @Override
-    public int buttonsColor() {
-        return R.color.colorAccent;
-    }
-
-    @Override
     public boolean canMoveFurther() {
-        return false;
+        return true;
     }
 
-    @Override
-    public String cantMoveFurtherErrorMessage() {
-        return getString(R.string.error_message);
-    }
 
-    @Override
-    public void onClick(View v) {
-        canMoveFurther = true;
-    }
 
     public void setupRV(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         String[] genreArr = getResources().getStringArray(R.array.genres);
         recyclerView.setAdapter(new GenreAdapter(getActivity(), Arrays.asList(genreArr)));
+    }
+
+    public interface Callback{
+       void allowMainContentTransition(boolean allow);
     }
 }

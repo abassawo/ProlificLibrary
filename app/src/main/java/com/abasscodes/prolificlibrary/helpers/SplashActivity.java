@@ -17,13 +17,16 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent;
-        if( PreferenceWrapper.isFirstRun(this)){
+        Intent intent = null;
+        if (PreferenceWrapper.isFirstRun(this)) {
             intent = new Intent(this, WelcomeActivity.class);
-        } else{
+        }else{
             intent = new Intent(this, MainTabsActivity.class);
         }
         startActivity(intent);
         finish();
+
+
     }
+
 }

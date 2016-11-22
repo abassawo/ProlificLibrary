@@ -34,8 +34,8 @@
         </activity>
         <activity
             android:name=".interactions.onboard_welcome.WelcomeActivity"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.Intro" />
-        <activity android:name=".interactions.SingleFragmentActivity" />
         <activity android:name=".interactions.onboard_welcome.GenresActivity" />
     </application>
 </manifest>

@@ -3,16 +3,14 @@
     <string-array id="genres" name="genres">
         <item>Fiction</item>
         <item>Non-Fiction</item>
-        <item>Law and Philosophy</item>
         <item>History</item>
         <item>Adventure</item>
         <item>Self Help</item>
-        <item>Biographies and Memoirs</item>
-        <item>Children\'\s</item>
-        <item>Comics and Graphics Novels</item>
-        <item>Computers and Technology</item>
-        <item>Cooking</item>
-        <item>Religion and Spirituality</item>
+        <item>Biographies</item>
+        <item>Comics &amp; Graphics Novels</item>
+        <item>Computers &amp;Technology</item>
+        <item>Religion &amp; Spirituality</item>
         <item>Adventure</item>
+        <item>Law &amp; Philosophy</item>
     </string-array>
 </resources>

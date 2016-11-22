@@ -40,4 +40,6 @@ public class GenreViewHolder extends BaseViewHolder<String> implements View.OnCl
     public void onClick(View v) {
         checkbox.setChecked(!isSelected);
     }
+
+
 }
