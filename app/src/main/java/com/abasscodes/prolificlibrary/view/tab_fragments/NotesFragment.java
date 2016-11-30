@@ -30,19 +30,19 @@ import butterknife.ButterKnife;
 public class NotesFragment extends Fragment implements BookRepository.BookCallback {
 
     public final static String TAG = "AllBooks";
-    private FragmentCommunication listener;
 
-    public BookAdapter rvAdapter;
+
+    public NotesAdapter rvAdapter;
     @Bind(R.id.books_recycler_view)
-    RecyclerView bookRecyclerView;
+    RecyclerView notesRecyclerView;
     private static NotesFragment instance;
     @Bind(R.id.empty_view) View emptyView;
     private List<Book> books;
 
-    public static NotesFragment getInstance(ArrayList<Book> books) {
+    public static NotesFragment newInstance(ArrayList<Book> books) {
         Bundle args = new Bundle();
         args.putParcelableArrayList("BOOKS", books);
-        instance = getInstance();
+        instance =new NotesFragment();
         instance.setArguments(args);
         return instance;
     }
@@ -52,16 +52,6 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        Bundle args = getArguments();
-        rvAdapter = new BookAdapter(getActivity());
-        if (args != null) {
-            books = args.getParcelableArrayList("BOOKS");
-            setupAdapter(books);
-        }else{
-            if(getArguments() == null)
-                new BookRepository(this).fetchBooks();
-        }
-
     }
 
 
@@ -73,16 +63,6 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
     }
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            this.listener = (FragmentCommunication) activity;
-        } catch (ClassCastException cce) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement Fragment Communication");
-        }
-    }
 
     @Nullable
     @Override
@@ -95,8 +75,8 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        bookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        bookRecyclerView.setAdapter(rvAdapter);
+        notesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        notesRecyclerView.setAdapter(rvAdapter);
     }
 
     @Override
@@ -105,45 +85,38 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
 
     }
 
-    protected void setupAdapter(List<Book> books){
-        Log.d(TAG, "Payload size " + books.size());
-        if(rvAdapter == null) rvAdapter = new BookAdapter(getActivity(),books);
-        else {
-            rvAdapter.setBooks(books);
-            rvAdapter.notifyDataSetChanged();
-        }
-        if(bookRecyclerView != null) {
-            if (rvAdapter.getItemCount() == 0) {
-                bookRecyclerView.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-            } else {
-                bookRecyclerView.setVisibility(View.VISIBLE);
-                emptyView.setVisibility(View.INVISIBLE);
-            }
-            bookRecyclerView.setAdapter(rvAdapter);
-            bookRecyclerView.scrollToPosition(0);
-        }
-
-    }
+//    protected void setupAdapter(List<Book> books){
+//        Log.d(TAG, "Payload size " + books.size());
+//        if(rvAdapter == null) rvAdapter = new BookAdapter(getActivity(),books);
+//        else {
+//            rvAdapter.setBooks(books);
+//            rvAdapter.notifyDataSetChanged();
+//        }
+//        if(bookRecyclerView != null) {
+//            if (rvAdapter.getItemCount() == 0) {
+//                bookRecyclerView.setVisibility(View.GONE);
+//                emptyView.setVisibility(View.VISIBLE);
+//            } else {
+//                bookRecyclerView.setVisibility(View.VISIBLE);
+//                emptyView.setVisibility(View.INVISIBLE);
+//            }
+//            bookRecyclerView.setAdapter(rvAdapter);
+//            bookRecyclerView.scrollToPosition(0);
+//        }
+//
+//    }
     @Override
     public void onBooksReady(ArrayList<Book> books) {
         if (isAdded() && isVisible()) {
-            setupAdapter(books);
+//            setupAdapter(books);
         }
-        listener.setCheckedOutBooks(books);
+//        listener.setCheckedOutBooks(books);
     }
 
 
     @Override
     public void onDownloadFail() {
-        //to-do error toast
-        if (isAdded()) {
-            setupAdapter(new ArrayList<Book>());
-        }
+
     }
 
-    //Used to transfer list of books that are currently checked out to host activity and fragment B
-    public interface FragmentCommunication {
-        void setCheckedOutBooks(ArrayList<Book> books);
-    }
 }

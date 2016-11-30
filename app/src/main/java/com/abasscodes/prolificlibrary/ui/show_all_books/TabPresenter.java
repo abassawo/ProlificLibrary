@@ -82,6 +82,7 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
 
 
     private void showReturnDialog(Book book) {
+
         showCheckOutDialog(book); //fixme
     }
 }

@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements NotesFragment.FragmentCommunication {
+public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
 
     private static final int FIRST_RUN = 718;
     @Bind(R.id.drawer_layout)
@@ -71,9 +71,9 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
 
     public void initViewPager(ViewPager viewPager) {
         adapter = new TabAdapter(this);
-        adapter.addFragment(new NotesFragment(), "Library");
+        adapter.addFragment(new AllBooksFragment(), "Library");
         adapter.addFragment(new ExplorerFragment(), "Explore");
-        adapter.addFragment(NotesFragment.getInstance(), "Notes");
+//        adapter.addFragment(NotesFragment.getInstance(), "Notes");
         viewPager.setAdapter(adapter);
     }
 
@@ -160,7 +160,7 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> books) {
-//        adapter.setCheckedOutBooks(books);
+        adapter.setCheckedOutBooks(books);
         adapter.notifyDataSetChanged();
     }
 }

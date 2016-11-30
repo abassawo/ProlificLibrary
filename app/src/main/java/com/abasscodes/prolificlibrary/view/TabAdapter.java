@@ -57,7 +57,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
         switch (position) {
             case 0:
                 if (books != null) {
-                    return NotesFragment.getInstance(books);
+                    return NotesFragment.newInstance(books);
                 }
                 RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
                 break;
@@ -109,7 +109,8 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-//        this.checkedOutBooks = checkedOutBooks;
+        if(getCount() < 3)
+        addFragment(2, NotesFragment.newInstance(checkedOutBooks), "Notes");
     }
 
     @Override

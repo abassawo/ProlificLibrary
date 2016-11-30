@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = null;
+        Intent intent = new Intent(this, WelcomeActivity.class);
         if (PreferenceHelper.isFirstRun(this)) {
             intent = new Intent(this, WelcomeActivity.class);
         }else{

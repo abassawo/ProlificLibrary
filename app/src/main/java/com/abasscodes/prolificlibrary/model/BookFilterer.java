@@ -30,9 +30,7 @@ public class BookFilterer {
             if(book.isCheckedOut()) checkedOutBooks.add(book);
             if(book.isArchived()) archivedBooks.add(book);
         }
-        listener.setCompletedBooks(completedBooks);
-        listener.setCheckedOutBooks(completedBooks);
-        listener.setArchivedBooks(completedBooks);
+
     }
 
     public interface FiltersReadyListener{

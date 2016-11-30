@@ -40,18 +40,6 @@ public class WelcomeActivity extends MaterialIntroActivity implements FirstOnboa
                 showMessage(getResources().getString(R.string.prolific_description));
             }
         }, getResources().getString(R.string.app_name));
-        translation = new IViewTranslation() {
-            @Override
-            public void translate(View view, @FloatRange(from = 0.0, to = 1.0) float percentage) {
-                PreferenceHelper.disableWelcome(WelcomeActivity.this);
-                if(userName != null && email != null){
-                    PreferenceHelper.setUserName(WelcomeActivity.this, userName);
-                    PreferenceHelper.setEmail(WelcomeActivity.this, email);
-                }
-                startActivity(new Intent(WelcomeActivity.this, MainTabsActivity.class));
-                finish();
-            }
-        };
         initSlides();
 
     }
