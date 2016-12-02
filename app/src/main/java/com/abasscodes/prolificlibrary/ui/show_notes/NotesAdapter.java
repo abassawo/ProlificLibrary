@@ -46,7 +46,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
     @Override
     public int getItemCount() {
-
         return books.size();
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
@@ -42,20 +44,19 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     View emptyView;
     private List<Book> books;
 
-    public static AllBooksFragment getInstance(ArrayList<Book> books) {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("BOOKS", books);
-        instance = getInstance();
-        instance.setArguments(args);
-        return instance;
-    }
+//    public static AllBooksFragment getInstance(ArrayList<Book> books) {
+//        Bundle args = new Bundle();
+//        args.putParcelableArrayList("BOOKS", books);
+//        instance = getInstance();
+//        instance.setArguments(args);
+//        return instance;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        getActivity().findViewById(R.id.fab).setVisibility(View.VISIBLE);
         Bundle args = getArguments();
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
@@ -64,12 +65,12 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     }
 
 
-    public static AllBooksFragment getInstance() {
-        if (instance == null) {
-            instance = new AllBooksFragment();
-        }
-        return instance;
-    }
+//    public static AllBooksFragment getInstance() {
+//        if (instance == null) {
+//            instance = new AllBooksFragment();
+//        }
+//        return instance;
+//    }
 
 
     @Override
@@ -88,7 +89,11 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
-            new BookRepository(this).fetchBooks();
+            if(ConnectionUtil.isConnected()){
+                new BookRepository(this).fetchBooks();
+            }else{
+                Snackbar.make(getView(), "No Internet", Snackbar.LENGTH_SHORT).show();
+            }
         } else {
             ArrayList<Book> books = getArguments().getParcelableArrayList("BOOKS");
             setupAdapter(books);

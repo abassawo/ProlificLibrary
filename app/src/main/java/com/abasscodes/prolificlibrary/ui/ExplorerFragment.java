@@ -42,7 +42,6 @@ public class ExplorerFragment extends Fragment {
         if(isAdded() && isVisible())
         getActivity().findViewById(R.id.fab).setVisibility(View.INVISIBLE);
         client = NYTClient.getInstance();
-
     }
 
     @Nullable

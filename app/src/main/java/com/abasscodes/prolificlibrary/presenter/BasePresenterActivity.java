@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.ui.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
@@ -71,6 +71,11 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       startActivity(intent);
    }
 
+   public void fillOutNewBookForm(Book book){
+      Intent intent = EditActivity.fillOutNewBook(this, book);
+      startActivity(intent);
+   }
+
 
    public void showNetworkSettings(){
       startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
@@ -94,5 +99,6 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivityForResult(homeIntent, DELETED_ITEM_CODE);
    }
+
 
 }

@@ -54,7 +54,7 @@ public class DetailActivity extends BasePresenterActivity implements DetailFragm
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         actionBar =  getSupportActionBar();
-        book = getIntent().getParcelableExtra(BOOK_KEY);
+        book = (Book) getIntent().getParcelableExtra(BOOK_KEY);
         if(book == null) {
             bookId = getIntent().getIntExtra(BOOK_ID, 0);
             initRetrofit(bookId);

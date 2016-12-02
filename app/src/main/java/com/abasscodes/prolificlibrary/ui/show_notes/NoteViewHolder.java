@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
@@ -36,7 +37,6 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     View addNoteBtn;
     private PageNoteAdapter adapter;
     private Book book;
-    private int indexInColl;
 
 
 
@@ -75,13 +75,9 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public void setupAdapter(Book book){
         this.book = book;
-        List<PageNote> pageNotes = new ArrayList<>();
-        for (PageNote pageNote : BookContentProvider.getInstance().getAllNotes()) {
-           if(book.getId() == pageNote.getBookId()){
-               pageNotes.add(pageNote);
-               Log.d(TAG, "page notes size was " + pageNotes.size());
-           }
-        }
+        List<PageNote> pageNotes = BookContentProvider.getInstance().getNotes(book.getId());
+        pageNotes.addAll(book.pageNoteMap.values());
+        Log.d(TAG, "size after add is " + pageNotes.size());
         Collections.sort(pageNotes);
         adapter = new PageNoteAdapter(pageNotes);
         Context ctx = itemView.getContext();

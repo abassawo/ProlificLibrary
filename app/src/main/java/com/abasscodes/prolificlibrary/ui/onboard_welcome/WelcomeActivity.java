@@ -12,7 +12,7 @@ import android.view.View;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer.GenrePickerSlide;
-import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
 import agency.tango.materialintroscreen.MessageButtonBehaviour;
@@ -45,13 +45,21 @@ public class WelcomeActivity extends MaterialIntroActivity implements FirstOnboa
     }
 
     public void initSlides() {
-        enableLastSlideAlphaExitTransition(true);
-        getNextButtonTranslationWrapper().setExitTranslation(translation);
         addSlide(new FirstOnboardSlide(), buttonBehavior);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             addPermissionSlide();
         }
         addSlide(new GenrePickerSlide(), buttonBehavior);
+        translation = new IViewTranslation() {
+            @Override
+            public void translate(View view, @FloatRange(from = 0.0, to = 1.0) float percentage) {
+                PreferenceHelper.disableWelcome(WelcomeActivity.this);
+                startActivity(new Intent(WelcomeActivity.this, MainTabsActivity.class));
+                finish();
+            }
+        };
+        getNextButtonTranslationWrapper().setExitTranslation(translation);
+        enableLastSlideAlphaExitTransition(true);
         addLastSlide();
     }
 

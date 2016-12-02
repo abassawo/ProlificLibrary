@@ -13,18 +13,23 @@ import android.view.ViewGroup;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
+import com.abasscodes.prolificlibrary.model.database.BookContentProvider;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
  */
 
-public class NotesFragment extends Fragment implements BookRepository.BookCallback {
+public class NotesFragment extends Fragment{
 
     public final static String TAG = "AllBooks";
 
@@ -76,43 +81,24 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
         return view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+        Call<List<Book>> call = APIClient.getInstance().getCheckedOutBooks(getActivity());
+        call.enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                books = response.body();
+                rvAdapter.setBooks(books);
+                rvAdapter.notifyDataSetChanged();
+            }
 
-    }
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
 
-//    protected void setupAdapter(List<Book> books){
-//        Log.d(TAG, "Payload size " + books.size());
-//        if(rvAdapter == null) rvAdapter = new BookAdapter(getActivity(),books);
-//        else {
-//            rvAdapter.setBooks(books);
-//            rvAdapter.notifyDataSetChanged();
-//        }
-//        if(bookRecyclerView != null) {
-//            if (rvAdapter.getItemCount() == 0) {
-//                bookRecyclerView.setVisibility(View.GONE);
-//                emptyView.setVisibility(View.VISIBLE);
-//            } else {
-//                bookRecyclerView.setVisibility(View.VISIBLE);
-//                emptyView.setVisibility(View.INVISIBLE);
-//            }
-//            bookRecyclerView.setAdapter(rvAdapter);
-//            bookRecyclerView.scrollToPosition(0);
-//        }
-//
-//    }
-    @Override
-    public void onBooksReady(ArrayList<Book> books) {
-        if (isAdded() && isVisible()) {
-//            setupAdapter(books);
-        }
-//        listener.setCheckedOutBooks(books);
-    }
-
-
-    @Override
-    public void onDownloadFail() {
+            }
+        });
 
     }
 

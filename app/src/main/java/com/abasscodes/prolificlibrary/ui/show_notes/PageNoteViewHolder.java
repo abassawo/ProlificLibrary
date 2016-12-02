@@ -37,8 +37,7 @@ public class PageNoteViewHolder extends RecyclerView.ViewHolder implements View.
 
     public void bindBookNote(PageNote note) {
         this.note = note;
-        String pageNum = String.valueOf(note.getPageNumber());
-        pageTV.setText(pageNum);
+        pageTV.setText(String.valueOf(note.getPageNumber()));
     }
 
     @Override

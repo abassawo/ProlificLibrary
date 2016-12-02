@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui.show_all_books;
+package com.abasscodes.prolificlibrary;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -14,10 +14,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.abasscodes.prolificlibrary.ui.show_all_books.AllBooksFragment;
+import com.abasscodes.prolificlibrary.ui.show_all_books.TabPresenter;
+import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
 import com.abasscodes.prolificlibrary.ui.ExplorerFragment;
 
@@ -53,7 +55,6 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
         initializeViews();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +155,10 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
                 break;
         }
         return true;
+    }
+
+    public void reloadNotes(){
+//        adapter.addFragment(2, new NotesFragment(), "Notes");
     }
 
 

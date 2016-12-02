@@ -5,12 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.PageNote;
+import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.Map;
 
 public class BookContentProvider {
 
+    private static final String TAG = BookContentProvider.class.getSimpleName();
     private static BookContentProvider instance;
     private final Context context;
     private Map<Integer, List<PageNote>> map = new HashMap<>();
@@ -47,26 +52,31 @@ public class BookContentProvider {
         allNotes = getAllNotes();
     }
 
-    private static ContentValues getContentValues(PageNote note, int bookId) {
+    private static ContentValues getContentValues(PageNote note) {
         ContentValues cv = new ContentValues();
-        cv.put(DBSchema.NotesTable.Cols._ID, note.getId());
-        cv.put(DBSchema.NotesTable.Cols.PAGE, note.getPageNumber());
-        cv.put(DBSchema.NotesTable.Cols.BOOK_ID, bookId);
-        cv.put(DBSchema.NotesTable.Cols.NOTE, note.getComments());
-        cv.put(DBSchema.NotesTable.Cols._ID, note.getBookId());
+            cv.put(DBSchema.NotesTable.Cols._ID, note.getId());
+            cv.put(DBSchema.NotesTable.Cols.PAGE, note.getPageNumber());
+            cv.put(DBSchema.NotesTable.Cols.BOOK_ID, note.getBookId());
+            cv.put(DBSchema.NotesTable.Cols.NOTE, note.getComment());
         return cv;
     }
 
 
     public void saveBookContent(Book book) {
-        for (PageNote note : book.getPageNotes()) {
-            ContentValues cv = getContentValues(note, book.getId());
+        for (PageNote note : book.pageNoteMap.values()) {
+            ContentValues cv = getContentValues(note);
             database.insert(DBSchema.NotesTable.NAME, null, cv);
         }
+
     }
 
-    public List<PageNote> getNotes(Book book) {
-        return map.containsKey(book) ? map.get(book.getId()) : new ArrayList<PageNote>();
+
+    public List<PageNote> getNotes(int id) {
+        List<PageNote> notes = new ArrayList<>();
+        for(PageNote note : getAllNotes()){
+            if(note.getBookId() == id) notes.add(note);
+        }
+        return notes;
     }
 
 
@@ -84,18 +94,10 @@ public class BookContentProvider {
             cursor.close();
         }
         Collections.sort(notes);
-        populateMap(notes);
+//        for(PageNote note : notes){
+//
+//        }
         return notes;
-    }
-
-    public void populateMap(List<PageNote> notes){
-        for(PageNote note : notes){
-            int bookid = note.getBookId();
-            List<PageNote> pageNotes = map.get(bookid);
-            if(pageNotes == null) pageNotes = new ArrayList<>();
-            pageNotes.add(note);
-            map.put(bookid, pageNotes);
-        }
     }
 
 
@@ -125,9 +127,9 @@ public class BookContentProvider {
             int pageNum = getInt(getColumnIndex(DBSchema.NotesTable.Cols.PAGE));
             int bookId = getInt(getColumnIndex(DBSchema.NotesTable.Cols.BOOK_ID));
             String note = getString(getColumnIndex(DBSchema.NotesTable.Cols.NOTE));
-            PageNote pageNote = new PageNote(pageNum, note);
+            PageNote pageNote;
+            pageNote = new PageNote(pageNum, note, bookId);
             pageNote.setId(id);
-            pageNote.setBookId(bookId);
             return pageNote;
         }
     }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.abasscodes.prolificlibrary.ui.onboard_welcome.WelcomeActivity;
-import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 
 /**
  * Created by C4Q on 11/11/16.

@@ -9,8 +9,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.abasscodes.prolificlibrary.Mvp;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -64,7 +66,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    public static Intent fillOutNewBook(Context context, Book book) {
+        return fillOutNewBook(context).putExtra("BOOK", book);
+    }
 }

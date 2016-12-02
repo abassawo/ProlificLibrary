@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 

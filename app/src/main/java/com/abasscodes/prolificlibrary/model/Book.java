@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a book
@@ -29,7 +32,7 @@ import java.util.List;
 
 public class Book implements Parcelable, Comparable<Book> {
 
-    private List<PageNote> pageNotes = new ArrayList<>();
+    public Map<Integer, PageNote> pageNoteMap = new HashMap<>();
 
     public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
         @Override
@@ -66,6 +69,7 @@ public class Book implements Parcelable, Comparable<Book> {
     transient boolean archived;
 
     public boolean notesVisible = false;
+    public String comment;
 
     public Book() {
     }
@@ -73,6 +77,13 @@ public class Book implements Parcelable, Comparable<Book> {
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
+    }
+
+    public Book(Result result) {
+        this.title = result.getTitle();
+        this.author = result.getAuthor();
+        this.publisher = result.getPublisher();
+        this.categories = result.getDescription();
     }
 
     public String getAuthor() {
@@ -269,12 +280,18 @@ public class Book implements Parcelable, Comparable<Book> {
         return archived;
     }
 
-    public List<PageNote> getPageNotes() {
-        return pageNotes;
+    public PageNote getPageNote(int idx) {
+        return pageNoteMap.get(idx);
     }
 
-    public void addPageNote(PageNote pageNote) {
-        pageNote.setBookId(this.id);
-        this.pageNotes.add(pageNote);
+    public void addPageNote(int page, String text) {
+        PageNote pageNote;
+        if(pageNoteMap.containsKey(page)){
+            pageNote = pageNoteMap.get(page);
+            pageNote.append(text);
+        }else{
+            pageNote = new PageNote(page, text, this.id);
+        }
+        pageNoteMap.put(page, pageNote);
     }
 }

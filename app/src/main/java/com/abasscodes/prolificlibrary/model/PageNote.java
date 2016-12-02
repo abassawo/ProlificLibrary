@@ -3,21 +3,23 @@ package com.abasscodes.prolificlibrary.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by C4Q on 11/30/16.
  */
 public class PageNote implements Parcelable, Comparable {
 
-    public List<String> comments;
+    public String comment;
     private int bookId;
     private int pageNumber;
     private int id;
 
     protected PageNote(Parcel in) {
-        comments = in.readArrayList(String.class.getClassLoader());
-        bookId = in.readInt();
+        comment = in.readString();
+//        bookId = in.readInt();
         pageNumber = in.readInt();
         id = in.readInt();
     }
@@ -34,22 +36,20 @@ public class PageNote implements Parcelable, Comparable {
         }
     };
 
-    public List<String> getComments() {
-        return comments;
+    public String getComment() {
+        return comment;
     }
 
-    public void setBookId(int bookId){
+
+
+    public PageNote(int pageNumber, String comment, int bookId) {
+        this.pageNumber = pageNumber;
+        this.comment = comment;
         this.bookId = bookId;
     }
 
-
-    public PageNote(int pageNumber, List<String> comments) {
-        this.pageNumber = pageNumber;
-        this.comments = comments;
-    }
-
-    public void setComments(List<String> comments) {
-       this.comments = comments;
+    public void setComment(String comment) {
+       this.comment = comment;
     }
 
     public int getPageNumber() {
@@ -60,8 +60,8 @@ public class PageNote implements Parcelable, Comparable {
     public int compareTo(Object o) {
         PageNote pageNote = (PageNote) o;
         int otherPage = pageNote.pageNumber;
-        if (bookId == pageNote.bookId && pageNumber == otherPage)
-            return 0;
+//        if (bookId == pageNote.bookId && pageNumber == otherPage)
+//            return 0;
         return pageNumber > otherPage ? 1 : -1; //fixme
     }
 
@@ -90,6 +90,19 @@ public class PageNote implements Parcelable, Comparable {
         parcel.writeValue(bookId);
         parcel.writeValue(id);
         parcel.writeValue(pageNumber);
-        parcel.writeStringList(comments);
+        parcel.writeString(comment);
+    }
+
+    public void append(String text) {
+        if(comment != null) {
+            this.comment += "\n" + text;
+        }else{
+            comment = text;
+        }
+    }
+
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 }

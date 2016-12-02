@@ -1,5 +1,6 @@
 package com.abasscodes.prolificlibrary.view;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
+import com.abasscodes.prolificlibrary.ui.edit_book.AddBookFragment;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditFragment;
+import com.abasscodes.prolificlibrary.ui.show_notes.AddNotesDialog;
 
 /**
  * Created by C4Q on 11/18/16.
@@ -17,14 +23,13 @@ public class NYTBookViewHolder extends RecyclerView.ViewHolder implements View.O
 
     private TextView titleTV;
     private TextView authorTV;
-    private Result book;
-    private ImageView checkedOutIV;
+    private Result result;
+
 
     public NYTBookViewHolder(ViewGroup parent) {
         super(inflateView(parent));
         titleTV = (TextView) itemView.findViewById(R.id.book_item_title);
         authorTV = (TextView) itemView.findViewById(R.id.book_item_author);
-        checkedOutIV = (ImageView) itemView.findViewById(R.id.checkout_icon_imgview);
         itemView.setOnClickListener(this);
     }
 
@@ -34,6 +39,7 @@ public class NYTBookViewHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     public void bindBook(Result result) {
+        this.result = result;
         this.titleTV.setText(result.getTitle());
         this.authorTV.setText(result.getAuthor());
     }
@@ -41,6 +47,11 @@ public class NYTBookViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
+        if(result != null) {
+            Book bookFromResult = new Book(result);
+            FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
+            RegisterActivity.basePresenterActivity.fillOutNewBookForm(bookFromResult);
+        }
 
     }
 

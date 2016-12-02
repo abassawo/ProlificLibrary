@@ -2,35 +2,19 @@ package com.abasscodes.prolificlibrary.ui.show_notes;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.PageNote;
 import com.abasscodes.prolificlibrary.model.database.BookContentProvider;
-import com.abasscodes.prolificlibrary.model.database.DatabaseHelper;
-import com.abasscodes.prolificlibrary.model.prolific.APIClient;
-import com.abasscodes.prolificlibrary.ui.checkout_book.CheckoutDialogFragment;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static okhttp3.internal.Internal.instance;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 
 /**
  * Created by C4Q on 12/1/16.
@@ -63,8 +47,8 @@ public class AddNotesDialog extends DialogFragment {
         title = "Add a new note for " + book.getTitle() + "";
         message = "It will be added to your notes";
         positiveBtn = "Yes";
-        pageField =new EditText(getActivity());
-        noteField =new EditText(getActivity());
+        pageField = new EditText(getActivity());
+        noteField = new EditText(getActivity());
 
     }
 
@@ -82,14 +66,19 @@ public class AddNotesDialog extends DialogFragment {
         builder.setView(ll);
         builder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                //Store the submitted name and check out book
                 int pageNum = Integer.parseInt(pageField.getText().toString());
                 String note = noteField.getText().toString();
-                PageNote pageNote = new PageNote(pageNum, note);
-                book.getPageNotes().add(pageNote);
-                DatabaseHelper dbHelper = new DatabaseHelper(RegisterActivity.basePresenterActivity);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                PageNote pageNote = book.getPageNote(pageNum);
+                if(pageNote == null){
+                    //Store a new note
+                    pageNote= new PageNote(pageNum, note, book.getId());
+                }else{
+                    pageNote.append(note);
+                }
+                book.pageNoteMap.put(pageNum, pageNote);
                 BookContentProvider.getInstance().saveBookContent(book);
+//                MainTabsActivity activity = (MainTabsActivity) RegisterActivity.basePresenterActivity;
+//                activity.reloadNotes();
             }
         });
 

@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.ui.show_all_books.MainTabsActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 
@@ -51,6 +51,7 @@ public class AddBookFragment extends Fragment {
 
     private APIClient client;
     private Book book;
+
 
 
     @Override
