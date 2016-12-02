@@ -10,7 +10,7 @@ import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
+import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;

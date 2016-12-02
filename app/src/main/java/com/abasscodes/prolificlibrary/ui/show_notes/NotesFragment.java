@@ -1,13 +1,11 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui.show_notes;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import android.view.ViewGroup;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
-import com.abasscodes.prolificlibrary.view.BookAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +49,11 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        if(getArguments() != null){
+            books = getArguments().getParcelableArrayList("BOOKS");
+            rvAdapter = new NotesAdapter(books);
+        }
+
     }
 
 
@@ -68,15 +70,11 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup
             container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.empty_recycler_view, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        final View view = inflater.inflate(R.layout.empty_recycler_view, container, false);
         ButterKnife.bind(this, view);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         notesRecyclerView.setAdapter(rvAdapter);
+        return view;
     }
 
     @Override

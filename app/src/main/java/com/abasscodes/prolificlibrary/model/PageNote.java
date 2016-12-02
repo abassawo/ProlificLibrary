@@ -6,13 +6,20 @@ import java.util.List;
 /**
  * Created by C4Q on 11/30/16.
  */
-public class BookNote {
+public class PageNote {
 
     private int pageNumber;
     private List<String> comments;
 
-    public BookNote(int pageNumber){
+    public PageNote(int pageNumber){
         this.pageNumber = pageNumber;
+        comments = new ArrayList<>();
+    }
+
+    public static PageNote testBookNote(){
+        PageNote pageNote = new PageNote(11);
+        pageNote.addComment("test");
+        return pageNote;
     }
 
     public void addComment(String comment){

@@ -42,6 +42,7 @@ public class PreferenceHelper {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(username_key, null);
     }
 
+
     public static void setUserName(Context context, String userName) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.edit().putString(username_key, userName);

@@ -1,16 +1,14 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
@@ -41,6 +39,7 @@ public class ExplorerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().findViewById(R.id.fab).setVisibility(View.INVISIBLE);
         client = NYTClient.getInstance();
 
     }

@@ -9,7 +9,7 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
-import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
+import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
 
 import java.util.ArrayList;
 

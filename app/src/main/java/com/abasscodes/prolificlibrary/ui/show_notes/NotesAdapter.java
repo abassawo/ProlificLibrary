@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui.show_notes;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,18 +7,16 @@ import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookNote;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by C4Q on 11/29/16.
  */
 public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Book> books = new ArrayList<>();
+    public static Book selectedBook = null;
 
     public NotesAdapter(List<Book> books) {
        this.books = books;
@@ -27,11 +25,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new NoteViewHolder(parent);
-    }
-
-    public static View inflateView(ViewGroup parent){
-        LayoutInflater infl = LayoutInflater.from(parent.getContext());
-        return infl.inflate(R.layout.book_note_row, parent, false);
     }
 
     @Override

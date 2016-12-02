@@ -19,8 +19,7 @@ import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.view.TabAdapter;
-import com.abasscodes.prolificlibrary.view.tab_fragments.NotesFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.ExplorerFragment;
+import com.abasscodes.prolificlibrary.ui.ExplorerFragment;
 
 import java.util.ArrayList;
 

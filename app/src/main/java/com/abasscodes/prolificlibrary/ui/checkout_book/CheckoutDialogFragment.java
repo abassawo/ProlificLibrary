@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
@@ -34,7 +35,7 @@ public class CheckoutDialogFragment extends DialogFragment{
     private Book book;
 
     private String title, message, positiveBtn;
-    String name = "Abass"; //fixme
+    String name; //fixme
 
     public static CheckoutDialogFragment newInstance(Book book){
             boolean returnBook = book.isCheckedOut();
@@ -56,6 +57,7 @@ public class CheckoutDialogFragment extends DialogFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        name = PreferenceHelper.getUserName(getActivity());
         book = (Book) getArguments().get(BOOK);
         returnBook = getArguments().getBoolean("RETURN");
         if(returnBook){

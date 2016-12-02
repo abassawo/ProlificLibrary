@@ -1,9 +1,8 @@
-package com.abasscodes.prolificlibrary.view.tab_fragments;
+package com.abasscodes.prolificlibrary.ui.show_notes;
 
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookNote;
+import com.abasscodes.prolificlibrary.model.PageNote;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 public class NotesRepository {
 
 
-    public static List<BookNote> getnotes(Book book) {
+    public static List<PageNote> getnotes(Book book) {
         //// FIXME: 11/30/16
         return Collections.EMPTY_LIST;
     }

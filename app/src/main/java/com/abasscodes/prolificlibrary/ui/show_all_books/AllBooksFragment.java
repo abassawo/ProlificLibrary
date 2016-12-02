@@ -55,6 +55,7 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        getActivity().findViewById(R.id.fab).setVisibility(View.VISIBLE);
         Bundle args = getArguments();
         if (args != null) {
             books = args.getParcelableArrayList("BOOKS");
@@ -141,7 +142,7 @@ public class AllBooksFragment extends Fragment implements BookRepository.BookCal
 
     @Override
     public void onDownloadFail() {
-        //to-do error toast
+        //todo error toast
         if (isAdded()) {
             setupAdapter(new ArrayList<Book>());
         }
