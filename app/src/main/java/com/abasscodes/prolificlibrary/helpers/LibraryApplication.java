@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.facebook.stetho.Stetho;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -16,6 +17,12 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onCreate() {
         super.onCreate();
         registerActivityLifecycleCallbacks(this);
+        // Create an InitializerBuilder
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
     @Override
@@ -39,7 +46,7 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onActivityResumed(Activity activity) {
         if (activity instanceof BasePresenterActivity)
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
-            if(RegisterActivity.basePresenterActivity != null)
+        if (RegisterActivity.basePresenterActivity != null)
             RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
     }
 

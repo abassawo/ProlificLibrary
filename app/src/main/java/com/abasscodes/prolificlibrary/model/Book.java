@@ -9,8 +9,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class representing a book
@@ -26,6 +28,8 @@ import java.util.Date;
  */
 
 public class Book implements Parcelable, Comparable<Book> {
+
+    private List<PageNote> pageNotes = new ArrayList<>();
 
     public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
         @Override
@@ -60,6 +64,8 @@ public class Book implements Parcelable, Comparable<Book> {
     private String url;
     private boolean isComplete = false;
     transient boolean archived;
+
+    public boolean notesVisible = false;
 
     public Book() {
     }
@@ -261,5 +267,14 @@ public class Book implements Parcelable, Comparable<Book> {
 
     public boolean isArchived() {
         return archived;
+    }
+
+    public List<PageNote> getPageNotes() {
+        return pageNotes;
+    }
+
+    public void addPageNote(PageNote pageNote) {
+        pageNote.setBookId(this.id);
+        this.pageNotes.add(pageNote);
     }
 }

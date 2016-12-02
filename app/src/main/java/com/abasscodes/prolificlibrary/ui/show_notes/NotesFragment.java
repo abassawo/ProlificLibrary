@@ -65,7 +65,6 @@ public class NotesFragment extends Fragment implements BookRepository.BookCallba
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup

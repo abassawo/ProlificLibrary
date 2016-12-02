@@ -39,6 +39,7 @@ public class ExplorerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(isAdded() && isVisible())
         getActivity().findViewById(R.id.fab).setVisibility(View.INVISIBLE);
         client = NYTClient.getInstance();
 

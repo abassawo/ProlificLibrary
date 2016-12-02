@@ -5,10 +5,14 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.PageNote;
+import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,4 +73,7 @@ public class PreferenceHelper {
         }
         return potentialGenres.keySet();
     }
+
+
+
 }
