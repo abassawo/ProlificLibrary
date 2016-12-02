@@ -19,7 +19,7 @@ public class PageNote implements Parcelable, Comparable {
 
     protected PageNote(Parcel in) {
         comment = in.readString();
-//        bookId = in.readInt();
+        bookId = in.readInt();
         pageNumber = in.readInt();
         id = in.readInt();
     }
@@ -48,9 +48,7 @@ public class PageNote implements Parcelable, Comparable {
         this.bookId = bookId;
     }
 
-    public void setComment(String comment) {
-       this.comment = comment;
-    }
+
 
     public int getPageNumber() {
         return pageNumber;
@@ -60,8 +58,8 @@ public class PageNote implements Parcelable, Comparable {
     public int compareTo(Object o) {
         PageNote pageNote = (PageNote) o;
         int otherPage = pageNote.pageNumber;
-//        if (bookId == pageNote.bookId && pageNumber == otherPage)
-//            return 0;
+        if (bookId == pageNote.bookId && pageNumber == otherPage)
+            return 0;
         return pageNumber > otherPage ? 1 : -1; //fixme
     }
 
@@ -101,8 +99,11 @@ public class PageNote implements Parcelable, Comparable {
         }
     }
 
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    @Override
+    public boolean equals(Object obj) {
+        PageNote other = (PageNote) obj;
+        return id == other.id;
     }
+
+
 }

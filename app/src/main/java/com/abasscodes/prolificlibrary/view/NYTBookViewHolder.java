@@ -5,16 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
-import com.abasscodes.prolificlibrary.ui.edit_book.AddBookFragment;
-import com.abasscodes.prolificlibrary.ui.edit_book.EditFragment;
-import com.abasscodes.prolificlibrary.ui.show_notes.AddNotesDialog;
 
 /**
  * Created by C4Q on 11/18/16.

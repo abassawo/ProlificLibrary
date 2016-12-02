@@ -281,17 +281,27 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public PageNote getPageNote(int idx) {
-        return pageNoteMap.get(idx);
+        if(pageNoteMap.containsKey(idx)) {
+            return pageNoteMap.get(idx);
+        }else {
+            PageNote note = new PageNote(idx, "", id);
+            pageNoteMap.put(idx, note);
+            return note;
+        }
     }
 
-    public void addPageNote(int page, String text) {
-        PageNote pageNote;
-        if(pageNoteMap.containsKey(page)){
-            pageNote = pageNoteMap.get(page);
-            pageNote.append(text);
-        }else{
-            pageNote = new PageNote(page, text, this.id);
-        }
-        pageNoteMap.put(page, pageNote);
+    public boolean hasPageNote(int pageNum) {
+        return pageNoteMap.containsKey(pageNum);
     }
+
+//    public void addPageNote(int page, String text) {
+//        PageNote pageNote;
+//        if(pageNoteMap.containsKey(page)){
+//            pageNote = pageNoteMap.get(page);
+//            pageNote.append(text);
+//        }else{
+//            pageNote = new PageNote(page, text, this.id);
+//        }
+//        pageNoteMap.put(page, pageNote);
+//    }
 }

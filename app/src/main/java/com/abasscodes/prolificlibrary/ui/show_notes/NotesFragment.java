@@ -81,25 +81,25 @@ public class NotesFragment extends Fragment{
         return view;
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Call<List<Book>> call = APIClient.getInstance().getCheckedOutBooks(getActivity());
-        call.enqueue(new Callback<List<Book>>() {
-            @Override
-            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                books = response.body();
-                rvAdapter.setBooks(books);
-                rvAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Book>> call, Throwable t) {
-
-            }
-        });
-
-    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Call<List<Book>> call = APIClient.getInstance().getCheckedOutBooks(getActivity());
+//        call.enqueue(new Callback<List<Book>>() {
+//            @Override
+//            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+//                books = response.body();
+//                rvAdapter.setBooks(books);
+//                rvAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Book>> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
 
 }

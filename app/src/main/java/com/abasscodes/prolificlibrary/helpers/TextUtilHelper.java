@@ -18,4 +18,18 @@ public class TextUtilHelper {
     public static boolean isEmpty(EditText editText) {
         return !hasText(editText);
     }
+
+    public static boolean hasValidIntText(EditText editText) {
+        if(!hasText(editText)) return false;
+        char[] numChars = editText.getText().toString().toCharArray();
+        boolean areDigits = true;
+        for(char c : numChars){
+            if(!Character.isDigit(c)) areDigits = false;
+        }
+        return areDigits;
+    }
+
+    public static boolean isValidNote(EditText pageField, EditText noteField) {
+        return hasValidIntText(pageField) && hasText(noteField);
+    }
 }
