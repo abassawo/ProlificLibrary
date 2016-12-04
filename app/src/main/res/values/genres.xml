@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array id="genres" name="genres">
-        <item>Fiction</item>
-        <item>Non-Fiction</item>
-        <item>History</item>
-        <item>Adventure</item>
-        <item>Self Help</item>
-        <item>Biographies</item>
-        <item>Comics &amp; Graphics Novels</item>
-        <item>Computers &amp;Technology</item>
-        <item>Religion &amp; Spirituality</item>
-        <item>Adventure</item>
-        <item>Law &amp; Philosophy</item>
+        <item>hardcover-fiction</item>
+        <item>hardcover-noniction</item>
+        <item>hardcover-adult-paperback</item>
+        <item>hardcover-grahic-books</item>
     </string-array>
 </resources>

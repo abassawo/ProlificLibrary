@@ -28,8 +28,7 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
 
    private static final String TAG = BasePresenterActivity.class.getSimpleName() ;
    public static final int DELETED_ITEM_CODE = 999;
-   public Fragment currentFragment;
-   private BookRepository bookRepo;
+
 
 
    public abstract P getPresenter();
@@ -39,25 +38,11 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       super.onCreate(savedInstanceState, persistentState);
    }
 
-//   @Override
-//   public void onConfigurationChanged(Configuration newConfig) {
-//      super.onConfigurationChanged(newConfig);
-//      getPresenter().updateUI(this);
-//   }
-//
-//   @Override
-//   protected void onResume() {
-//      super.onResume();
-//      getPresenter().updateUI(this);
-//   }
-
 
    public void showBookDetail(Book book) {
       Intent intent = DetailActivity.makeIntent(this, book);
       startActivity(intent);
    }
-
-
 
 
    public void editBook(int id, Book book) {
@@ -67,7 +52,7 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
 
 
    public void fillOutNewBookForm() {
-      Intent intent = EditActivity.fillOutNewBook(this);
+      Intent intent = EditActivity.fillOutNewBook(this, null);
       startActivity(intent);
    }
 

@@ -58,7 +58,7 @@ public class APIClient {
         return api.listBooks();
     }
 
-    public Call<ArrayList<Book>> listCheckedOuttBooks(){
+    public Call<ArrayList<Book>> listCheckedOutBooks(){
         return api.listBooks();
     }
 
@@ -102,4 +102,5 @@ public class APIClient {
     public Call<Void> deleteAll() {
          return api.deleteAll();
     }
+
 }

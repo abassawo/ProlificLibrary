@@ -3,6 +3,7 @@ package com.abasscodes.prolificlibrary.ui.show_notes;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -16,8 +17,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.abasscodes.prolificlibrary.InputMisMatchException;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
@@ -42,13 +41,15 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private static final String TAG = NoteViewHolder.class.getSimpleName();
     @Bind(R.id.note_vh_title)
     TextView titleTV;
-    boolean notesVisible = false;
     @Bind(R.id.notes_recycler_view)
     RecyclerView notesRecyclerView;
     @Bind(R.id.add_note)
     View addNoteBtn;
     private PageNoteAdapter adapter;
     private Book book;
+    private boolean visible = false;
+
+    private BookContentProvider bookProvider;
 
 
     public NoteViewHolder(ViewGroup parent) {
@@ -56,6 +57,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         ButterKnife.bind(this, itemView);
         titleTV.setOnClickListener(this);
         addNoteBtn.setOnClickListener(this);
+        bookProvider = new BookContentProvider();
     }
 
     public static View inflateView(ViewGroup parent) {
@@ -71,23 +73,14 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
     public void updateUI() {
-        boolean visible = book.notesVisible;
-        if (!NotesAdapter.selectedBooks.isEmpty()) {
-            visible = book == NotesAdapter.selectedBooks.peek();
-        }
-        if (visible) {
-            notesRecyclerView.setVisibility(View.VISIBLE);
-            addNoteBtn.setVisibility(View.VISIBLE);
-        } else {
-            notesRecyclerView.setVisibility(View.INVISIBLE);
-            addNoteBtn.setVisibility(View.INVISIBLE);
-        }
+        notesRecyclerView.setVisibility(View.INVISIBLE);
+        addNoteBtn.setVisibility(View.INVISIBLE);
+
     }
 
     public void setupAdapter(Book book) {
         this.book = book;
-        List<PageNote> pageNotes = BookContentProvider.getInstance().getNotes(book.getId());
-        Log.d(TAG, "size after add is " + pageNotes.size());
+        List<PageNote> pageNotes = new BookContentProvider().getNotes(book.getId());
         adapter = new PageNoteAdapter(pageNotes);
         Context ctx = itemView.getContext();
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false));
@@ -103,8 +96,26 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                 showAddDialog();
                 break;
         }
-        book.notesVisible = !book.notesVisible;
-        updateUI();
+        if(!visible) {
+            showHiddenContent();
+        }else{
+            updateUI();
+        }
+    }
+
+    public void showHiddenContent() {
+        notesRecyclerView.setVisibility(View.VISIBLE);
+        addNoteBtn.setVisibility(View.VISIBLE);
+        visible = true;
+        Handler handler = new Handler();
+        Runnable r = new Runnable() {
+            public void run() {
+                notesRecyclerView.setVisibility(View.INVISIBLE);
+                addNoteBtn.setVisibility(View.INVISIBLE);
+                visible = false;
+            }
+        };
+        handler.postDelayed(r, 2000);
     }
 
     public void showAddDialog() {
@@ -128,16 +139,17 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                     int pageNum = Integer.parseInt(pageField.getText().toString());
                     String note = noteField.getText().toString();
                     PageNote pageNote;
-                    if(book.hasPageNote(pageNum)){
-                        pageNote  = book.getPageNote(pageNum);
+                    if (book.hasPageNote(pageNum)) {
+                        pageNote = book.getPageNote(pageNum);
                         pageNote.append(note);
-                        BookContentProvider.getInstance().updatePageNote(pageNote);
-                    }else{
+                        bookProvider.updatePageNote(pageNote);
+                    } else {
                         pageNote = new PageNote(pageNum, note, book.getId());
-                        BookContentProvider.getInstance().savePageNote(pageNote);
+                        bookProvider.savePageNote(pageNote);
                     }
                     book.pageNoteMap.put(pageNum, pageNote);
                     bindBook(book);
+                    showHiddenContent();
 
                 } else {
                     Toast.makeText(ctx, "Please verify all forms", Toast.LENGTH_SHORT).show();

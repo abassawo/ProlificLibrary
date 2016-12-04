@@ -14,4 +14,7 @@ public interface NYTimesAPI {
 
     @GET("lists/best-sellers/history.json")
     Call<NYTResponse> getBestSellersList(@Query("api-key") String apiKey);
+
+    @GET("lists/names.json")
+    Call<NYTResponse> getCategoriesList(@Query("api-key") String apiKey, @Query("list") String name);
 }

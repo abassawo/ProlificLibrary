@@ -52,7 +52,13 @@ public class AddBookFragment extends Fragment {
     private APIClient client;
     private Book book;
 
-
+    public static AddBookFragment newInstance(Book book) {
+        Bundle args = new Bundle();
+        args.putParcelable("BOOK", book);
+        AddBookFragment fragment = new AddBookFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +77,18 @@ public class AddBookFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(getArguments() != null){
+            Book book = getArguments().getParcelable("BOOK");
+            Log.d(TAG, "book specs " + book);
+            titleField.setText(book.getTitle());
+            authorField.setText(book.getAuthor());
+            publisherField.setText(book.getPublisher());
+            categoryField.setText(book.getCategories());
+        }
+    }
 
     public void addBook(EditText... editTexts) {
         title =  editTexts[0].getText().toString();

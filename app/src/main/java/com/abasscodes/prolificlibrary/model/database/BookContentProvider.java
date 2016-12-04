@@ -5,24 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.PageNote;
-import com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable;
-import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.*;
 
@@ -34,31 +23,15 @@ public class BookContentProvider {
 
     private static final String TAG = BookContentProvider.class.getSimpleName();
     private static BookContentProvider instance;
-    private List<Book> checkedOutBooks;
-    private Map<Integer, List<PageNote>> map = new HashMap<>();
     private SQLiteDatabase database;
     private List<PageNote> allNotes;
 
 
-    public BookContentProvider(List<Book> checkedOutBooks){
-        this.checkedOutBooks = checkedOutBooks;
-    }
 
 
-    public static BookContentProvider getInstance() {
+    public BookContentProvider() {
         Context ctx = RegisterActivity.basePresenterActivity;
-        return getInstance(new DatabaseHelper(ctx).getReadableDatabase());
-    }
-
-    private static BookContentProvider getInstance(SQLiteDatabase db) {
-        if (instance == null) {
-            instance = new BookContentProvider(db);
-        }
-        return instance;
-    }
-
-    public BookContentProvider(SQLiteDatabase db) {
-        this.database = db;
+        this.database = new DatabaseHelper(ctx).getReadableDatabase();
         allNotes = getAllNotes();
     }
 
@@ -74,7 +47,6 @@ public class BookContentProvider {
 //  u
 
     public void savePageNote(PageNote pageNote) {
-        int pageKey = pageNote.getPageNumber();
         if(allNotes.contains(pageNote)) {
             updatePageNote(pageNote);
         }else{
@@ -110,7 +82,7 @@ public class BookContentProvider {
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                notes.add(cursor.getNote());
+                notes.add(cursor.getNextNote());
                 cursor.moveToNext();
             }
         } finally {
@@ -142,14 +114,14 @@ public class BookContentProvider {
             super(cursor);
         }
 
-        public PageNote getNote() {
+        public PageNote getNextNote() {
             int id = getInt(getColumnIndex(Cols._ID));
             int pageNum = getInt(getColumnIndex(Cols.PAGE));
             int bookId = getInt(getColumnIndex(Cols.BOOK_ID));
             String note = getString(getColumnIndex(Cols.NOTE));
             PageNote pageNote;
             pageNote = new PageNote(pageNum, note, bookId);
-//            pageNote.setId(id);
+            pageNote.setId(id);
             return pageNote;
         }
     }

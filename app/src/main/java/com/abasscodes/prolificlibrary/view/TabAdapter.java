@@ -26,9 +26,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
     private ArrayList<Book> books;
-
-    private String currentFragmentTitle;
-
+    public int currentIndex;
 
 
     public TabAdapter(AppCompatActivity activity) {
@@ -56,13 +54,9 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (books != null) {
+                if (books != null)
                     return NotesFragment.newInstance(books);
-                }
-                RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
                 break;
-            case 1:
-            case 2: RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.INVISIBLE);
         }
         return fragments.get(position);
     }
@@ -85,15 +79,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-        currentFragmentTitle = fragmentTitles.get(position);
-        switch (position) {
-            case 0:
-                RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.VISIBLE);
-                break;
-            case 1:
-            case 2: RegisterActivity.basePresenterActivity.findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-        }
-
+       this.currentIndex = position;
     }
 
     @Override
@@ -103,18 +89,10 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
 
     @Override
-    public void setCompletedBooks(ArrayList<Book> completedBooks) {
-//        this.completedBooks = completedBooks;
-    }
-
-    @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
         if(getCount() < 3)
         addFragment(2, NotesFragment.newInstance(checkedOutBooks), "Notes");
     }
 
-    @Override
-    public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-//        this.archivedBooks = archivedBooks;
-    }
+
 }

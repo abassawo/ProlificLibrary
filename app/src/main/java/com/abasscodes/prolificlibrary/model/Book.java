@@ -3,7 +3,9 @@ package com.abasscodes.prolificlibrary.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.abasscodes.prolificlibrary.model.nytimes.pojos.RanksHistory;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -32,6 +34,7 @@ import java.util.Map;
 
 public class Book implements Parcelable, Comparable<Book> {
 
+    private static final String TAG = Book.class.getSimpleName();
     public Map<Integer, PageNote> pageNoteMap = new HashMap<>();
 
     public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
@@ -80,10 +83,17 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public Book(Result result) {
+        Log.d(TAG, "Result specs were " + result);
         this.title = result.getTitle();
         this.author = result.getAuthor();
         this.publisher = result.getPublisher();
-        this.categories = result.getDescription();
+        List<RanksHistory> ranks = result.getRanksHistory();
+        if(ranks.size() > 0){
+            this.categories = ranks.get(0).getDisplayName();
+        }else{
+            this.categories = "New York Times Best Seller";
+        }
+
     }
 
     public String getAuthor() {

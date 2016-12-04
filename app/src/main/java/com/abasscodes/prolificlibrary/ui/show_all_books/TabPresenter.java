@@ -40,26 +40,6 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
         return instance;
     }
 
-    @Override
-    public void onAllBooksLoaded(Activity activity, ArrayList<Book> books) {
-        if (books == null)  {
-            Log.d(TAG, "Empty response");
-            return;
-        }
-        try {
-            MainTabsActivity tabsActivity = (MainTabsActivity) activity;
-            if(tabsActivity != null){
-                adapter = tabsActivity.adapter;
-                adapter.addFragment(0, NotesFragment.getInstance(), "Library");
-                adapter.notifyDataSetChanged();
-            }
-
-        }catch (Exception e){
-
-        }
-
-    }
-
 
     @Override
     public void onConnectionFailure() {
@@ -72,19 +52,5 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
         }).show();
     }
 
-    @Override
-    public void updateUI() {
-        if(presenterActivity.adapter != null) {
-            adapter = presenterActivity.adapter;
-            NotesFragment fragment = (NotesFragment) adapter.getItem(0);
-//            fixme fragment.refresh();
-        }
 
-    }
-
-
-    private void showReturnDialog(Book book) {
-
-        showCheckOutDialog(book); //fixme
-    }
 }

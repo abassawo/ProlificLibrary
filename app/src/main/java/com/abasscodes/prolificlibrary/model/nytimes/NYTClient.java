@@ -39,7 +39,13 @@ public class NYTClient {
         return instance;
     }
 
+
+
     public Call<NYTResponse> listBestSellers() {
         return api.getBestSellersList(API_KEY);
+    }
+
+    public Call<NYTResponse> getCategoriesList(String category) {
+        return api.getCategoriesList(API_KEY, category);
     }
 }

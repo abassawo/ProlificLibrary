@@ -11,12 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.abasscodes.prolificlibrary.view.SuggestedBooksAdapter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +34,6 @@ import retrofit2.Response;
 public class ExplorerFragment extends Fragment {
     private static final String TAG = ExplorerFragment.class.getSimpleName();
     private static ExplorerFragment instance;
-    private NYTClient client;
     @Bind(R.id.books_recycler_view) RecyclerView rv;
     private SuggestedBooksAdapter adapter;
 
@@ -39,10 +41,9 @@ public class ExplorerFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(isAdded() && isVisible())
-        getActivity().findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-        client = NYTClient.getInstance();
     }
+
+
 
     @Nullable
     @Override
@@ -56,16 +57,22 @@ public class ExplorerFragment extends Fragment {
         ButterKnife.bind(this, view);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         fetchBestSellers();
+        fetchOptionalNYTFeed();
     }
 
     public void fetchBestSellers(){
-        Call<NYTResponse> call = client.listBestSellers();
+        Call<NYTResponse> call = NYTClient.getInstance().listBestSellers();
         call.enqueue(new Callback<NYTResponse>() {
             @Override
             public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
                 List<Result> bookResults = response.body().getResults();
-                adapter = new SuggestedBooksAdapter(bookResults);
-                rv.setAdapter(adapter);
+                if(adapter == null) {
+                    adapter = new SuggestedBooksAdapter(bookResults);
+                    rv.setAdapter(adapter);
+                }else {
+                    adapter.addAll(bookResults);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -73,6 +80,35 @@ public class ExplorerFragment extends Fragment {
                 Log.d(TAG, "Failure retrofitting " + t);
             }
         });
+    }
+
+    public void fetchOptionalNYTFeed(){
+        Set<String> nytSet =  PreferenceHelper.getNYTFeeds(getActivity());
+        Log.d(TAG, "nyt set size was " + nytSet.size());
+        if(nytSet != null) {
+            for (String category : nytSet) {
+                Call<NYTResponse> call = NYTClient.getInstance().getCategoriesList(category);
+                call.enqueue(new Callback<NYTResponse>() {
+                    @Override
+                    public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
+                        NYTResponse nytResponse = response.body();
+                        Log.d(TAG, "NYT api call size was " + nytResponse.getResults().size());
+                        List<Result> results = response.body().getResults();
+                        if(results != null) {
+                            if(adapter != null){
+                                adapter.addAll(response.body().getResults());
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<NYTResponse> call, Throwable t) {
+                        Log.d(TAG, "Failure " + t);
+                    }
+                });
+            }
+        }
     }
 
     @Override

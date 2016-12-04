@@ -27,7 +27,7 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends BasePresenterActivity implements DetailFragment.DetailInteractionListener{
+public class DetailActivity extends BasePresenterActivity{
     private String TAG = "DetailActivity";
     private ActionBar actionBar;
     private Fragment fragment = null;
@@ -163,11 +163,6 @@ public class DetailActivity extends BasePresenterActivity implements DetailFragm
         intent.putExtra(BOOK_ID, book.getId());
         intent.putExtra(BOOK_KEY, book);
         return intent;
-    }
-
-    @Override
-    public void checkOut(Book book) {
-        getPresenter().showCheckOutDialog(book);
     }
 
 }

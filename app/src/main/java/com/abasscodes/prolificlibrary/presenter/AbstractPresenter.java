@@ -20,7 +20,7 @@ public abstract class AbstractPresenter implements Mvp.Presenter{
     }
 
     public void fillOutNewBookForm(){
-        Intent intent = EditActivity.fillOutNewBook(activity);
+        Intent intent = EditActivity.fillOutNewBook(activity, null);
         activity.startActivity(intent);
     }
 

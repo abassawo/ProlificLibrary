@@ -128,4 +128,8 @@ public class Result {
         this.reviews = reviews;
     }
 
+    @Override
+    public String toString() {
+        return title + " " + author + " " + publisher + " " + description;
+    }
 }

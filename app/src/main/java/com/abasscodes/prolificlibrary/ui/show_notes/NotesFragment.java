@@ -61,7 +61,6 @@ public class NotesFragment extends Fragment{
 
     }
 
-
     public static NotesFragment getInstance(){
         if (instance == null) {
             instance = new NotesFragment();
@@ -78,28 +77,18 @@ public class NotesFragment extends Fragment{
         ButterKnife.bind(this, view);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         notesRecyclerView.setAdapter(rvAdapter);
+        if (notesRecyclerView != null) {
+            if (rvAdapter.getItemCount() == 0) {
+                notesRecyclerView.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                notesRecyclerView.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.INVISIBLE);
+            }
+        }
         return view;
     }
 
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Call<List<Book>> call = APIClient.getInstance().getCheckedOutBooks(getActivity());
-//        call.enqueue(new Callback<List<Book>>() {
-//            @Override
-//            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-//                books = response.body();
-//                rvAdapter.setBooks(books);
-//                rvAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Book>> call, Throwable t) {
-//
-//            }
-//        });
-//
-//    }
+
 
 }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
@@ -54,7 +55,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
     public static final String BOOK_KEY = "book_detail";
     private DetailPresenter presenter;
-    private DetailInteractionListener callback;
+
 
 
     @Override
@@ -66,16 +67,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            callback = (DetailInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement DetailInteractionListener");
-        }
-    }
 
     public static DetailFragment newInstance(Book book) {
         Bundle args = new Bundle();
@@ -108,7 +99,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     public void bindBook(Book book) {
         this.book = book;
         if (book == null) return;
-        ;
         String title = book.getTitle() == null ? "" : book.getTitle();
         Log.d(TAG, title);
         String author = book.getAuthor() == null ? "" : book.getAuthor();
@@ -117,40 +107,12 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         authorTV.setText(author);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void showCheckoutDialog(final Book book) {
-        String title = getResources().getString(R.string.checkout_book) + " " + book.getTitle() + "?";
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final EditText edittext = new EditText(getActivity());
-        builder.setTitle(title)
-                .setMessage(getResources().getString(R.string.dialog_msg));
-        builder.setView(edittext);
 
-
-        builder.setPositiveButton("Checkout", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
-                String name = edittext.getText().toString();
-                checkOut(book, name);
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
-            }
-        });
-
-        Dialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-    public void checkOut(final Book book, String name) {
+    public void checkOut(final Book book) {
         Date date = new Date();
         String dateFormatStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
         book.setLastCheckedOut(dateFormatStr);
-        book.setLastCheckedOutBy(name);
+        book.setLastCheckedOutBy(PreferenceHelper.getUserName(getActivity()));
         Call<Book> call = client.updateBook(book.getId(), book);
         call.enqueue(new Callback<Book>() {
             @Override
@@ -202,14 +164,11 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.checkout_book:
-                callback.checkOut(book);
+                checkOut(book);
                 break;
         }
 
     }
 
-    public interface DetailInteractionListener {
-        void checkOut(Book book);
-    }
 
 }

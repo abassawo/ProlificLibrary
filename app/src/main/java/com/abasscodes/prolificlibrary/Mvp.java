@@ -21,6 +21,5 @@ public interface Mvp {
         void onConnectionFailure();
         void showNetworkSettings();
         void showCheckOutDialog(Book book);
-        void updateUI();
     }
 }

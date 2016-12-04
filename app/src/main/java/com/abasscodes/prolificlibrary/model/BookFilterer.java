@@ -21,21 +21,13 @@ public class BookFilterer {
     }
 
     public void filter(List<Book> books){
-        ArrayList<Book> completedBooks = new ArrayList<>();
         ArrayList<Book> checkedOutBooks = new ArrayList<>();
-        ArrayList<Book> archivedBooks = new ArrayList<>();
-
         for(Book book : books){
-            if(book.isComplete()) completedBooks.add(book);
             if(book.isCheckedOut()) checkedOutBooks.add(book);
-            if(book.isArchived()) archivedBooks.add(book);
         }
-
     }
 
     public interface FiltersReadyListener{
-        void setCompletedBooks(ArrayList<Book> completedBooks);
         void setCheckedOutBooks(ArrayList<Book> checkedOutBooks);
-        void setArchivedBooks(ArrayList<Book> archivedBooks);
     }
 }

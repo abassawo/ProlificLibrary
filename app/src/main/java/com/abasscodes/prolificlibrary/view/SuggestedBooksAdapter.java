@@ -3,9 +3,11 @@ package com.abasscodes.prolificlibrary.view;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.abasscodes.prolificlibrary.view.NYTBookViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +15,13 @@ import java.util.List;
  */
 public class SuggestedBooksAdapter extends RecyclerView.Adapter<NYTBookViewHolder> {
 
-    private final List<Result> results;
+    private List<Result> results;
 
-    public SuggestedBooksAdapter(List<Result> results){
+
+    public SuggestedBooksAdapter(List<Result> results) {
         this.results = results;
     }
+
     @Override
     public NYTBookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new NYTBookViewHolder(parent);
@@ -29,8 +33,21 @@ public class SuggestedBooksAdapter extends RecyclerView.Adapter<NYTBookViewHolde
         holder.bindBook(result);
     }
 
+    public List<Result> getData() {
+        return results;
+    }
+
     @Override
     public int getItemCount() {
         return results.size();
+    }
+
+
+    public void addAll(List<Result> results) {
+        if(this.results == null){
+            this.results = results;
+        }else{
+            results.addAll(results);
+        }
     }
 }

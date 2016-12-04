@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by C4Q on 11/30/16.
  */
-public class PageNoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public class PageNoteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     //Circular preview of the page
     @Bind(R.id.page_number_fab)
     TextView pageTV;
@@ -43,11 +43,7 @@ public class PageNoteViewHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View v) {
         FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-        ShowNoteDialog.newInstance(note).show(fm, null);
+        ShowNoteDialog.newInstance(note.comment).show(fm, null);
     }
 
-    @Override
-    public boolean onLongClick(View v) {
-        return false;
-    }
 }

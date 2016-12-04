@@ -80,14 +80,6 @@ public class WelcomeActivity extends MaterialIntroActivity implements FirstOnboa
         addSlide(permissionSlide, buttonBehavior);
     }
 
-    public void addOnboardSlide() {
-        addSlide(builder.backgroundColor(R.color.colorPrimary)
-                        .buttonsColor(R.color.colorAccent)
-                        .title("Looks like it's your first time")
-                        .description(getResources().getString(R.string.join_prolific))
-                        .build(),
-                buttonBehavior);
-    }
 
     public void addLastSlide() {
         addSlide(builder.backgroundColor(R.color.colorPrimary)

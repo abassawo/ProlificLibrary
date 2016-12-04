@@ -13,24 +13,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/add_nyt_book_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_add"/>
+
         <LinearLayout
             android:id="@+id/preview_ll"
             android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/book_thumbnail"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/placeholder"/>
+            <ImageView
+                android:id="@+id/book_thumbnail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/new_york_times_icon"/>
 
-        <TextView
-            android:id="@+id/bottom_border"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/blueish_grey"/>
 
         </LinearLayout>
 
@@ -43,7 +47,7 @@
 
             <TextView
                 android:layout_gravity="left"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/book_item_title"
                 android:textSize="16dp"
@@ -51,17 +55,15 @@
 
             <TextView
                 android:layout_gravity="left"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/book_item_author"/>
 
+
+
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/checkout_icon_imgview"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"/>
+
 
     </RelativeLayout>
 

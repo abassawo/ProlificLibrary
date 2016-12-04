@@ -64,9 +64,4 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
     public void onConnectionFailure() {
 
     }
-
-    @Override
-    public void updateUI() {
-
-    }
 }
