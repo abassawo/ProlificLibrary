@@ -4,11 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
+import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.view.tab_fragments.AllBooksFragment;
-import com.abasscodes.prolificlibrary.view.tab_fragments.BaseTabFragment;
+import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();
     private ArrayList<Book> books;
-
+    public int currentIndex;
 
 
     public TabAdapter(AppCompatActivity activity) {
@@ -52,9 +54,8 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (books != null) {
-                    return AllBooksFragment.getInstance(books);
-                }
+                if (books != null)
+                    return NotesFragment.newInstance(books);
                 break;
         }
         return fragments.get(position);
@@ -78,9 +79,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-//        BaseTabFragment fragment = (AllBooksFragment) fragments.get(position);
-//        fragment.refresh(books);
-
+       this.currentIndex = position;
     }
 
     @Override
@@ -90,17 +89,10 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
 
     @Override
-    public void setCompletedBooks(ArrayList<Book> completedBooks) {
-//        this.completedBooks = completedBooks;
-    }
-
-    @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-//        this.checkedOutBooks = checkedOutBooks;
+        if(getCount() < 3)
+        addFragment(2, NotesFragment.newInstance(checkedOutBooks), "Notes");
     }
 
-    @Override
-    public void setArchivedBooks(ArrayList<Book> archivedBooks) {
-//        this.archivedBooks = archivedBooks;
-    }
+
 }

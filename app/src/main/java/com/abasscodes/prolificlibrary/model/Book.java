@@ -3,14 +3,21 @@ package com.abasscodes.prolificlibrary.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.abasscodes.prolificlibrary.model.nytimes.pojos.RanksHistory;
+import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class representing a book
@@ -26,6 +33,9 @@ import java.util.Date;
  */
 
 public class Book implements Parcelable, Comparable<Book> {
+
+    private static final String TAG = Book.class.getSimpleName();
+    public Map<Integer, PageNote> pageNoteMap = new HashMap<>();
 
     public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
         @Override
@@ -61,12 +71,29 @@ public class Book implements Parcelable, Comparable<Book> {
     private boolean isComplete = false;
     transient boolean archived;
 
+    public boolean notesVisible = false;
+    public String comment;
+
     public Book() {
     }
 
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
+    }
+
+    public Book(Result result) {
+        Log.d(TAG, "Result specs were " + result);
+        this.title = result.getTitle();
+        this.author = result.getAuthor();
+        this.publisher = result.getPublisher();
+        List<RanksHistory> ranks = result.getRanksHistory();
+        if(ranks.size() > 0){
+            this.categories = ranks.get(0).getDisplayName();
+        }else{
+            this.categories = "New York Times Best Seller";
+        }
+
     }
 
     public String getAuthor() {
@@ -262,4 +289,29 @@ public class Book implements Parcelable, Comparable<Book> {
     public boolean isArchived() {
         return archived;
     }
+
+    public PageNote getPageNote(int idx) {
+        if(pageNoteMap.containsKey(idx)) {
+            return pageNoteMap.get(idx);
+        }else {
+            PageNote note = new PageNote(idx, "", id);
+            pageNoteMap.put(idx, note);
+            return note;
+        }
+    }
+
+    public boolean hasPageNote(int pageNum) {
+        return pageNoteMap.containsKey(pageNum);
+    }
+
+//    public void addPageNote(int page, String text) {
+//        PageNote pageNote;
+//        if(pageNoteMap.containsKey(page)){
+//            pageNote = pageNoteMap.get(page);
+//            pageNote.append(text);
+//        }else{
+//            pageNote = new PageNote(page, text, this.id);
+//        }
+//        pageNoteMap.put(page, pageNote);
+//    }
 }

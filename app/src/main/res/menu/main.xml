@@ -1,22 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".interactions.show_all_books.MainTabsActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainTabsActivity">
 
 
     <item android:id="@+id/menu_item_search"
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item android:id="@+id/menu_item_add"
         android:title="@string/add"
-        app:showAsAction="collapseActionView"/>
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="always"/>
 
     <item
         android:icon="@android:drawable/ic_delete"
         android:id="@+id/menu_item_deleteAll"
         android:title="@string/delete_all"
-        app:showAsAction="never"/>
+        app:showAsAction="collapseActionView"/>
 
 
 </menu>

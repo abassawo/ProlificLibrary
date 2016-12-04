@@ -21,4 +21,8 @@ public class ConnectionUtil {
             Log.d(TAG, "Connected " + connected);
             return connected;
     }
+
+    public static void showConnecitonError(){
+        //fixme
+    }
 }

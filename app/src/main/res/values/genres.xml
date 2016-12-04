@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array id="genres" name="genres">
+        <item>hardcover-fiction</item>
+        <item>hardcover-noniction</item>
+        <item>hardcover-adult-paperback</item>
+        <item>hardcover-grahic-books</item>
+    </string-array>
+</resources>

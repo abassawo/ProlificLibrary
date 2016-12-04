@@ -9,9 +9,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.interactions.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.interactions.show_all_books.MainTabsActivity;
-import com.abasscodes.prolificlibrary.interactions.show_book_detail.DetailActivity;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.MainTabsActivity;
+import com.abasscodes.prolificlibrary.ui.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
@@ -28,8 +28,7 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
 
    private static final String TAG = BasePresenterActivity.class.getSimpleName() ;
    public static final int DELETED_ITEM_CODE = 999;
-   public Fragment currentFragment;
-   private BookRepository bookRepo;
+
 
 
    public abstract P getPresenter();
@@ -39,25 +38,11 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       super.onCreate(savedInstanceState, persistentState);
    }
 
-//   @Override
-//   public void onConfigurationChanged(Configuration newConfig) {
-//      super.onConfigurationChanged(newConfig);
-//      getPresenter().updateUI(this);
-//   }
-//
-//   @Override
-//   protected void onResume() {
-//      super.onResume();
-//      getPresenter().updateUI(this);
-//   }
-
 
    public void showBookDetail(Book book) {
       Intent intent = DetailActivity.makeIntent(this, book);
       startActivity(intent);
    }
-
-
 
 
    public void editBook(int id, Book book) {
@@ -67,8 +52,18 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
 
 
    public void fillOutNewBookForm() {
-      Intent intent = EditActivity.fillOutNewBook(this);
+      Intent intent = EditActivity.fillOutNewBook(this, null);
       startActivity(intent);
+   }
+
+   public void fillOutNewBookForm(Book book){
+      Intent intent = EditActivity.fillOutNewBook(this, book);
+      startActivity(intent);
+   }
+
+   public void showConnectionError(){
+      //fixme //
+      Toast.makeText(this, "Unable to connect", Toast.LENGTH_SHORT).show();
    }
 
 

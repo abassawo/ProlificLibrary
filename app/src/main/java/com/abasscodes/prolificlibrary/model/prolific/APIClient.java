@@ -1,7 +1,9 @@
 package com.abasscodes.prolificlibrary.model.prolific;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,7 +58,7 @@ public class APIClient {
         return api.listBooks();
     }
 
-    public Call<ArrayList<Book>> listCheckedOuttBooks(){
+    public Call<ArrayList<Book>> listCheckedOutBooks(){
         return api.listBooks();
     }
 
@@ -88,17 +90,17 @@ public class APIClient {
 
             @Override
             public void onFailure(Call<Book> call, Throwable t) {
-
                 Log.d("Deleting Book", "failure " + t);
             }
         });
     }
 
-    public Call<List<Book>> getCheckedOutBooks() {
-        return api.getCheckedOutBooks("Abass");
+    public Call<List<Book>> getCheckedOutBooks(Context context) {
+        return api.getCheckedOutBooks(PreferenceHelper.getUserName(context));
     }
 
     public Call<Void> deleteAll() {
          return api.deleteAll();
     }
+
 }
