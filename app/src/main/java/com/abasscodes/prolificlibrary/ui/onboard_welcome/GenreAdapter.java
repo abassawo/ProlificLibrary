@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer.GenreViewHolder;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

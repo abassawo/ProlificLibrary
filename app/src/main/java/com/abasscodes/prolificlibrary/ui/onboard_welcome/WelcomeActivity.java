@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
-import com.abasscodes.prolificlibrary.ui.onboard_welcome.genre_customizer.GenrePickerSlide;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 
 import agency.tango.materialintroscreen.MaterialIntroActivity;
@@ -24,12 +23,10 @@ import agency.tango.materialintroscreen.animations.IViewTranslation;
  * Created by C4Q on 11/21/16.
  */
 
-public class WelcomeActivity extends MaterialIntroActivity implements FirstOnboardSlide.Callback {
+public class WelcomeActivity extends MaterialIntroActivity {
     SlideFragmentBuilder builder = new SlideFragmentBuilder();
     private MessageButtonBehaviour buttonBehavior;
     private IViewTranslation translation;
-    private String userName, email;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +87,4 @@ public class WelcomeActivity extends MaterialIntroActivity implements FirstOnboa
                 .build(), buttonBehavior);
     }
 
-    @Override
-    public void setUsername(String username) {
-        this.userName = username;
-    }
-
-    @Override
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

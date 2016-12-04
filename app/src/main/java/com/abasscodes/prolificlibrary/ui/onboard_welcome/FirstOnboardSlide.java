@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 
 import butterknife.Bind;
@@ -28,7 +29,6 @@ public class FirstOnboardSlide extends BaseSlideFragment {
     EditText emailField;
     @Bind(R.id.welcome_image_view)
     ImageView imageView;
-    private Callback listener;
 
 
     @Override
@@ -36,15 +36,6 @@ public class FirstOnboardSlide extends BaseSlideFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            this.listener = (Callback) activity;
-        }catch (ClassCastException cce){
-            throw new ClassCastException("Must impement Callback");
-        }
-    }
 
     @Nullable
     @Override
@@ -64,7 +55,8 @@ public class FirstOnboardSlide extends BaseSlideFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                listener.setUsername(s.toString());
+
+                PreferenceHelper.setUserName(getActivity(), s.toString());
             }
         });
         emailField.addTextChangedListener(new TextWatcher() {
@@ -75,7 +67,7 @@ public class FirstOnboardSlide extends BaseSlideFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                listener.setEmail(s.toString());
+                PreferenceHelper.setEmail(getActivity(), s.toString());
             }
 
             @Override
@@ -95,12 +87,6 @@ public class FirstOnboardSlide extends BaseSlideFragment {
     @Override
     public boolean canMoveFurther() {
         return TextUtilHelper.hasText(nameField) && TextUtilHelper.hasText(emailField);
-    }
-
-    public interface Callback{
-
-        void setUsername(String username);
-        void setEmail(String email);
     }
 
 
