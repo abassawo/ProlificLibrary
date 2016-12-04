@@ -35,9 +35,9 @@ public interface BookAPI {
     @PUT("books/{id}/")
     Call<Book> updateBook(@Path("id") int bookId, @Body Book book);
 
+
     @DELETE("clean/")
     Call<Void> deleteAll();
-
 
     @POST("books")
     Call<Book> addBook(@Body Book book);

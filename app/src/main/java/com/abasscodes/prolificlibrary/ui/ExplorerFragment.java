@@ -7,26 +7,18 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.abasscodes.prolificlibrary.view.SuggestedBooksAdapter;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

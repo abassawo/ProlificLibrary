@@ -29,9 +29,8 @@ public class APIClient {
     private static BookAPI api;
 
 
-
-    private APIClient(){
-        if(api == null) {
+    private APIClient() {
+        if (api == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                     .create();
@@ -46,19 +45,14 @@ public class APIClient {
     }
 
 
-
-    public static APIClient getInstance(){
-        if(instance == null){
+    public static APIClient getInstance() {
+        if (instance == null) {
             instance = new APIClient();
         }
-        return  instance;
+        return instance;
     }
 
-    public Call<ArrayList<Book>> getBooks(){
-        return api.listBooks();
-    }
-
-    public Call<ArrayList<Book>> listCheckedOutBooks(){
+    public Call<ArrayList<Book>> getBooks() {
         return api.listBooks();
     }
 
@@ -67,9 +61,11 @@ public class APIClient {
         return api.getBook(bookId);
     }
 
-    public Call<Book> updateBook(int id, Book book) {
-        return api.updateBook(id, book);
+
+    public Call<Book> updateBook(Book book){
+        return api.updateBook(book.getId(), book);
     }
+    
 
     public Call<Book> addBook(String title, String author, String publisher, String categories) {
         return api.addBook(title, author, publisher, categories);
@@ -79,28 +75,9 @@ public class APIClient {
         return api.deleteBook(id);
     }
 
-    public void deleteBook(Book book){
-        final String title = book.getTitle();
-        Call<Book> call = deleteBook(book.getId());
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d("Deleting Book", "failure " + t);
-            }
-        });
-    }
-
-    public Call<List<Book>> getCheckedOutBooks(Context context) {
-        return api.getCheckedOutBooks(PreferenceHelper.getUserName(context));
-    }
 
     public Call<Void> deleteAll() {
-         return api.deleteAll();
+        return api.deleteAll();
     }
 
 }

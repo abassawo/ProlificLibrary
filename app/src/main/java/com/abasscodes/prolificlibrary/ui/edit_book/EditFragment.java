@@ -24,11 +24,17 @@ public class EditFragment extends AddBookFragment {
 
     APIClient client;
     public static final String BOOK_ID = "id";
-    public static final String BOOK_KEY = "book_key";
-    private static EditFragment sFragment = null;
     private String TAG = EditFragment.class.getSimpleName();
     private Book book;
 
+
+    public static EditFragment newInstance(Book book) {
+        Bundle args = new Bundle();
+        args.putParcelable(BOOK_KEY, book);
+        EditFragment fragment = new EditFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Override
@@ -80,6 +86,10 @@ public class EditFragment extends AddBookFragment {
 
     }
 
+
+
+
+
     public void updateBook() {
         int id = book.getId();
         Log.d(TAG, "Book edit is " + book.getTitle() + " " + id);
@@ -88,7 +98,7 @@ public class EditFragment extends AddBookFragment {
         book.setCategories(categoryField.getText().toString());
         book.setPublisher(publisherField.getText().toString());
 
-        Call<Book> call = client.updateBook(id, book);
+        Call<Book> call = client.updateBook(book);
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {

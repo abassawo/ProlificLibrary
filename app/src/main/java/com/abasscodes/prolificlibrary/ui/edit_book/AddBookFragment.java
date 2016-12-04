@@ -33,6 +33,7 @@ public class AddBookFragment extends Fragment {
 
 
     private static final String TAG = AddBookFragment.class.getSimpleName();
+    public static final String BOOK_KEY = "BOOK";
     public static final int ADD_BOOK_CODE = 101;
 
     @Bind(R.id.edittext_book_title)
@@ -54,7 +55,7 @@ public class AddBookFragment extends Fragment {
 
     public static AddBookFragment newInstance(Book book) {
         Bundle args = new Bundle();
-        args.putParcelable("BOOK", book);
+        args.putParcelable(BOOK_KEY, book);
         AddBookFragment fragment = new AddBookFragment();
         fragment.setArguments(args);
         return fragment;
@@ -81,7 +82,7 @@ public class AddBookFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(getArguments() != null){
-            Book book = getArguments().getParcelable("BOOK");
+            Book book = getArguments().getParcelable(BOOK_KEY);
             Log.d(TAG, "book specs " + book);
             titleField.setText(book.getTitle());
             authorField.setText(book.getAuthor());
@@ -143,7 +144,7 @@ public class AddBookFragment extends Fragment {
 
 
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
 

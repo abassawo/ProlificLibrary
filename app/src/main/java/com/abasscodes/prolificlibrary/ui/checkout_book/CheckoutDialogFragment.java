@@ -93,24 +93,7 @@ public class CheckoutDialogFragment extends DialogFragment {
     public void checkOut(Book book, String name) {
         book.setLastCheckedOut(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         book.setLastCheckedOutBy(name);
-        updateBookOnServer(book);
+        APIClient.getInstance().updateBook(book);
     }
-
-    public void updateBookOnServer(Book book) {
-        Call<Book> call = APIClient.getInstance().updateBook(book.getId(), book);
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Toast.makeText(getActivity(), "error " + t, Toast.LENGTH_LONG).show();
-                Log.d(TAG, "failed to post " + t);
-            }
-        });
-    }
-
 
 }
