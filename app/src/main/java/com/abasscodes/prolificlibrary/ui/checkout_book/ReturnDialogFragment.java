@@ -56,6 +56,7 @@ public class ReturnDialogFragment extends CheckoutDialogFragment {
                 //Store the submitted name and check out book
                 Context ctx = getContext();
                 returnBook(book);
+                ctx.startActivity(new Intent(getActivity(), MainTabsActivity.class)); //fixme
 
 
             }
@@ -72,8 +73,7 @@ public class ReturnDialogFragment extends CheckoutDialogFragment {
 
 
     public void returnBook(Book book) {
-        book.setLastCheckedOut(null);
-        book.setLastCheckedOutBy(null);
-        onResume();
+        book.returnCheckOut();
+        updateBookOnServer(book);
     }
 }

@@ -65,7 +65,7 @@ public class APIClient {
     public Call<Book> updateBook(Book book){
         return api.updateBook(book.getId(), book);
     }
-    
+
 
     public Call<Book> addBook(String title, String author, String publisher, String categories) {
         return api.addBook(title, author, publisher, categories);

@@ -151,6 +151,11 @@ public class Book implements Parcelable, Comparable<Book> {
         this.lastCheckedOutBy = lastCheckedOutBy;
     }
 
+    public void returnCheckOut(){
+        this.lastCheckedOutBy = "";
+        this.lastCheckedOut = "";
+    }
+
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
@@ -283,7 +288,7 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public boolean isCheckedOut() {
-        return lastCheckedOut != null && !lastCheckedOut.equals("null");
+        return !lastCheckedOutBy.isEmpty();
     }
 
     public boolean isArchived() {
@@ -304,14 +309,5 @@ public class Book implements Parcelable, Comparable<Book> {
         return pageNoteMap.containsKey(pageNum);
     }
 
-//    public void addPageNote(int page, String text) {
-//        PageNote pageNote;
-//        if(pageNoteMap.containsKey(page)){
-//            pageNote = pageNoteMap.get(page);
-//            pageNote.append(text);
-//        }else{
-//            pageNote = new PageNote(page, text, this.id);
-//        }
-//        pageNoteMap.put(page, pageNote);
-//    }
+
 }
