@@ -44,6 +44,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     public void setBooks(List<Book> books){
         this.books = books;
+        notifyDataSetChanged();
     }
 
 

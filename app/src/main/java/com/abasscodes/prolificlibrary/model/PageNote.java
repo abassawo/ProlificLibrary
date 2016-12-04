@@ -2,6 +2,7 @@ package com.abasscodes.prolificlibrary.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +61,9 @@ public class PageNote implements Parcelable, Comparable {
         int otherPage = pageNote.pageNumber;
         if (bookId == pageNote.bookId && pageNumber == otherPage)
             return 0;
-        return pageNumber > otherPage ? 1 : -1; //fixme
+        return pageNumber > otherPage ? 1 : -1;
     }
-
-
-
+    
     public int getBookId() {
         return bookId;
     }
@@ -86,7 +85,6 @@ public class PageNote implements Parcelable, Comparable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeValue(id);
         parcel.writeValue(bookId);
-        parcel.writeValue(id);
         parcel.writeValue(pageNumber);
         parcel.writeString(comment);
     }

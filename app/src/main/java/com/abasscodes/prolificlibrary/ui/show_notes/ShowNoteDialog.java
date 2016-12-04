@@ -46,6 +46,7 @@ public class ShowNoteDialog extends SupportBlurDialogFragment {
         Handler handler = new Handler();
         Runnable r = new Runnable() {
             public void run() {
+                if(isAdded() && isVisible())
                 dismiss();
             }
         };

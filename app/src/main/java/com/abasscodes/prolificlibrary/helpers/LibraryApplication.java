@@ -17,12 +17,11 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onCreate() {
         super.onCreate();
         registerActivityLifecycleCallbacks(this);
-        // Create an InitializerBuilder
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                        .build());
+        Stetho.Initializer initializer = Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build();
+        Stetho.initialize(initializer);
     }
 
     @Override

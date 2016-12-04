@@ -1,32 +1,28 @@
 package com.abasscodes.prolificlibrary.ui.show_book_detail;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
+import com.abasscodes.prolificlibrary.ui.checkout_book.CheckoutDialogFragment;
+import com.abasscodes.prolificlibrary.ui.checkout_book.ReturnDialogFragment;
+import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,6 +44,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     TextView authorTV;
     @Bind(R.id.checkout_book)
     ImageView checkoutBook;
+    @Bind(R.id.return_book)
+    ImageView returnBook;
     private Book book;
     private APIClient client;
     private String TAG = "DetailFragment";
@@ -55,7 +53,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
     public static final String BOOK_KEY = "book_detail";
     private DetailPresenter presenter;
-
 
 
     @Override
@@ -89,11 +86,25 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        checkoutBook.setOnClickListener(this);
-        if (book != null && presenter != null) {
+        if (book != null) {
             presenter.showBookDetail(getView(), book);
+            if (book.isCheckedOut()) {
+                checkoutBook.setVisibility(View.INVISIBLE);
+                returnBook.setVisibility(View.VISIBLE);
+                returnBook.setOnClickListener(this);
+            } else {
+                returnBook.setVisibility(View.INVISIBLE);
+                checkoutBook.setVisibility(View.VISIBLE);
+                checkoutBook.setOnClickListener(this);
+            }
+        } else {
+            showError();
         }
 
+    }
+
+    private void showError() {
+        //todo
     }
 
     public void bindBook(Book book) {
@@ -105,29 +116,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, author);
         titleTV.setText(title);
         authorTV.setText(author);
-    }
-
-
-    public void checkOut(final Book book) {
-        Date date = new Date();
-        String dateFormatStr = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
-        book.setLastCheckedOut(dateFormatStr);
-        book.setLastCheckedOutBy(PreferenceHelper.getUserName(getActivity()));
-        Call<Book> call = client.updateBook(book.getId(), book);
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(final Call<Book> call, Response<Book> response) {
-                Toast.makeText(getActivity(), book.getTitle() + " checked out by " + book.getLastCheckedOutBy(), Toast.LENGTH_SHORT).show();
-                bindBook(book);
-            }
-
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Toast.makeText(getActivity(), "error " + t, Toast.LENGTH_LONG).show();
-                Log.d(TAG, "failed to post " + t);
-            }
-        });
     }
 
 
@@ -160,12 +148,27 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         startActivity(intent);
     }
 
+
+    public void showCheckoutDialog(final Book book) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        CheckoutDialogFragment.newInstance(book).show(fm, null);
+    }
+
+    public void showReturnDialog(Book book) {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        ReturnDialogFragment.newInstance(book).show(fm, null);
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.checkout_book:
-                checkOut(book);
+                showCheckoutDialog(book);
                 break;
+            case R.id.return_book:
+                showReturnDialog(book);
+
         }
 
     }

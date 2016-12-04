@@ -36,6 +36,5 @@
             android:name=".ui.onboard_welcome.WelcomeActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Intro"/>
-        <activity android:name=".ui.onboard_welcome.genre_customizer.GenresActivity" />
     </application>
 </manifest>

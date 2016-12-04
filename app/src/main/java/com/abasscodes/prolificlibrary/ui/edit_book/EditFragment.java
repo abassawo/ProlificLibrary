@@ -26,17 +26,10 @@ public class EditFragment extends AddBookFragment {
     public static final String BOOK_ID = "id";
     public static final String BOOK_KEY = "book_key";
     private static EditFragment sFragment = null;
-    private String TAG = "EditFragment";
+    private String TAG = EditFragment.class.getSimpleName();
     private Book book;
 
 
-    public static EditFragment newInstance(Book book) { //Edit an existing book
-        Bundle args = new Bundle();
-        args.putParcelable(BOOK_KEY, book);
-        sFragment = new EditFragment();
-        sFragment.setArguments(args);
-        return sFragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,7 +93,6 @@ public class EditFragment extends AddBookFragment {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
                 Log.d(TAG, response.message());
-                Book bookPost = response.body();
                 startActivity(new Intent(getActivity(), MainTabsActivity.class));
             }
 

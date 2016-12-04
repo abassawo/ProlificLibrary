@@ -22,7 +22,6 @@ public class EditActivity extends AppCompatActivity {
 
     private static final String BOOK_KEY = "book_key";
     private static final String NEW_BOOK = "new_book_bool";
-    private static final String NEW_BOOK_FROM_SUGGESTION = "new_book-sugg";
     private ActionBar actionBar;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.edit_activity);
         setupToolbar();
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(NEW_BOOK, true)) {
+        if (intent.getBooleanExtra(NEW_BOOK, false)) {
             actionBar.setTitle("Add Book");
             Book book = intent.getParcelableExtra("BOOK");
             Fragment fragment = book == null ? new AddBookFragment() : AddBookFragment.newInstance(book);

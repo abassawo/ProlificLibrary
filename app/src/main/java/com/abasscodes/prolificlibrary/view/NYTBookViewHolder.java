@@ -43,7 +43,11 @@ public class NYTBookViewHolder extends RecyclerView.ViewHolder implements View.O
         titleTV.setOnClickListener(this);
         authorTV.setOnClickListener(this);
         addBtn.setOnClickListener(this);
+    }
 
+    public void showDescription(Result result){
+        FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
+        NYTNoteDialog.newInstance(result.getDescription()).show(fm, null);
     }
 
     public static View inflateView(ViewGroup parent) {
@@ -61,18 +65,16 @@ public class NYTBookViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-
+        if(v == itemView) showDescription(result);
         switch (v.getId()) {
             case R.id.add_nyt_book_btn:
                 Book bookFromResult = new Book(result);
                 Log.d(TAG, "Book specs " + bookFromResult);
                 RegisterActivity.basePresenterActivity.fillOutNewBookForm(bookFromResult);
-                break;
             case R.id.book_item_author:
             case R.id.book_item_title:
             case R.id.book_thumbnail:
-                FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-                ShowNoteDialog.newInstance(result.getDescription()).show(fm, null);
+                showDescription(result);
                 break;
 
         }

@@ -31,7 +31,8 @@ public class PreferenceHelper {
 
 
     public static boolean isFirstRun(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(onboard_key, true);
+        boolean firstRun = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(onboard_key, true);
+        return firstRun;
     }
 
     public static void disableWelcome(Context context) {

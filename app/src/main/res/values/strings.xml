@@ -28,5 +28,8 @@
     <string name="select_genre_prompt">Select your genres of interest</string>
     <string name="check_input_prompt">Make sure you have filled out all necessary fields.</string>
     <string name="add_note_hint">Add Note</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="reload">Reload</string>
     <!--<string name="first_run">Looks like it\'s your first time </string>-->
 </resources>

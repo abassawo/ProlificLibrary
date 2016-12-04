@@ -61,6 +61,11 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       startActivity(intent);
    }
 
+   public void showConnectionError(){
+      //fixme //
+      Toast.makeText(this, "Unable to connect", Toast.LENGTH_SHORT).show();
+   }
+
 
    public void showNetworkSettings(){
       startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
@@ -84,6 +89,5 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivityForResult(homeIntent, DELETED_ITEM_CODE);
    }
-
 
 }

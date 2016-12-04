@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.PageNote;
+import com.abasscodes.prolificlibrary.view.NYTNoteDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,7 +44,7 @@ public class PageNoteViewHolder extends RecyclerView.ViewHolder implements View.
     @Override
     public void onClick(View v) {
         FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-        ShowNoteDialog.newInstance(note.comment).show(fm, null);
+        NYTNoteDialog.newInstance(note.comment).show(fm, null);
     }
 
 }

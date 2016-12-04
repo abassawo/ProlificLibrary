@@ -12,5 +12,4 @@ import com.abasscodes.prolificlibrary.model.Book;
 public interface Presenter extends Mvp.Presenter {
 
     void showBookDetail(View view, Book book);
-    void showCheckOutDialog(Book book);
 }
