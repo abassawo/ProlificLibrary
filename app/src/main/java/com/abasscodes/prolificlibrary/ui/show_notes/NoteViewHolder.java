@@ -1,36 +1,23 @@
 package com.abasscodes.prolificlibrary.ui.show_notes;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
-import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.NotesRepository;
 import com.abasscodes.prolificlibrary.model.PageNote;
 import com.abasscodes.prolificlibrary.model.database.BookContentProvider;
 import com.abasscodes.prolificlibrary.ui.AddNoteDialog;
-import com.facebook.stetho.inspector.MismatchedResponseException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +33,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     RecyclerView notesRecyclerView;
     @Bind(R.id.add_note)
     View addNoteBtn;
-    private PageNoteAdapter adapter;
+    private InnerNoteAdapter adapter;
     private Book book;
     private boolean visible = false;
 
@@ -79,7 +66,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void setupAdapter(Book book) {
         this.book = book;
         List<PageNote> pageNotes = new BookContentProvider().getNotes(book.getId());
-        adapter = new PageNoteAdapter(pageNotes);
+        adapter = new InnerNoteAdapter(pageNotes);
         Context ctx = itemView.getContext();
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false));
         notesRecyclerView.setAdapter(adapter);

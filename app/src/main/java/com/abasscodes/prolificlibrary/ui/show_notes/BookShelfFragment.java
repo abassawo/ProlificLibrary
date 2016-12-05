@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.model.Book;
 
 import java.util.ArrayList;
@@ -17,16 +17,16 @@ import java.util.List;
  * Created by C4Q on 11/11/16.
  */
 
-public class NotesFragment extends RecyclerViewFragment {
+public class BookShelfFragment extends RecyclerViewFragment {
 
     public final static String TAG = "AllBooks";
-    private static NotesFragment instance;
+    private static BookShelfFragment instance;
     private List<Book> books;
 
-    public static NotesFragment newInstance(ArrayList<Book> books) {
+    public static BookShelfFragment newInstance(ArrayList<Book> books) {
         Bundle args = new Bundle();
         args.putParcelableArrayList("BOOKS", books);
-        instance = new NotesFragment();
+        instance = new BookShelfFragment();
         instance.setArguments(args);
         return instance;
     }
@@ -48,9 +48,9 @@ public class NotesFragment extends RecyclerViewFragment {
     }
 
 
-    public static NotesFragment getInstance() {
+    public static BookShelfFragment getInstance() {
         if (instance == null) {
-            instance = new NotesFragment();
+            instance = new BookShelfFragment();
         }
         return instance;
     }
@@ -67,9 +67,9 @@ public class NotesFragment extends RecyclerViewFragment {
         if(adapter != null) return adapter;
         if (getArguments() != null) {
             books = getArguments().getParcelableArrayList("BOOKS");
-            adapter = new NotesAdapter(books);
+            adapter = new OuterShelfAdapter(books);
         }else{
-            adapter = new NotesAdapter();
+            adapter = new OuterShelfAdapter();
         }
         return adapter;
     }

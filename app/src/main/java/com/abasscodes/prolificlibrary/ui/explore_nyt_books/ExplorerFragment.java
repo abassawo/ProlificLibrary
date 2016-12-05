@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;

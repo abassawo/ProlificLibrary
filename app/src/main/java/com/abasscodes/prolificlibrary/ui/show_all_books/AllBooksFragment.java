@@ -23,8 +23,7 @@ import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
-import com.abasscodes.prolificlibrary.view.adapters.BookAdapter;
-import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     private static final String BOOKS_KEY = "Books_Key";
     private FragmentCommunication listener;
     private ArrayList<Book> books;
-    private BookAdapter adapter;
+    private AllBooksAdapter adapter;
 
 
     @Override
@@ -198,7 +197,7 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         }
         this.books = books;
         if (adapter == null) {
-            adapter = new BookAdapter(getActivity(), books);
+            adapter = new AllBooksAdapter(getActivity(), books);
             recyclerView.setAdapter(adapter);
         } else {
             adapter.setBooks(books);

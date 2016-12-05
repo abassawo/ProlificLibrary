@@ -4,13 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
+import com.abasscodes.prolificlibrary.ui.show_notes.BookShelfFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +82,7 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
     @Override
     public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
         if(getCount() < 3)
-        addFragment(2, NotesFragment.newInstance(checkedOutBooks), "Notes");
+        addFragment(2, BookShelfFragment.newInstance(checkedOutBooks), "Notes");
     }
 
 

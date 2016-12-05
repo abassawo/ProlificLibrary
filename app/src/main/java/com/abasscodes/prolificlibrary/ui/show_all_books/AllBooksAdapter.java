@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view.adapters;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,16 +13,16 @@ import java.util.List;
  * Created by C4Q on 11/11/16.
  */
 
-public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
+public class AllBooksAdapter extends RecyclerView.Adapter<BookViewHolder> {
     private List<Book> books;
     private Context context;
 
-    public BookAdapter(Context context, List<Book> books){
+    public AllBooksAdapter(Context context, List<Book> books){
         this.books = books;
         this.context = context;
     }
 
-    public BookAdapter(Context context){
+    public AllBooksAdapter(Context context){
         this.context = context;
     }
 

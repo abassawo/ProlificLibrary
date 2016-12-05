@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view.fragments;
+package com.abasscodes.prolificlibrary.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

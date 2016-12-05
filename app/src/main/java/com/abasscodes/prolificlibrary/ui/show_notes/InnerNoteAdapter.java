@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by C4Q on 11/30/16.
  */
-public class PageNoteAdapter extends RecyclerView.Adapter<PageNoteViewHolder> {
+public class InnerNoteAdapter extends RecyclerView.Adapter<PageNoteViewHolder> {
     public List<PageNote> pageNotes;
 
 
-    public PageNoteAdapter(List<PageNote> pageNotes) {
+    public InnerNoteAdapter(List<PageNote> pageNotes) {
         this.pageNotes = pageNotes;
     }
 

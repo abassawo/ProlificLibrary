@@ -15,14 +15,14 @@ import java.util.Stack;
 /**
  * Created by C4Q on 11/29/16.
  */
-public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder>{
+public class OuterShelfAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Book> books = new ArrayList<>();
 
-    public NotesAdapter(List<Book> books) {
+    public OuterShelfAdapter(List<Book> books) {
        this.books = books;
     }
 
-    public NotesAdapter() {
+    public OuterShelfAdapter() {
         this.books = new ArrayList<>();
     }
 
