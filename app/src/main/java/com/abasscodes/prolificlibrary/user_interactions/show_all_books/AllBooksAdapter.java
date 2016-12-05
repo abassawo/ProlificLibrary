@@ -48,4 +48,18 @@ public class AllBooksAdapter extends RecyclerView.Adapter<BookViewHolder> {
     }
 
 
+    public void clear() {
+        books.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addBook(Book book) {
+        if(books != null){
+            books.add(book);
+        }
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
 }

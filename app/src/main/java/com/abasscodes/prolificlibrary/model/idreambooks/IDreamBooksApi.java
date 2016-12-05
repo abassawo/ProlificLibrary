@@ -5,6 +5,7 @@ import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -13,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface IDreamBooksApi {
 
-    @GET("")
-    Call<ReviewResponse> getBookReview(@Query("api-key") String apiKey, @Query("q") String bookTitle);
+    @GET("books/reviews.json")
+    Call<ReviewResponse> getBookReview(@Query("key") String apiKey, @Query("q") String bookTitle);
 
 }

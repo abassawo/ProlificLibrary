@@ -23,7 +23,7 @@ public class CriticReview {
     private String posOrNeg;
     @SerializedName("star_rating")
     @Expose
-    private Integer starRating;
+    private Double starRating;
     @SerializedName("review_date")
     @Expose
     private String reviewDate;
@@ -93,14 +93,14 @@ public class CriticReview {
     /**
      * @return The starRating
      */
-    public Integer getStarRating() {
+    public Double getStarRating() {
         return starRating;
     }
 
     /**
      * @param starRating The star_rating
      */
-    public void setStarRating(Integer starRating) {
+    public void setStarRating(Double starRating) {
         this.starRating = starRating;
     }
 

@@ -65,7 +65,7 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public boolean onLongClick(View view) {
         FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-        if (book.isCheckedOut()) {
+        if(book.isCheckedOut()) {
             ReturnDialogFragment.newInstance(book).show(fm, null);
         } else {
             CheckoutDialogFragment.newInstance(book).show(fm, null);

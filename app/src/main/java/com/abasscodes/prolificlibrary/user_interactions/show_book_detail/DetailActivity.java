@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -15,11 +16,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
+import com.abasscodes.prolificlibrary.user_interactions.checkout_book.CheckoutDialogFragment;
+import com.abasscodes.prolificlibrary.user_interactions.checkout_book.ReturnDialogFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,12 +35,17 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailActivity extends BasePresenterActivity{
+public class DetailActivity extends BasePresenterActivity implements View.OnClickListener {
     private String TAG = "DetailActivity";
     private ActionBar actionBar;
     private Fragment fragment = null;
     private Integer bookId;
     private ShareActionProvider actionProvider;
+    @Bind(R.id.checkout_book)
+    Button checkoutBook;
+    @Bind(R.id.return_book)
+    Button returnBook;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.collapsing_toolbar)
@@ -46,8 +56,8 @@ public class DetailActivity extends BasePresenterActivity{
     private DetailPresenter presenter;
 
 
-   public static final String BOOK_ID = "Book_id";
-   public static final String BOOK_KEY = "Book";
+    public static final String BOOK_ID = "Book_id";
+    public static final String BOOK_KEY = "Book";
     private String bookTitle;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,40 +65,57 @@ public class DetailActivity extends BasePresenterActivity{
         setContentView(R.layout.detail_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        actionBar =  getSupportActionBar();
+        actionBar = getSupportActionBar();
         minimizeToolbar();
         presenter = new DetailPresenter(this);
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             book = savedInstanceState.getParcelable(BOOK_KEY);
-        }else{
+        } else {
             book = getIntent().getParcelableExtra(BOOK_KEY);
         }
-        if(book != null){
-             updateUI(book);
+        if (book != null) {
+            updateUI(book);
         }
     }
 
-    public void updateUI(Book book){
-            setupActionBar(actionBar);
-            bookTitle = book.getTitle();
-            presenter.setToolbarTitle(book);
-            fragment = DetailFragment.newInstance(book);
-            hostFragment(fragment);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (book != null) {
+            if (book.isCheckedOut()) {
+                checkoutBook.setVisibility(View.INVISIBLE);
+                returnBook.setVisibility(View.VISIBLE);
+                returnBook.setOnClickListener(this);
+            } else {
+                returnBook.setVisibility(View.INVISIBLE);
+                checkoutBook.setVisibility(View.VISIBLE);
+                checkoutBook.setOnClickListener(this);
+
+            }
+        }
+    }
+
+    public void updateUI(Book book) {
+        setupActionBar(actionBar);
+        bookTitle = book.getTitle();
+        presenter.setToolbarTitle(book);
+        fragment = DetailFragment.newInstance(book);
+        hostFragment(fragment);
 
     }
 
-    public void minimizeToolbar(){
+    public void minimizeToolbar() {
         Handler handler = new Handler();
         Runnable r = new Runnable() {
             public void run() {
-                if(appBar != null)
+                if (appBar != null)
                     appBar.setExpanded(false, true);
             }
         };
         handler.postDelayed(r, 2000);
     }
 
-    public void hostFragment(Fragment fragment){
+    public void hostFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.detail_container, fragment).commit();
     }
 
@@ -99,25 +126,6 @@ public class DetailActivity extends BasePresenterActivity{
                 ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP);
         ab.setTitle(book.getTitle());
     }
-
-    public void initRetrofit(final int bookId) {
-        Call<Book> call = APIClient.getInstance().getBook(bookId);
-        call.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                book = response.body();
-                hostFragment(DetailFragment.newInstance(book));
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Log.d(TAG, "Error retrofitting " + t);
-            }
-
-        });
-    }
-
-
 
 
     @Override
@@ -156,13 +164,24 @@ public class DetailActivity extends BasePresenterActivity{
     }
 
 
-
-
     public static Intent makeIntent(Context context, Book book) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(BOOK_ID, book.getId());
         intent.putExtra(BOOK_KEY, book);
         return intent;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.checkout_book:
+                CheckoutDialogFragment.newInstance(book).show(getSupportFragmentManager(), null);
+                break;
+            case R.id.return_book:
+                ReturnDialogFragment.newInstance(book).show(getSupportFragmentManager(), null);
+
+        }
+
     }
 
 }

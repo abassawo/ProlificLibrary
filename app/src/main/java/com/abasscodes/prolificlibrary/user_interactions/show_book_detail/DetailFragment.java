@@ -5,16 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.AppCompatRatingBar;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.idreambooks.DreamApiClient;
@@ -35,23 +41,23 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailFragment extends Fragment implements View.OnClickListener {
+public class DetailFragment extends Fragment{
 
     @Bind(R.id.book_title)
     TextView titleTV;
     @Bind(R.id.book_author)
     TextView authorTV;
-    @Bind(R.id.checkout_book)
-    Button checkoutBook;
-    @Bind(R.id.return_book)
-    Button returnBook;
+
     private Book book;
     @Bind(R.id.book_checkout_status)
     TextView lastCheckedOutTV;
-    @Bind(R.id.books_recycler_view)
+    @Bind(R.id.detail_recycler_view)
     RecyclerView criticsRV;
+    @Bind(R.id.rating_bar)
+    RatingBar ratingBar;
 
     private String TAG = "DetailFragment";
+    private ReviewAdapter reviewAdapter;
 
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
     public static final String BOOK_KEY = "book_detail";
@@ -61,9 +67,10 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = DetailPresenter.getInstance((DetailActivity) getActivity());
         setRetainInstance(true);
         setHasOptionsMenu(true);
+        presenter = DetailPresenter.getInstance((DetailActivity) getActivity());
+        reviewAdapter = new ReviewAdapter();
     }
 
 
@@ -80,8 +87,16 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        ButterKnife.bind(this, view);
         book = getArguments().getParcelable(BOOK_KEY);
+        ButterKnife.bind(this, view);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        criticsRV.setLayoutManager(llm);
+        criticsRV.setAdapter(reviewAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
+                llm.getOrientation());
+        criticsRV.addItemDecoration(dividerItemDecoration);
+        if(!book.isCheckedOut()) lastCheckedOutTV.setVisibility(View.INVISIBLE);
+        showBookReviews(book);
         return view;
     }
 
@@ -90,43 +105,40 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         if (book != null) {
             presenter.showBookDetail(getView(), book);
-            if (book.isCheckedOut()) {
-                checkoutBook.setVisibility(View.INVISIBLE);
-                returnBook.setVisibility(View.VISIBLE);
-                returnBook.setOnClickListener(this);
-            } else {
-                lastCheckedOutTV.setVisibility(View.INVISIBLE);
-                returnBook.setVisibility(View.INVISIBLE);
-                checkoutBook.setVisibility(View.VISIBLE);
-                checkoutBook.setOnClickListener(this);
-
-            }
-        } else {
-            showError();
         }
 
     }
 
-    public void showBookReviews(Book book){
-        Call<ReviewResponse> call = DreamApiClient.getInstance().getBookReview(book.getTitle());
+    public void showBookReviews(final Book book) {
+        Call<ReviewResponse> call = DreamApiClient.getInstance().getBookReview(book.getTitle().toLowerCase());
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+                Log.d(TAG, "For book " + book.getTitle() + response.isSuccessful() + " items were " + response.body().getTotalResults());
+                if (response != null) {
+                    ReviewResponse reviewBody = response.body();
+                    if (reviewBody != null) {
+                        com.abasscodes.prolificlibrary.model.idreambooks.pojos.Book book = reviewBody.getBook();
+                        List<CriticReview> reviews = reviewBody.getBook().getCriticReviews();
+                        reviewAdapter.setReviews(reviews);
+                        if (book.getAverageCriticReviews() > 0) {
+                            ratingBar.setVisibility(View.VISIBLE);
+                            ratingBar.setRating(book.getAverageCriticReviews());
+                        }
+                    }
+                }
 
+                ((DetailActivity) getActivity()).minimizeToolbar();
             }
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
-
+                Log.d(TAG, "Failure retrofitting " + t);
+                ((DetailActivity) getActivity()).minimizeToolbar();
             }
         });
 
     }
-
-    private void showError() {
-        //todo
-    }
-
 
 
     @Override
@@ -159,28 +171,13 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void showCheckoutDialog(final Book book) {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        CheckoutDialogFragment.newInstance(book).show(fm, null);
-    }
-
-    public void showReturnDialog(Book book) {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        ReturnDialogFragment.newInstance(book).show(fm, null);
-    }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.checkout_book:
-                showCheckoutDialog(book);
-                break;
-            case R.id.return_book:
-                showReturnDialog(book);
 
-        }
 
+    public interface DetailFragmentListener{
+        void checkout(Book book);
+        void returnBook(Book book);
     }
 
 

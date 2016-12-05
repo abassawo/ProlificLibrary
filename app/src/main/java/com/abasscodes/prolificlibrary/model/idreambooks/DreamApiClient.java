@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DreamApiClient {
 
-    public static final String API_URL = "https://idreambooks.com/api/books/";
+    public static final String API_URL = "https://idreambooks.com/api/";
     private static final String API_KEY = "9a725e0de0577ba7a7a78a9f0df286cb52a9736e";
     private static DreamApiClient instance;
     private IDreamBooksApi api;

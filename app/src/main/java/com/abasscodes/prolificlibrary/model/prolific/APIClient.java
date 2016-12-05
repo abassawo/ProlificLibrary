@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 //import retrofit2.converter.gson.GsonConverterFactory;
@@ -64,6 +66,10 @@ public class APIClient {
         return api.addBook(title, author, publisher, categories);
     }
 
+    public Call<Book> addBook(Book book){
+        return api.addBook(book);
+    }
+
     public Call<Book> deleteBook(int id) {
         return api.deleteBook(id);
     }
@@ -73,4 +79,21 @@ public class APIClient {
         return api.deleteAll();
     }
 
+    public void addBooks(ArrayList<Book> books) {
+        Callback<Book> callback = new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+
+            }
+        };
+        for(Book book : books) {
+            addBook(book).enqueue(callback);
+        }
+
+    }
 }

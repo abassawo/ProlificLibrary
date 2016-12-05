@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,8 +42,9 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     public final static String TAG = "AllBooks";
     private static final String BOOKS_KEY = "Books_Key";
     private FragmentCommunication listener;
-    private ArrayList<Book> books;
     private AllBooksAdapter adapter;
+    private boolean recentlyDeleted = false;
+    private ArrayList<Book> books;
 
 
     @Override
@@ -67,11 +69,15 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         builder.setPositiveButton("Delete Everything", new DialogInterface.OnClickListener() {
             public void onClick(final DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
+                final ArrayList<Book> deletedBooks = (ArrayList<Book>) adapter.getBooks();
                 Call<Void> call = APIClient.getInstance().deleteAll();
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        refreshContent();
+                        recentlyDeleted = true;
+                        adapter.clear();
+                        showUndoDeleteAllSnackbar(deletedBooks);
+
                     }
 
                     @Override
@@ -93,6 +99,32 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
     }
 
+    private void showUndoDeleteAllSnackbar(final ArrayList<Book> deletedBooks) {
+        recentlyDeleted = false;
+        Snackbar.make(getView(), "All items were deleted", Snackbar.LENGTH_INDEFINITE).setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.setBooks(deletedBooks);
+                for(Book book : deletedBooks){
+                    Call<Book> call = APIClient.getInstance().addBook(book);
+                    call.enqueue(new Callback<Book>() {
+                        @Override
+                        public void onResponse(Call<Book> call, Response<Book> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Book> call, Throwable t) {
+                            Log.d(TAG, "Error retrofit adding " + t);
+                        }
+                    });
+                }
+                adapter.notifyDataSetChanged();
+                refreshContent();
+            }
+        }).show();
+    }
+
 
     public void prepareToDeleteAll() {
         if (books.size() == 0) {
@@ -100,8 +132,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         } else {
             showDeleteAllDialog();
         }
-
-
     }
 
 
@@ -182,8 +212,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         if (adapter != null) adapter.notifyDataSetChanged();
         if (ConnectionUtil.isConnected()) {
             new BookRepository(this).fetchBooks();
-        } else {
-            Snackbar.make(getView(), "No Internet", Snackbar.LENGTH_SHORT).show();
         }
         if (swipeLayout != null)
             swipeLayout.setRefreshing(false);
@@ -192,8 +220,10 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
     @Override
     public void onBooksReady(ArrayList<Book> books) {
-        if(books == null || books.isEmpty()){
+        if (books == null || books.isEmpty()) {
+            if(!recentlyDeleted){
                 showTipSnackBar();
+            }
         }
         this.books = books;
         if (adapter == null) {
