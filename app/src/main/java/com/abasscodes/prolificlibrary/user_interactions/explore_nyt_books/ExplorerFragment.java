@@ -62,7 +62,6 @@ public class ExplorerFragment extends RecyclerViewFragment {
     }
 
 
-
     @Override
     public void refreshContent() {
         fetchBestSellers();
@@ -72,6 +71,9 @@ public class ExplorerFragment extends RecyclerViewFragment {
 
     @Override
     public RecyclerView.Adapter getAdapter() {
+        if(adapter == null){
+            adapter = new SuggestedBooksAdapter();
+        }
         return adapter;
     }
 
@@ -80,7 +82,7 @@ public class ExplorerFragment extends RecyclerViewFragment {
         call.enqueue(new Callback<NYTResponse>() {
             @Override
             public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
-                if(response != null && response.body() != null) {
+                if (response != null && response.body() != null) {
                     List<Result> bookResults = response.body().getResults();
                     if (adapter == null) {
                         adapter = new SuggestedBooksAdapter(bookResults);
@@ -104,11 +106,19 @@ public class ExplorerFragment extends RecyclerViewFragment {
         Log.d(TAG, "nyt set size was " + nytSet.size());
         if (nytSet != null) {
             for (String category : nytSet) {
-                Call<NYTResponse> call = NYTClient.getInstance().getCategoriesList(category);
-                call.enqueue(new Callback<NYTResponse>() {
-                    @Override
-                    public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
-                        NYTResponse nytResponse = response.body();
+               searchCategory(category);
+            }
+        }
+    }
+
+    public void searchCategory(String category){
+        Call<NYTResponse> call = NYTClient.getInstance().getCategoriesList(category);
+        call.enqueue(new Callback<NYTResponse>() {
+            @Override
+            public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
+                if (response.body() != null) {
+                    NYTResponse nytResponse = response.body();
+                    if (nytResponse != null) {
                         Log.d(TAG, "NYT api call size was " + nytResponse.getResults().size());
                         results = response.body().getResults();
                         if (results != null) {
@@ -118,14 +128,14 @@ public class ExplorerFragment extends RecyclerViewFragment {
                             }
                         }
                     }
-
-                    @Override
-                    public void onFailure(Call<NYTResponse> call, Throwable t) {
-                        Log.d(TAG, "Failure " + t);
-                    }
-                });
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call<NYTResponse> call, Throwable t) {
+                Log.d(TAG, "Failure " + t);
+            }
+        });
     }
 
 
