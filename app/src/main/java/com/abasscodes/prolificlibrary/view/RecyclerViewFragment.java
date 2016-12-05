@@ -107,7 +107,10 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
     }
 
 
-    public abstract void refreshContent();
+    public void refreshContent(){
+        if (swipeLayout != null)
+            swipeLayout.setRefreshing(false);
+    }
 
 
 
