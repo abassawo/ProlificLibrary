@@ -28,6 +28,8 @@ The detail page utilizes the IDreamBooks Api to query the selected book for reco
 
 - More integrity checks on the Database system.
 
+- Acceptance testing and Performance testing
+
 
 ## Networking and Tools I found helpful
 
@@ -35,7 +37,7 @@ The detail page utilizes the IDreamBooks Api to query the selected book for reco
 - [Retrofit](https://square.github.io/retrofit/)
 - [Tango Material intro Screen](https://github.com/TangoAgency/material-intro-screen)
 - [Blur Dialog Fragment](https://github.com/tvbarthel/BlurDialogFragment)
-- [Stetho](http://facebook.github.io/stetho/) 
+- [Stetho](http://facebook.github.io/stetho/)
 
 
  Rx Java would have been helpful with concurrent networking work, but was not vital to this project.
