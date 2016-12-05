@@ -28,12 +28,10 @@ public class DreamApiClient {
     private IDreamBooksApi api;
 
     private DreamApiClient(Context context){
-        API_KEY = Config.getNYTApiKey(context);
-        Log.d("Dream Api", API_KEY);
+        API_KEY = Config.getDreamApiKey(context);
         if(api == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                    .setLenient()
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(API_URL)
