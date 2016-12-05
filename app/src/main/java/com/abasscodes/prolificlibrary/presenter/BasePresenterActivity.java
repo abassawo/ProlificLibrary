@@ -3,17 +3,14 @@ package com.abasscodes.prolificlibrary.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
-import com.abasscodes.prolificlibrary.ui.show_book_detail.DetailActivity;
+import com.abasscodes.prolificlibrary.user_interactions.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import retrofit2.Call;
@@ -24,14 +21,12 @@ import retrofit2.Response;
  * Created by C4Q on 11/15/16.
  */
 
-public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends AppCompatActivity{
+public abstract class BasePresenterActivity extends AppCompatActivity{
 
    private static final String TAG = BasePresenterActivity.class.getSimpleName() ;
    public static final int DELETED_ITEM_CODE = 999;
 
 
-
-   public abstract P getPresenter();
 
    @Override
    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -61,15 +56,11 @@ public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends App
       startActivity(intent);
    }
 
-   public void showConnectionError(){
-      //fixme //
-      Toast.makeText(this, "Unable to connect", Toast.LENGTH_SHORT).show();
-   }
-
 
    public void showNetworkSettings(){
       startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
    }
+
 
    public void deleteBook(Book book) {
       final String title = book.getTitle();

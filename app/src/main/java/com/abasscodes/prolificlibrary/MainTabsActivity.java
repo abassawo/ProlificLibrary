@@ -5,38 +5,26 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
-import com.abasscodes.prolificlibrary.ui.ExplorerFragment;
-import com.abasscodes.prolificlibrary.ui.show_all_books.AllBooksFragment;
-import com.abasscodes.prolificlibrary.ui.show_all_books.TabPresenter;
-import com.abasscodes.prolificlibrary.view.TabAdapter;
+import com.abasscodes.prolificlibrary.user_interactions.explore_nyt_books.ExplorerFragment;
+import com.abasscodes.prolificlibrary.user_interactions.show_all_books.AllBooksFragment;
+import com.abasscodes.prolificlibrary.view.adapters.TabAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implements AllBooksFragment.FragmentCommunication {
+public class MainTabsActivity extends BasePresenterActivity implements AllBooksFragment.FragmentCommunication {
 
     @Bind(R.id.tabs)
     TabLayout tabs;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
-    private String TAG = MainTabsActivity.class.getSimpleName();
     public TabAdapter adapter;
 
-
-    @Override
-    public TabPresenter getPresenter() {
-        return TabPresenter.getInstance(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,31 +61,6 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.mipmap.favicon);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_add:
-                getPresenter().fillOutNewBookForm();
-                break;
-            case R.id.menu_item_deleteAll:
-                Call<Void> call = APIClient.getInstance().deleteAll();
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        onResume();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-
-                    }
-                });
-                break;
-        }
-        return true;
     }
 
 

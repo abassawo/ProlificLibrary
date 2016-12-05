@@ -27,6 +27,12 @@ public class BookContentProvider {
     private List<PageNote> allNotes;
 
 
+    public static BookContentProvider getInstance() {
+        if(instance == null){
+            instance = new BookContentProvider();
+        }
+        return instance;
+    }
 
 
     public BookContentProvider() {
@@ -44,7 +50,7 @@ public class BookContentProvider {
         return cv;
     }
 
-//  u
+
 
     public void savePageNote(PageNote pageNote) {
         if(allNotes.contains(pageNote)) {

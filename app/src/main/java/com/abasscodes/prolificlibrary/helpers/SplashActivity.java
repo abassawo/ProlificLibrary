@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.abasscodes.prolificlibrary.ui.onboard_welcome.WelcomeActivity;
+import com.abasscodes.prolificlibrary.user_interactions.onboard_welcome.WelcomeActivity;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 
 /**

@@ -151,6 +151,11 @@ public class Book implements Parcelable, Comparable<Book> {
         this.lastCheckedOutBy = lastCheckedOutBy;
     }
 
+    public void returnCheckOut(){
+        this.lastCheckedOutBy = "";
+        this.lastCheckedOut = null;
+    }
+
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
@@ -170,33 +175,6 @@ public class Book implements Parcelable, Comparable<Book> {
         });
     }
 
-    public String display() {
-        String pub = this.publisher == null? "" : publisher;
-        String tags = this.categories == null? "": categories;
-
-        String checkoutStatus = "";
-        //If book is not checked out by, print empty text.
-
-        String dateOut = "";
-        if(this.lastCheckedOut != null) {
-            String restFormat = "yyyy-MM-dd h:mm:ss";
-            String humanFormat = "EEE, MMM d, yyyy";
-            SimpleDateFormat df = new SimpleDateFormat(restFormat);
-            Date date = null;
-            try {
-                date = df.parse(lastCheckedOut);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            df.applyPattern(humanFormat);
-            dateOut = " @ " + df.format(date);
-        }
-        checkoutStatus = this.lastCheckedOutBy == null? "": lastCheckedOutBy + dateOut;
-        return "Publisher: " + pub +
-                "\nTags: " + tags +
-                "\nLast Checked Out: " + "\n" + checkoutStatus;
-
-    }
 
     @SuppressWarnings("RedundantIfStatement")
     @Override
@@ -205,21 +183,13 @@ public class Book implements Parcelable, Comparable<Book> {
         if (o == null || getClass() != o.getClass()) return false;
 
         Book book = (Book) o;
-
-        if (author != null ? !author.equals(book.author) : book.author != null) return false;
-        if (categories != null ? !categories.equals(book.categories) : book.categories != null)
-            return false;
-        if (id != null ? !id.equals(book.id) : book.id != null) return false;
-        if (lastCheckedOut != null ? !lastCheckedOut.equals(book.lastCheckedOut) : book.lastCheckedOut != null)
-            return false;
-        if (lastCheckedOutBy != null ? !lastCheckedOutBy.equals(book.lastCheckedOutBy) : book.lastCheckedOutBy != null)
-            return false;
-        if (publisher != null ? !publisher.equals(book.publisher) : book.publisher != null)
-            return false;
-        if (title != null ? !title.equals(book.title) : book.title != null) return false;
-        if (url != null ? !url.equals(book.url) : book.url != null) return false;
-
-        return true;
+        return id == book.getId() &&
+                author.equals(book.author) &&
+                categories.equals(book.categories) &&
+                publisher.equals(book.publisher) &&
+                lastCheckedOut.equals(book.lastCheckedOut) &&
+                lastCheckedOutBy.equals(book.lastCheckedOutBy) &&
+                url.equals(book.url);
     }
 
     @Override
@@ -283,7 +253,8 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public boolean isCheckedOut() {
-        return lastCheckedOut != null && !lastCheckedOut.equals("null");
+        if(lastCheckedOutBy == null) return false;
+        return !lastCheckedOutBy.isEmpty();
     }
 
     public boolean isArchived() {
@@ -304,14 +275,5 @@ public class Book implements Parcelable, Comparable<Book> {
         return pageNoteMap.containsKey(pageNum);
     }
 
-//    public void addPageNote(int page, String text) {
-//        PageNote pageNote;
-//        if(pageNoteMap.containsKey(page)){
-//            pageNote = pageNoteMap.get(page);
-//            pageNote.append(text);
-//        }else{
-//            pageNote = new PageNote(page, text, this.id);
-//        }
-//        pageNoteMap.put(page, pageNote);
-//    }
+
 }

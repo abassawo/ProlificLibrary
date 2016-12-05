@@ -1,17 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.show_book_detail.DetailActivity">
+    tools:context=".user_interactions.show_book_detail.DetailActivity">
 
     <item android:id="@+id/share_book"
         android:title="@string/share"
         app:showAsAction="ifRoom"
         app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 
-    <item android:id="@+id/favorite_this_book"
-        android:icon="@drawable/ic_action_favorite"
-        android:title="@string/faves"
-        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/edit_this_book"
         android:title="@string/edit_this"

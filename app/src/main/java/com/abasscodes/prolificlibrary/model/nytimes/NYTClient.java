@@ -29,7 +29,6 @@ public class NYTClient {
                     .build();
             api = retrofit.create(NYTimesAPI.class);
         }
-
     }
 
     public static NYTClient getInstance() {
