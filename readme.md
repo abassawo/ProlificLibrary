@@ -6,7 +6,7 @@ Users can use the app to discover new books, curate a list of books, and associa
 
 ### Running the app
 
-The application uses very basic information hiding. The Config class exposes the encoded api keys and returns the decoded value.
+The application uses very basic information hiding. The Config class exposes the encoded api keys and returns the decoded value. Clone and open with Android Studio. Feel free to replace the return value of the getter methods in the Config.java file to match your own api keys. Otherwise, you can also run this as-is using the encoded/decoded values.
 
 ### Features
 
