@@ -29,6 +29,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -107,6 +109,17 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 
     public void showBookReviews(Book book){
         Call<ReviewResponse> call = DreamApiClient.getInstance().getBookReview(book.getTitle());
+        call.enqueue(new Callback<ReviewResponse>() {
+            @Override
+            public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
+
+            }
+        });
 
     }
 
