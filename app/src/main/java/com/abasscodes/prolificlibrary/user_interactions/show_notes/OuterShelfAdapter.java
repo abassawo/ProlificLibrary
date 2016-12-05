@@ -23,6 +23,7 @@ public class OuterShelfAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     }
 
     public void setBooks(){
+
         this.books = books;
     }
 
@@ -49,5 +50,6 @@ public class OuterShelfAdapter extends RecyclerView.Adapter<NoteViewHolder>{
 
     public void setBooks(List<Book> books) {
         this.books = books;
+        notifyDataSetChanged();
     }
 }

@@ -110,7 +110,7 @@ public class DetailFragment extends Fragment{
     }
 
     public void showBookReviews(final Book book) {
-        Call<ReviewResponse> call = DreamApiClient.getInstance().getBookReview(book.getTitle().toLowerCase());
+        Call<ReviewResponse> call = DreamApiClient.getInstance(getActivity()).getBookReview(book.getTitle().toLowerCase());
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {

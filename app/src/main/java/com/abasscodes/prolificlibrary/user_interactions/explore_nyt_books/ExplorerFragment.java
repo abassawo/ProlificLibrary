@@ -71,14 +71,11 @@ public class ExplorerFragment extends RecyclerViewFragment {
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        if(adapter == null){
-            adapter = new SuggestedBooksAdapter();
-        }
         return adapter;
     }
 
     public void fetchBestSellers() {
-        Call<NYTResponse> call = NYTClient.getInstance().listBestSellers();
+        Call<NYTResponse> call = NYTClient.getInstance(getActivity()).listBestSellers();
         call.enqueue(new Callback<NYTResponse>() {
             @Override
             public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
@@ -106,36 +103,30 @@ public class ExplorerFragment extends RecyclerViewFragment {
         Log.d(TAG, "nyt set size was " + nytSet.size());
         if (nytSet != null) {
             for (String category : nytSet) {
-               searchCategory(category);
-            }
-        }
-    }
-
-    public void searchCategory(String category){
-        Call<NYTResponse> call = NYTClient.getInstance().getCategoriesList(category);
-        call.enqueue(new Callback<NYTResponse>() {
-            @Override
-            public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
-                if (response.body() != null) {
-                    NYTResponse nytResponse = response.body();
-                    if (nytResponse != null) {
-                        Log.d(TAG, "NYT api call size was " + nytResponse.getResults().size());
-                        results = response.body().getResults();
-                        if (results != null) {
-                            if (adapter != null) {
-                                adapter.addAll(response.body().getResults());
-                                adapter.notifyDataSetChanged();
+                Call<NYTResponse> call = NYTClient.getInstance(getActivity()).getCategoriesList(category);
+                call.enqueue(new Callback<NYTResponse>() {
+                    @Override
+                    public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
+                        NYTResponse nytResponse = response.body();
+                        if (nytResponse != null) {
+                            Log.d(TAG, "NYT api call size was " + nytResponse.getResults().size());
+                            results = response.body().getResults();
+                            if (results != null) {
+                                if (adapter != null) {
+                                    adapter.addAll(response.body().getResults());
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<NYTResponse> call, Throwable t) {
-                Log.d(TAG, "Failure " + t);
+                    @Override
+                    public void onFailure(Call<NYTResponse> call, Throwable t) {
+                        Log.d(TAG, "Failure " + t);
+                    }
+                });
             }
-        });
+        }
     }
 
 

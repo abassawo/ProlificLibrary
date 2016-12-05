@@ -25,8 +25,6 @@ import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,31 +39,12 @@ import retrofit2.Response;
 
 public class AllBooksFragment extends RecyclerViewFragment implements BookRepository.BookCallback {
 
-    public final static String TAG = AllBooksFragment.class.getSimpleName();
+    public final static String TAG = "AllBooks";
     private static final String BOOKS_KEY = "Books_Key";
     private FragmentCommunication listener;
     private AllBooksAdapter adapter;
     private boolean recentlyDeleted = false;
     private ArrayList<Book> books;
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            this.listener = (FragmentCommunication) activity;
-        } catch (ClassCastException cce) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement Fragment Communication");
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshContent();
-
-    }
 
 
     @Override
@@ -91,14 +70,12 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
             public void onClick(final DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
                 final ArrayList<Book> deletedBooks = (ArrayList<Book>) adapter.getBooks();
-                Log.d(TAG, "Size of items to be deleted is " + deletedBooks.size());
                 Call<Void> call = APIClient.getInstance().deleteAll();
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         recentlyDeleted = true;
                         adapter.clear();
-                        showUndoDeleteAllSnackbar(deletedBooks);
                     }
 
                     @Override
@@ -119,23 +96,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         dialog.show();
 
     }
-
-    private void showUndoDeleteAllSnackbar(final ArrayList<Book> deletedBooks) {
-        recentlyDeleted = false;
-        Snackbar.make(getView(), "All items were deleted", Snackbar.LENGTH_INDEFINITE).setAction("Undo", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.setBooks(deletedBooks);
-                for(Book book : deletedBooks) {
-                   String json = new Gson().toJson(book);
-                    Log.d(TAG, json);
-//                    APIClient.getInstance().addBook(json);
-                }
-                refreshContent();
-            }
-        }).show();
-    }
-
 
     public void prepareToDeleteAll() {
         if (books.size() == 0) {
@@ -185,12 +145,26 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        if(adapter == null){
-            adapter = new AllBooksAdapter(getActivity());
-        }
         return adapter;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            this.listener = (FragmentCommunication) activity;
+        } catch (ClassCastException cce) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement Fragment Communication");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshContent();
+
+    }
 
 
     public void showTipSnackBar() {

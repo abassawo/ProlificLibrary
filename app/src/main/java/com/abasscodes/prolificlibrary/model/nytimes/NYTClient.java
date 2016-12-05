@@ -1,5 +1,9 @@
 package com.abasscodes.prolificlibrary.model.nytimes;
 
+import android.content.Context;
+import android.util.Base64;
+
+import com.abasscodes.prolificlibrary.Config;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,10 +19,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NYTClient {
     private static NYTClient instance;
     public static final String API_URL = "https://api.nytimes.com/svc/books/v3/";
-    private static final String API_KEY = "3cfd4c24b2734248b53aa4488568815d";
+    private String API_KEY;
     private static NYTimesAPI api;
 
-    private NYTClient(){
+    private NYTClient(Context context){
+        API_KEY = Config.getNYTApiKey(context);
         if(api == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -31,9 +36,9 @@ public class NYTClient {
         }
     }
 
-    public static NYTClient getInstance() {
+    public static NYTClient getInstance(Context context) {
         if(instance == null){
-            instance = new NYTClient();
+            instance = new NYTClient(context);
         }
         return instance;
     }

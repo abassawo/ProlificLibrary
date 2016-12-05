@@ -1,5 +1,10 @@
 package com.abasscodes.prolificlibrary.model.idreambooks;
 
+import android.content.Context;
+import android.util.Base64;
+import android.util.Log;
+
+import com.abasscodes.prolificlibrary.Config;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.ReviewResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTimesAPI;
@@ -18,11 +23,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DreamApiClient {
 
     public static final String API_URL = "https://idreambooks.com/api/";
-    private static final String API_KEY = "9a725e0de0577ba7a7a78a9f0df286cb52a9736e";
+    private static String API_KEY;
     private static DreamApiClient instance;
     private IDreamBooksApi api;
 
-    private DreamApiClient(){
+    private DreamApiClient(Context context){
+        API_KEY = Config.getNYTApiKey(context);
+        Log.d("Dream Api", API_KEY);
         if(api == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -36,9 +43,9 @@ public class DreamApiClient {
 
     }
 
-    public static DreamApiClient getInstance() {
+    public static DreamApiClient getInstance(Context context) {
         if(instance == null){
-            instance = new DreamApiClient();
+            instance = new DreamApiClient(context);
         }
         return instance;
     }

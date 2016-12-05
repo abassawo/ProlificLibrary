@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
 import com.abasscodes.prolificlibrary.user_interactions.explore_nyt_books.NYTBookViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +15,6 @@ public class SuggestedBooksAdapter extends RecyclerView.Adapter<NYTBookViewHolde
 
     private List<Result> results;
 
-    public SuggestedBooksAdapter() {
-        this.results = new ArrayList<>();
-    }
 
     public SuggestedBooksAdapter(List<Result> results) {
         this.results = results;
