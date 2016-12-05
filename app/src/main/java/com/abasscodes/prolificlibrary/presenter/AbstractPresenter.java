@@ -3,8 +3,7 @@ package com.abasscodes.prolificlibrary.presenter;
 import android.content.Intent;
 
 import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
-import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 
 /**
  * Created by C4Q on 11/15/16.

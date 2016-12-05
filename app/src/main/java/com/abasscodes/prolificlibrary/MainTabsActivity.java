@@ -8,9 +8,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
-import com.abasscodes.prolificlibrary.ui.explore_nyt_books.ExplorerFragment;
-import com.abasscodes.prolificlibrary.ui.show_all_books.AllBooksFragment;
-import com.abasscodes.prolificlibrary.ui.show_all_books.TabPresenter;
+import com.abasscodes.prolificlibrary.user_interactions.explore_nyt_books.ExplorerFragment;
+import com.abasscodes.prolificlibrary.user_interactions.show_all_books.AllBooksFragment;
 import com.abasscodes.prolificlibrary.view.adapters.TabAdapter;
 
 import java.util.ArrayList;

@@ -3,17 +3,14 @@ package com.abasscodes.prolificlibrary.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.abasscodes.prolificlibrary.Mvp;
-import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
-import com.abasscodes.prolificlibrary.ui.show_book_detail.DetailActivity;
+import com.abasscodes.prolificlibrary.user_interactions.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 
 import retrofit2.Call;

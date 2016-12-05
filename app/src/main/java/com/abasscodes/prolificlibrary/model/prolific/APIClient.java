@@ -1,19 +1,12 @@
 package com.abasscodes.prolificlibrary.model.prolific;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 //import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,7 +19,7 @@ public class APIClient {
 
     public static final String API_URL = "http://prolific-interview.herokuapp.com/5697d53d18f8ff000917b40b/";
     private static APIClient instance;
-    private static BookAPI api;
+    private static ProlificBookAPI api;
 
 
     private APIClient() {
@@ -39,7 +32,7 @@ public class APIClient {
                     .baseUrl(API_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            api = retrofit.create(BookAPI.class);
+            api = retrofit.create(ProlificBookAPI.class);
         }
 
     }

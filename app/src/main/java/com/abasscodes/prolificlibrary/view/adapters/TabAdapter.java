@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookFilterer;
-import com.abasscodes.prolificlibrary.ui.show_notes.BookShelfFragment;
+import com.abasscodes.prolificlibrary.user_interactions.show_notes.BookShelfFragment;
 
 import java.util.ArrayList;
 import java.util.List;

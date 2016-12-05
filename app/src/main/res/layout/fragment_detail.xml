@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.show_book_detail.DetailActivity">
+    tools:context=".user_interactions.show_book_detail.DetailActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -24,6 +24,8 @@
     <include layout="@layout/book_detail"/>
 
     </android.support.v7.widget.CardView>
+
+        <include layout="@layout/empty_recycler_view"/>
 
 
 
