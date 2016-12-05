@@ -14,6 +14,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.R;
@@ -29,6 +30,7 @@ import com.abasscodes.prolificlibrary.view.BookAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +61,7 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
         return true;
     }
 
-    public void showDeleteAllDialog(){
+    public void showDeleteAllDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.delete_all_warning)
@@ -77,7 +79,7 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        Snackbar.make(getView(), "Error deleting ",  Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Error deleting ", Snackbar.LENGTH_SHORT).show();
                     }
                 });
 
@@ -95,8 +97,8 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     }
 
 
-    public void prepareToDeleteAll(){
-        if(books.size() == 0){
+    public void prepareToDeleteAll() {
+        if (books.size() == 0) {
             Toast.makeText(getActivity(), "Already Empty", Toast.LENGTH_SHORT).show();
         } else {
             showDeleteAllDialog();
@@ -143,7 +145,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     }
 
 
-
     @Override
     public RecyclerView.Adapter getAdapter() {
         return adapter;
@@ -164,33 +165,47 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     public void onResume() {
         super.onResume();
         refreshContent();
+
     }
 
+
+    public void showTipSnackBar() {
+        Snackbar.make(getView(), "The library is empty. Add a new book or use the Explore tab", Snackbar.LENGTH_LONG)
+                .setAction("New Book", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        RegisterActivity.basePresenterActivity.fillOutNewBookForm();
+                    }
+                }).show();
+    }
 
 
     @Override
     public void refreshContent() {
-        if(adapter != null)  adapter.notifyDataSetChanged();
+        if (adapter != null) adapter.notifyDataSetChanged();
         if (ConnectionUtil.isConnected()) {
             new BookRepository(this).fetchBooks();
         } else {
             Snackbar.make(getView(), "No Internet", Snackbar.LENGTH_SHORT).show();
         }
-        if(swipeLayout != null)
-        swipeLayout.setRefreshing(false);
+        if (swipeLayout != null)
+            swipeLayout.setRefreshing(false);
     }
 
 
     @Override
     public void onBooksReady(ArrayList<Book> books) {
+        if(books == null || books.isEmpty()){
+                showTipSnackBar();
+        }
         this.books = books;
         if (adapter == null) {
-            adapter = new BookAdapter(getActivity(),books);
+            adapter = new BookAdapter(getActivity(), books);
             recyclerView.setAdapter(adapter);
-        }else{
+        } else {
             adapter.setBooks(books);
         }
-        if(adapter.getItemCount() == 0) showEmptyView();
+        if (adapter.getItemCount() == 0) showEmptyView();
         ArrayList<Book> myBooks = new ArrayList<>();
         for (Book book : books) {
             if (book.isCheckedOut()) myBooks.add(book);

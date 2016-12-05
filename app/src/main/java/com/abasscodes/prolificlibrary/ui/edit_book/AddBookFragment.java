@@ -81,7 +81,7 @@ public class AddBookFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             Book book = getArguments().getParcelable(BOOK_KEY);
             Log.d(TAG, "book specs " + book);
             titleField.setText(book.getTitle());
@@ -92,7 +92,7 @@ public class AddBookFragment extends Fragment {
     }
 
     public void addBook(EditText... editTexts) {
-        title =  editTexts[0].getText().toString();
+        title = editTexts[0].getText().toString();
         author = editTexts[1].getText().toString();
         pubs = editTexts[2].getText().toString();
         tags = editTexts[3].getText().toString();
@@ -102,11 +102,11 @@ public class AddBookFragment extends Fragment {
             public void onResponse(Call<Book> call, Response<Book> response) {
                 Log.d(TAG, response.message());
                 book = response.body();
-                if(book != null){
+                if (book != null) {
                     Toast.makeText(getActivity(), "New Book added : " + book.getTitle(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), MainTabsActivity.class);
                     startActivityForResult(intent, ADD_BOOK_CODE);
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "Error : ", Toast.LENGTH_SHORT).show();
 
                 }
@@ -149,7 +149,7 @@ public class AddBookFragment extends Fragment {
 
 
     protected boolean fieldsValid() {
-        return hasText(titleField) && hasText(authorField) && hasText(publisherField) && hasText(categoryField);
+        return hasText(titleField) && hasText(authorField);
     }
 
     protected boolean hasText(EditText editText) {

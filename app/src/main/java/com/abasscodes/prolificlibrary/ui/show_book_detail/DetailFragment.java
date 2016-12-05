@@ -47,7 +47,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.return_book)
     ImageView returnBook;
     private Book book;
-    private APIClient client;
+    @Bind(R.id.book_checkout_status)
+    TextView lastCheckedOutTV;
     private String TAG = "DetailFragment";
 
     //Extra for Detail Fragment Book AND for passing book onto Edit Activity
@@ -58,7 +59,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        client = APIClient.getInstance();
         presenter = DetailPresenter.getInstance((DetailActivity) getActivity());
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -93,9 +93,11 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 returnBook.setVisibility(View.VISIBLE);
                 returnBook.setOnClickListener(this);
             } else {
+                lastCheckedOutTV.setVisibility(View.INVISIBLE);
                 returnBook.setVisibility(View.INVISIBLE);
                 checkoutBook.setVisibility(View.VISIBLE);
                 checkoutBook.setOnClickListener(this);
+
             }
         } else {
             showError();
@@ -107,16 +109,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         //todo
     }
 
-    public void bindBook(Book book) {
-        this.book = book;
-        if (book == null) return;
-        String title = book.getTitle() == null ? "" : book.getTitle();
-        Log.d(TAG, title);
-        String author = book.getAuthor() == null ? "" : book.getAuthor();
-        Log.d(TAG, author);
-        titleTV.setText(title);
-        authorTV.setText(author);
-    }
 
 
     @Override

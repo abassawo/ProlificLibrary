@@ -1,6 +1,5 @@
 package com.abasscodes.prolificlibrary.ui.onboard_welcome;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -40,7 +39,7 @@ public class FirstOnboardSlide extends BaseSlideFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.welcome_screen_two, container, false);
+        final View view = inflater.inflate(R.layout.welcome_screen, container, false);
         ButterKnife.bind(this, view);
         nameField.addTextChangedListener(new TextWatcher() {
             @Override

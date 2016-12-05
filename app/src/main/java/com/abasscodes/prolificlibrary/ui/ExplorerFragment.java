@@ -59,11 +59,7 @@ public class ExplorerFragment extends RecyclerViewFragment {
     public void onResume() {
         super.onResume();
         refreshContent();
-        if(isVisible()) {
-//                showNotesSnackBar();
-        }
     }
-
 
 
 

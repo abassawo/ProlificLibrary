@@ -4,7 +4,8 @@
 
     <item android:id="@+id/refresh"
         android:title="@string/reload"
-        app:showAsAction="collapseActionView"
+        android:icon="@drawable/autorenew"
+        app:showAsAction="always"
         android:orderInCategory="1"/>
 
 </menu>

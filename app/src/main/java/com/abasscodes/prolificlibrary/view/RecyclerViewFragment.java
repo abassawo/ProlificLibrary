@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,6 +56,15 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
         inflater.inflate(R.menu.menu_tab, menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.refresh:
+                refreshContent();
+                break;
+        }
+        return true;
+    }
 
     @Nullable
     @Override

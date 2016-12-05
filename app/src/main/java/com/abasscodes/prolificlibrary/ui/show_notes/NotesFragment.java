@@ -49,11 +49,6 @@ public class NotesFragment extends RecyclerViewFragment {
     }
 
 
-    public void showNotesSnackBar() {
-        Snackbar.make(getView(), "Check out a book in the Library to add notes", Snackbar.LENGTH_LONG).show();
-    }
-
-
     public static NotesFragment getInstance() {
         if (instance == null) {
             instance = new NotesFragment();
