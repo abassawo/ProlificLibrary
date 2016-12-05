@@ -5,11 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.PageNote;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.Cols;
 import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.NAME;
 
@@ -26,7 +29,7 @@ public class BookContentProvider {
 
 
     public static BookContentProvider getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new BookContentProvider();
         }
         return instance;
@@ -41,39 +44,31 @@ public class BookContentProvider {
 
     private static ContentValues getContentValues(PageNote note) {
         ContentValues cv = new ContentValues();
-            cv.put(Cols._ID, note.getId());
-            cv.put(Cols.PAGE, note.getPageNumber());
-            cv.put(Cols.BOOK_ID, note.getBookId());
-            cv.put(Cols.NOTE, note.getComment());
+        cv.put(Cols._ID, note.getId());
+        cv.put(Cols.PAGE, note.getPageNumber());
+        cv.put(Cols.BOOK_ID, note.getBookId());
+        cv.put(Cols.NOTE, note.getComment());
         return cv;
     }
 
 
-
     public void savePageNote(PageNote pageNote) {
-        if(allNotes.contains(pageNote)) {
-            updatePageNote(pageNote);
-        }else{
-            ContentValues cv = getContentValues(pageNote);
-            database.insert(NAME, null, cv);
-        }
+        ContentValues cv = getContentValues(pageNote);
+        database.insert(NAME, null, cv);
     }
 
     public void updatePageNote(PageNote pageNote) {
         ContentValues cv = getContentValues(pageNote);
-        String selection = Cols._ID + " LIKE ?";
-        String[] selectionArgs = { String.valueOf(pageNote.getId())};
-        database.delete(NAME, selection, selectionArgs);
-        database.insert(NAME, null, cv);
+        String selection = Cols._ID + " LIKE " + pageNote.getId();
+        String[] selectionArgs = {String.valueOf(pageNote.getId())};
+        database.update(NAME, cv, selection, null);
     }
-
-
 
 
     public List<PageNote> getNotes(int bookId) {
         List<PageNote> notes = new ArrayList<>();
-        for(PageNote note : getAllNotes()){
-            if(note.getBookId() == bookId) notes.add(note);
+        for (PageNote note : getAllNotes()) {
+            if (note.getBookId() == bookId) notes.add(note);
         }
         return notes;
     }
@@ -93,7 +88,6 @@ public class BookContentProvider {
             cursor.close();
         }
         Collections.sort(notes);
-
         return notes;
     }
 

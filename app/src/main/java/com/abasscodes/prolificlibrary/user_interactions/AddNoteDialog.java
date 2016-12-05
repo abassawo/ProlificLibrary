@@ -10,14 +10,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.PageNote;
 import com.abasscodes.prolificlibrary.model.database.BookContentProvider;
+
+import java.util.List;
 
 /**
  * Created by C4Q on 12/4/16.
@@ -68,34 +72,32 @@ public class AddNoteDialog extends DialogFragment {
 
         builder.setView(ll);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                if (TextUtilHelper.isValidNote(pageField, noteField)) {
-                    int pageNum = Integer.parseInt(pageField.getText().toString());
-                    String note = noteField.getText().toString();
-                    PageNote pageNote;
-                    if (book.hasPageNote(pageNum)) {
-                        pageNote = book.getPageNote(pageNum);
-                        pageNote.append(note);
-                        bookProvider.updatePageNote(pageNote);
-                    } else {
-                        pageNote = new PageNote(pageNum, note, book.getId());
-                        bookProvider.savePageNote(pageNote);
-                    }
-                    book.pageNoteMap.put(pageNum, pageNote);
-                    listener.onNoteAdded();;
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (TextUtilHelper.isValidNote(pageField, noteField)) {
+                            int pageNum = Integer.parseInt(pageField.getText().toString());
+                            String note = noteField.getText().toString();
+                            PageNote pageNote = new PageNote(pageNum, note, book.getId());
+                            bookProvider.savePageNote(pageNote);
+                            pageNote.append(note);
+                            listener.onNoteAdded();
+                        } else {
+                            Toast.makeText(ctx, "Please verify all forms", Toast.LENGTH_SHORT).show();
+                        }
 
-                } else {
-                    Toast.makeText(ctx, "Please verify all forms", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-            }
-        });
+        );
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // No action - Dismiss.
-            }
-        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // No action - Dismiss.
+                    }
+                }
+
+        );
 
         Dialog dialog = builder.create();
         return dialog;
