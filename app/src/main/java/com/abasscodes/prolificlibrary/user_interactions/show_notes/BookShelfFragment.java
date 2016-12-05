@@ -40,6 +40,7 @@ public class BookShelfFragment extends RecyclerViewFragment {
         if (isVisible()) {
             if (getAdapter() == null || getAdapter().getItemCount() == 0)
                 emptyView.setVisibility(View.VISIBLE);
+            else showRecyclerView();
         }
         refreshContent();
     }
@@ -48,7 +49,6 @@ public class BookShelfFragment extends RecyclerViewFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setBackgroundResource(R.drawable.shelf);
-        showRecyclerView();
     }
 
 

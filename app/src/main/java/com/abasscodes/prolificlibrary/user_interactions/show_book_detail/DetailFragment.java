@@ -23,8 +23,10 @@ import com.abasscodes.prolificlibrary.model.idreambooks.DreamApiClient;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.CriticReview;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.ReviewResponse;
 import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
+import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -104,7 +106,7 @@ public class DetailFragment extends Fragment {
     }
 
     public void showBookReviews(final Book book) {
-        String search = book.getAuthor();
+        String search = book.getAuthor().toLowerCase(Locale.ENGLISH);
         Call<ReviewResponse> call = DreamApiClient.getInstance(getActivity()).getBookReview(search);
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
@@ -112,17 +114,17 @@ public class DetailFragment extends Fragment {
                 Log.d(TAG, "For book " + book.getTitle() + response.isSuccessful() + " items were " + response.body().getTotalResults());
                 if (response != null) {
                     ReviewResponse reviewBody = response.body();
-                    if (reviewBody != null) {
+                    if (reviewBody != null || reviewBody.getTotalResults() > 0) {
                         com.abasscodes.prolificlibrary.model.idreambooks.pojos.Book book = reviewBody.getBook();
                         List<CriticReview> reviews = reviewBody.getBook().getCriticReviews();
                         reviewAdapter.setReviews(reviews);
-                        if (book.getAverageCriticReviews() > 0) {
+                        if (getAverageCriticReviews(book) > 0) {
                             ratingBar.setVisibility(View.VISIBLE);
-                            ratingBar.setRating(book.getAverageCriticReviews());
+                            ratingBar.setRating(getAverageCriticReviews(book));
                         }
                     }
                 }
-
+                if(isAdded())
                 ((DetailActivity) getActivity()).minimizeToolbar();
             }
 
@@ -133,6 +135,17 @@ public class DetailFragment extends Fragment {
             }
         });
 
+    }
+
+    public float getAverageCriticReviews(com.abasscodes.prolificlibrary.model.idreambooks.pojos.Book book) {
+        float avg = 0, sum = 0;
+        List<CriticReview> criticReviews = book.getCriticReviews();
+        if (criticReviews == null) return 0;
+        if (criticReviews.isEmpty()) return 0;
+        for (CriticReview review : criticReviews) {
+            sum += review.getStarRating();
+        }
+        return sum / criticReviews.size();
     }
 
 

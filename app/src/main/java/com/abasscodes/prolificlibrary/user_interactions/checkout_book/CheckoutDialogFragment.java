@@ -1,5 +1,6 @@
 package com.abasscodes.prolificlibrary.user_interactions.checkout_book;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,18 +8,24 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
+import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
+import com.abasscodes.prolificlibrary.user_interactions.show_book_detail.DetailActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +38,7 @@ public class CheckoutDialogFragment extends DialogFragment {
     public static final String TAG = CheckoutDialogFragment.class.getSimpleName();
     protected static final String BOOK_KEY = "BOOK_KEY";
     protected Book book;
+    protected CheckoutStateListener listener;
 
     protected String title, message, positiveBtn;
 
@@ -41,7 +49,6 @@ public class CheckoutDialogFragment extends DialogFragment {
         args.putParcelable(BOOK_KEY, book);
         fragment.setArguments(args);
         return fragment;
-
     }
 
 
@@ -71,7 +78,7 @@ public class CheckoutDialogFragment extends DialogFragment {
                 //Store the submitted name and check out book
                 Context ctx = getContext();
                 checkOut(book, PreferenceHelper.getUserName(ctx));
-               updateBookOnServer(book);
+                updateBookOnServer(book);
 
             }
         });
@@ -92,11 +99,12 @@ public class CheckoutDialogFragment extends DialogFragment {
         updateBookOnServer(book);
     }
 
-    public void updateBookOnServer(Book book) {
+    public void updateBookOnServer(final Book book) {
         Call<Book> call = APIClient.getInstance().updateBook(book);
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
+                listener.onCheckoutChange(book);
                 dismiss();
             }
 
@@ -106,6 +114,14 @@ public class CheckoutDialogFragment extends DialogFragment {
                 Log.d(TAG, "failed to post " + t);
             }
         });
+    }
+
+    public void setListener(CheckoutStateListener listener) {
+        this.listener = listener;
+    }
+
+    public interface CheckoutStateListener{
+        void onCheckoutChange(Book book);
     }
 
 

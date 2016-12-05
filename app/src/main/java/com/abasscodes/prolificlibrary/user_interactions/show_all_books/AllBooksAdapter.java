@@ -25,7 +25,7 @@ public class AllBooksAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     @Override
     public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new BookViewHolder(parent);
+        return new BookViewHolder(parent, this);
     }
 
     @Override

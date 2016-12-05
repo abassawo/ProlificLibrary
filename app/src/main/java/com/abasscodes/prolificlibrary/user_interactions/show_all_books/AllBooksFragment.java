@@ -160,7 +160,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     public void onResume() {
         super.onResume();
         refreshContent();
-
     }
 
 
@@ -177,7 +176,6 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
     @Override
     public void refreshContent() {
-        if (adapter != null) adapter.notifyDataSetChanged();
         if (ConnectionUtil.isConnected()) {
             new BookRepository(this).fetchBooks();
         }

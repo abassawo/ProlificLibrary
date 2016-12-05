@@ -6,8 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by C4Q on 12/4/16.
@@ -16,8 +25,6 @@ import com.abasscodes.prolificlibrary.model.Book;
 public class ReturnDialogFragment extends CheckoutDialogFragment {
 
     public static final String TAG = CheckoutDialogFragment.class.getSimpleName();
-
-
 
     public static ReturnDialogFragment newInstance(Book book) {
         ReturnDialogFragment fragment = new ReturnDialogFragment();
@@ -67,4 +74,6 @@ public class ReturnDialogFragment extends CheckoutDialogFragment {
         book.returnCheckOut();
         updateBookOnServer(book);
     }
+
+
 }

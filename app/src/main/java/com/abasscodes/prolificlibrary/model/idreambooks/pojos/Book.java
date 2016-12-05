@@ -165,15 +165,7 @@ public class Book {
         this.criticReviews = criticReviews;
     }
 
-    public float getAverageCriticReviews() {
-        float avg = 0, sum = 0;
-        if(criticReviews == null) return 0;
-        if(criticReviews.isEmpty()) return 0;
-        for (CriticReview review : criticReviews) {
-           sum += review.getStarRating();
-        }
-        return sum/criticReviews.size();
-    }
+
 }
 
 
