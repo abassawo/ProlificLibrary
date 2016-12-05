@@ -4,6 +4,7 @@ This project shows a proof of concept for an Android library application for the
 
 Users can use the app to discover new books, curate a list of books, and associate notes with books that are currently checked out.
 
+
 ### Running the app
 
 The application uses very basic information hiding. The Config class exposes the encoded api keys and returns the decoded value. Clone and open with Android Studio. Feel free to replace the return value of the getter methods in the Config.java file to match your own api keys. Otherwise, you can also run this as-is using the encoded/decoded values.
@@ -11,6 +12,8 @@ The application uses very basic information hiding. The Config class exposes the
 ### Features
 
 Api consumption from Prolific Library,  IDreamBooks API, and NYTimes Api
+
+Check out a book or return by selecting it in the Library tab or long-clicking on it in the Library Tab.
 
 The Library Tab displays all content from the Prolific Api.
 
