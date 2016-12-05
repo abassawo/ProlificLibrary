@@ -3,6 +3,9 @@ package com.abasscodes.prolificlibrary.ui.show_book_detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
@@ -35,43 +40,54 @@ public class DetailActivity extends BasePresenterActivity{
     private ShareActionProvider actionProvider;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingBar;
+    @Bind(R.id.detail_appbar)
+    AppBarLayout appBar;
     private Book book;
+    private DetailPresenter presenter;
 
 
    public static final String BOOK_ID = "Book_id";
    public static final String BOOK_KEY = "Book";
     private String bookTitle;
 
-    @Override
-    public DetailPresenter getPresenter() {
-        return DetailPresenter.getInstance(this);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         actionBar =  getSupportActionBar();
-        book = (Book) getIntent().getParcelableExtra(BOOK_KEY);
-        if(book == null) {
-            bookId = getIntent().getIntExtra(BOOK_ID, 0);
-            initRetrofit(bookId);
-        }
-
-        if(savedInstanceState == null) {
-            //fixme
+        minimizeToolbar();
+        presenter = new DetailPresenter(this);
+        if(savedInstanceState != null) {
+            book = savedInstanceState.getParcelable(BOOK_KEY);
+        }else{
+            book = getIntent().getParcelableExtra(BOOK_KEY);
         }
         if(book != null){
+             updateUI(book);
+        }
+    }
+
+    public void updateUI(Book book){
             setupActionBar(actionBar);
             bookTitle = book.getTitle();
-            getPresenter().setToolbarTitle(book);
-
+            presenter.setToolbarTitle(book);
             fragment = DetailFragment.newInstance(book);
             hostFragment(fragment);
 
-        }
+    }
+
+    public void minimizeToolbar(){
+        Handler handler = new Handler();
+        Runnable r = new Runnable() {
+            public void run() {
+                if(appBar != null)
+                    appBar.setExpanded(false, true);
+            }
+        };
+        handler.postDelayed(r, 2000);
     }
 
     public void hostFragment(Fragment fragment){
@@ -142,21 +158,7 @@ public class DetailActivity extends BasePresenterActivity{
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.favorite_this_book:
-                if (item.getIcon() == getResources().getDrawable(R.drawable.ic_action_favorite)) {
-                    item.setIcon(getResources().getDrawable(R.drawable.ic_action_favorite_selected));
-                } else {
-                    item.setIcon(getResources().getDrawable(R.drawable.ic_action_favorite));
-                }
-                break;
-        }
 
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public static Intent makeIntent(Context context, Book book) {
         Intent intent = new Intent(context, DetailActivity.class);

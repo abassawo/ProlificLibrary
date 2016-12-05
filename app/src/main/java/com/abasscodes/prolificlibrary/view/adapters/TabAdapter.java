@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view;
+package com.abasscodes.prolificlibrary.view.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;

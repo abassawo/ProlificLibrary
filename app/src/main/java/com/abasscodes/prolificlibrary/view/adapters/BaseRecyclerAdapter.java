@@ -1,10 +1,10 @@
-package com.abasscodes.prolificlibrary;
+package com.abasscodes.prolificlibrary.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.abasscodes.prolificlibrary.model.Book;
+import com.abasscodes.prolificlibrary.view.BaseViewHolder;
 
 import java.util.List;
 

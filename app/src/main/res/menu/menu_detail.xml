@@ -8,10 +8,6 @@
         app:showAsAction="ifRoom"
         app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 
-    <item android:id="@+id/favorite_this_book"
-        android:icon="@drawable/ic_action_favorite"
-        android:title="@string/faves"
-        app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/edit_this_book"
         android:title="@string/edit_this"

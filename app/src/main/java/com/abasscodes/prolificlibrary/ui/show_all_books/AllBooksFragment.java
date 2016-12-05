@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -20,17 +19,16 @@ import android.widget.Toast;
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
-import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
-import com.abasscodes.prolificlibrary.view.BookAdapter;
+import com.abasscodes.prolificlibrary.view.adapters.BookAdapter;
+import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

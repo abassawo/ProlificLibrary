@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.ui;
+package com.abasscodes.prolificlibrary.ui.explore_nyt_books;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.model.nytimes.NYTClient;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
-import com.abasscodes.prolificlibrary.view.SuggestedBooksAdapter;
+import com.abasscodes.prolificlibrary.view.adapters.SuggestedBooksAdapter;
 
 import java.util.List;
 import java.util.Set;

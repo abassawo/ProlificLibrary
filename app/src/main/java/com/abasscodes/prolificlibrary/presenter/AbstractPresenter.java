@@ -11,10 +11,10 @@ import com.abasscodes.prolificlibrary.model.Book;
  */
 
 public abstract class AbstractPresenter implements Mvp.Presenter{
-    protected static BasePresenterActivity<AbstractPresenter> activity;
+    protected static BasePresenterActivity activity;
 
 
-    public AbstractPresenter(BasePresenterActivity<AbstractPresenter> activity){
+    public AbstractPresenter(BasePresenterActivity activity){
         this.activity = activity;
     }
 
@@ -28,11 +28,5 @@ public abstract class AbstractPresenter implements Mvp.Presenter{
         activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
     }
 
-
-//    @Override
-//    public void showCheckOutDialog(Book book) {
-//        CheckoutDialogFragment fragment = CheckoutDialogFragment.newInstance(book);
-//        fragment.show(activity.getSupportFragmentManager(), null);
-//    }
 
 }

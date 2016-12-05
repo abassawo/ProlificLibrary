@@ -1,19 +1,13 @@
 package com.abasscodes.prolificlibrary.ui.show_all_books;
 
-import android.app.Activity;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
-import com.abasscodes.prolificlibrary.view.TabAdapter;
-import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
-
-import java.util.ArrayList;
+import com.abasscodes.prolificlibrary.view.adapters.TabAdapter;
 
 /**
  * Created by C4Q on 11/15/16.
@@ -24,9 +18,9 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
     private static final String TAG = TabPresenter.class.getSimpleName();
     private static TabPresenter instance;
     private static MainTabsActivity presenterActivity;
-    private TabAdapter adapter;
 
-    public TabPresenter(BasePresenterActivity<AbstractPresenter> activity) {
+
+    public TabPresenter(BasePresenterActivity activity) {
         super(activity);
 
     }

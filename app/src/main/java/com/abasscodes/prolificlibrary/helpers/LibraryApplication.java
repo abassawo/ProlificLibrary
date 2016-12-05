@@ -28,7 +28,7 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         if (activity instanceof BasePresenterActivity) {
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
-            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
+//            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
         }
 
     }
@@ -37,7 +37,7 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onActivityStarted(Activity activity) {
         if (activity instanceof BasePresenterActivity) {
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
-            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
+//            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
         }
     }
 
@@ -45,8 +45,8 @@ public class LibraryApplication extends Application implements Application.Activ
     public void onActivityResumed(Activity activity) {
         if (activity instanceof BasePresenterActivity)
             RegisterActivity.basePresenterActivity = (BasePresenterActivity) activity;
-        if (RegisterActivity.basePresenterActivity != null)
-            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
+//        if (RegisterActivity.basePresenterActivity != null)
+//            RegisterActivity.presenter = RegisterActivity.basePresenterActivity.getPresenter();
     }
 
     @Override

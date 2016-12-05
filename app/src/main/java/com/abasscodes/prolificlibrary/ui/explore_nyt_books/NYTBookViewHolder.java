@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view;
+package com.abasscodes.prolificlibrary.ui.explore_nyt_books;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +13,6 @@ import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
-import com.abasscodes.prolificlibrary.model.nytimes.pojos.Review;
-import com.abasscodes.prolificlibrary.ui.show_notes.ShowNoteDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

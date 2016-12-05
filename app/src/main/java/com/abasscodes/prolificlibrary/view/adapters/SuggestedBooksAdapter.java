@@ -1,13 +1,11 @@
-package com.abasscodes.prolificlibrary.view;
+package com.abasscodes.prolificlibrary.view.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.abasscodes.prolificlibrary.model.nytimes.pojos.NYTResponse;
 import com.abasscodes.prolificlibrary.model.nytimes.pojos.Result;
-import com.abasscodes.prolificlibrary.view.NYTBookViewHolder;
+import com.abasscodes.prolificlibrary.ui.explore_nyt_books.NYTBookViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -5,9 +5,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.abasscodes.prolificlibrary.BaseViewHolder;
+import com.abasscodes.prolificlibrary.view.BaseViewHolder;
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.ui.onboard_welcome.GenreAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

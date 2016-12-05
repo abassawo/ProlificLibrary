@@ -3,12 +3,11 @@ package com.abasscodes.prolificlibrary.ui.show_notes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
+import com.abasscodes.prolificlibrary.view.fragments.RecyclerViewFragment;
 import com.abasscodes.prolificlibrary.model.Book;
 
 import java.util.ArrayList;

@@ -39,27 +39,22 @@
         android:background="@color/blueish_grey"
         android:visibility="visible">
 
-        <ImageView
+
+        <Button
             android:id="@+id/return_book"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_delete"
-            android:tint="@color/cardview_light_background" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:visibility="invisible"
-            android:src="@android:drawable/list_selector_background"/>
+            android:text="@string/return_book"/>
 
-        <ImageView
+        <Button
             android:id="@+id/checkout_book"
             android:clickable="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_send"
+            android:text="@string/checkout_book"
             android:tint="@color/cardview_light_background"  />
 
     </LinearLayout>

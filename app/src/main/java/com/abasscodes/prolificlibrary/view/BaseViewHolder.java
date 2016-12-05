@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary;
+package com.abasscodes.prolificlibrary.view;
 
 import android.support.annotation.RawRes;
 import android.support.v7.widget.RecyclerView;

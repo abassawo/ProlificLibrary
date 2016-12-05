@@ -5,33 +5,24 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.ui.checkout_book.CheckoutDialogFragment;
 import com.abasscodes.prolificlibrary.ui.checkout_book.ReturnDialogFragment;
 import com.abasscodes.prolificlibrary.ui.edit_book.EditActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by C4Q on 11/11/16.
@@ -43,9 +34,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.book_author)
     TextView authorTV;
     @Bind(R.id.checkout_book)
-    ImageView checkoutBook;
+    Button checkoutBook;
     @Bind(R.id.return_book)
-    ImageView returnBook;
+    Button returnBook;
     private Book book;
     @Bind(R.id.book_checkout_status)
     TextView lastCheckedOutTV;

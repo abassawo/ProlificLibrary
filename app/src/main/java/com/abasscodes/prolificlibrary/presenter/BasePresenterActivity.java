@@ -24,14 +24,12 @@ import retrofit2.Response;
  * Created by C4Q on 11/15/16.
  */
 
-public abstract class BasePresenterActivity<P extends Mvp.Presenter> extends AppCompatActivity{
+public abstract class BasePresenterActivity extends AppCompatActivity{
 
    private static final String TAG = BasePresenterActivity.class.getSimpleName() ;
    public static final int DELETED_ITEM_CODE = 999;
 
 
-
-   public abstract P getPresenter();
 
    @Override
    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

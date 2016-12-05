@@ -1,4 +1,4 @@
-package com.abasscodes.prolificlibrary.view;
+package com.abasscodes.prolificlibrary.ui.show_all_books;
 
 import android.content.Context;
 import android.content.Intent;
@@ -58,10 +58,5 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         ctx.startActivity(intent);
     }
 
-//    @Override
-//    public boolean onLongClick(View v) {
-//            FragmentManager fm = RegisterActivity.basePresenterActivity.getSupportFragmentManager();
-//            CheckoutDialogFragment.newInstance(book).show(fm, null);
-//            return true;
-//    }
+
 }

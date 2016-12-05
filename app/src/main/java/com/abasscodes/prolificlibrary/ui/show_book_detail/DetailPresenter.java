@@ -27,7 +27,7 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
         return instance;
     }
 
-    public DetailPresenter(BasePresenterActivity<AbstractPresenter> activity) {
+    public DetailPresenter(BasePresenterActivity activity) {
         super(activity);
     }
 
