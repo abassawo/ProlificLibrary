@@ -3,6 +3,7 @@ package com.abasscodes.prolificlibrary.ui.show_notes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -21,7 +22,6 @@ public class NotesFragment extends RecyclerViewFragment {
 
     public final static String TAG = "AllBooks";
     private static NotesFragment instance;
-    private NotesAdapter rvAdapter;
     private List<Book> books;
 
     public static NotesFragment newInstance(ArrayList<Book> books) {
@@ -33,10 +33,26 @@ public class NotesFragment extends RecyclerViewFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(isVisible()) {
+            if (getAdapter() == null || getAdapter().getItemCount() == 0)
+                emptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setBackgroundResource(R.drawable.shelf);
+        showRecyclerView();
     }
+
+
+    public void showNotesSnackBar() {
+        Snackbar.make(getView(), "Check out a book in the Library to add notes", Snackbar.LENGTH_LONG).show();
+    }
+
 
     public static NotesFragment getInstance() {
         if (instance == null) {
@@ -45,27 +61,23 @@ public class NotesFragment extends RecyclerViewFragment {
         return instance;
     }
 
+
     @Override
     public void refreshContent() {
-        if (isAdded()) {
-            if (rvAdapter.getItemCount() == 0) {
-                showEmptyView();
-            } else {
-                showRecyclerView();
-            }
-        }
+        showRecyclerView();
         swipeLayout.setRefreshing(false);
-
     }
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        if (rvAdapter != null) return rvAdapter;
+        if(adapter != null) return adapter;
         if (getArguments() != null) {
             books = getArguments().getParcelableArrayList("BOOKS");
-            rvAdapter = new NotesAdapter(books);
+            adapter = new NotesAdapter(books);
+        }else{
+            adapter = new NotesAdapter();
         }
-        return rvAdapter;
+        return adapter;
     }
 
 

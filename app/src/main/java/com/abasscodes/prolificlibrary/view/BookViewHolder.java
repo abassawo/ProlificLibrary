@@ -45,6 +45,8 @@ public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.authorTV.setText(book.getAuthor());
         if (book.isCheckedOut()) {
             checkedOutIV.setImageResource(R.drawable.checkout_status_on);
+        }else{
+            checkedOutIV.setImageResource(android.R.color.transparent);
         }
     }
 

@@ -2,6 +2,7 @@ package com.abasscodes.prolificlibrary.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
+import com.abasscodes.prolificlibrary.ui.show_notes.NotesFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,11 +39,20 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
     protected SwipeRefreshLayout swipeLayout;
     protected Adapter adapter;
 
+    public abstract Adapter getAdapter();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_tab, menu);
     }
 
 
@@ -60,13 +72,15 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
         super.onViewCreated(view, savedInstanceState);
         showRecyclerView();
         recyclerView.setAdapter(getAdapter());
-        if(recyclerView.getAdapter() != null && recyclerView.getAdapter().getItemCount() == 0) {
+        boolean emptyContent = recyclerView.getAdapter() != null && recyclerView.getAdapter().getItemCount() == 0;
+        if (emptyContent) {
             showEmptyView();
-        }else{
+        } else {
             showRecyclerView();
         }
-
     }
+
+
 
     public void showRecyclerView() {
         recyclerView.setVisibility(View.VISIBLE);
@@ -76,7 +90,7 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
     public void showEmptyView() {
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
-        RegisterActivity.basePresenterActivity.showConnectionError();
+        ConnectionUtil.showConnecitonError();
     }
 
 
@@ -90,11 +104,5 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
     public abstract void refreshContent();
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_tab, menu);
-    }
 
-    public abstract Adapter getAdapter();
 }

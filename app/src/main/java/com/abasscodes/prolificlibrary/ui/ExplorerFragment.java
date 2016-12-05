@@ -59,7 +59,13 @@ public class ExplorerFragment extends RecyclerViewFragment {
     public void onResume() {
         super.onResume();
         refreshContent();
+        if(isVisible()) {
+//                showNotesSnackBar();
+        }
     }
+
+
+
 
     @Override
     public void refreshContent() {
@@ -78,7 +84,7 @@ public class ExplorerFragment extends RecyclerViewFragment {
         call.enqueue(new Callback<NYTResponse>() {
             @Override
             public void onResponse(Call<NYTResponse> call, Response<NYTResponse> response) {
-                if(response != null) {
+                if(response != null && response.body() != null) {
                     List<Result> bookResults = response.body().getResults();
                     if (adapter == null) {
                         adapter = new SuggestedBooksAdapter(bookResults);

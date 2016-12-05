@@ -31,5 +31,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="reload">Reload</string>
+    <string name="delete_all_warning">Delete all books?</string>
+    <string name="delete_all_prompt">All items will be removed from the Prolific Library</string>
     <!--<string name="first_run">Looks like it\'s your first time </string>-->
 </resources>

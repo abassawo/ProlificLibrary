@@ -76,7 +76,8 @@ public class CheckoutDialogFragment extends DialogFragment {
                 //Store the submitted name and check out book
                 Context ctx = getContext();
                 checkOut(book, PreferenceHelper.getUserName(ctx));
-                startActivity(new Intent(ctx, MainTabsActivity.class));
+               updateBookOnServer(book);
+
             }
         });
 
@@ -101,7 +102,7 @@ public class CheckoutDialogFragment extends DialogFragment {
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
-
+                dismiss();
             }
 
             @Override

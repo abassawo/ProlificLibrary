@@ -77,31 +77,6 @@ public class MainTabsActivity extends BasePresenterActivity<TabPresenter> implem
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_add:
-                getPresenter().fillOutNewBookForm();
-                break;
-            case R.id.menu_item_deleteAll:
-                Call<Void> call = APIClient.getInstance().deleteAll();
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        onResume();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-
-                    }
-                });
-                break;
-        }
-        return true;
-    }
-
-
-    @Override
     public void setCheckedOutBooks(ArrayList<Book> books) {
         adapter.setCheckedOutBooks(books);
         adapter.notifyDataSetChanged();

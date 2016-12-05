@@ -52,12 +52,6 @@ public class TabAdapter extends FragmentPagerAdapter implements ViewPager.OnPage
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                if (books != null)
-                    return NotesFragment.newInstance(books);
-                break;
-        }
         return fragments.get(position);
     }
 

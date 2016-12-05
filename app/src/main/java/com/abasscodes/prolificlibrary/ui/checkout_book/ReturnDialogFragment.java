@@ -54,10 +54,7 @@ public class ReturnDialogFragment extends CheckoutDialogFragment {
         builder.setPositiveButton(positiveBtn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //Store the submitted name and check out book
-                Context ctx = getContext();
                 returnBook(book);
-                ctx.startActivity(new Intent(getActivity(), MainTabsActivity.class)); //fixme
-
 
             }
         });

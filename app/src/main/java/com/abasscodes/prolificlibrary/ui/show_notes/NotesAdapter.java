@@ -17,20 +17,22 @@ import java.util.Stack;
  */
 public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder>{
     private List<Book> books = new ArrayList<>();
-    public static Stack<Book> selectedBooks = new Stack<>();
 
     public NotesAdapter(List<Book> books) {
        this.books = books;
     }
+
+    public NotesAdapter() {
+        this.books = new ArrayList<>();
+    }
+
+    public void setBooks(){
+        this.books = books;
+    }
+
     private static NoteViewHolder holder;
 
-    public void setSelectedBook(Book book) {
-        while(!selectedBooks.isEmpty()){
-            Book b = selectedBooks.pop();
-            if(holder != null) holder.bindBook(b);
-        }
-        selectedBooks.push(book);
-    }
+
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

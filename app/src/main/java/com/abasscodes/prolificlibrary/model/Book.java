@@ -253,6 +253,7 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public boolean isCheckedOut() {
+        if(lastCheckedOutBy == null) return false;
         return !lastCheckedOutBy.isEmpty();
     }
 
