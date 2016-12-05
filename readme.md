@@ -4,13 +4,16 @@ This project shows a proof of concept for an Android library application for the
 
 Users can use the app to discover new books, curate a list of books, and associate notes with books that are currently checked out.
 
+
 ### Running the app
 
-The application uses very basic information hiding. The Config class exposes the encoded api keys and returns the decoded value.
+The application uses very basic information hiding. The Config class exposes the encoded api keys and returns the decoded value. Clone and open with Android Studio. Feel free to replace the return value of the getter methods in the Config.java file to match your own api keys. Otherwise, you can also run this as-is using the encoded/decoded values.
 
 ### Features
 
 Api consumption from Prolific Library,  IDreamBooks API, and NYTimes Api
+
+Check out a book or return by selecting it in the Library tab or long-clicking on it in the Library Tab.
 
 The Library Tab displays all content from the Prolific Api.
 
@@ -24,9 +27,9 @@ The detail page utilizes the IDreamBooks Api to query the selected book for reco
 
 - Caching - This application is a bit data intense, as it uses a number of Api's to further the user's experience.
 
-- Dependency management was a challenge for this project given. I used a global scope in my Application to keep track of the current PresenterActivity and context, but would like to explore Dagger for this end goal.
+- Dependency management was a challenge for this project. I used a global scope in my Application to keep track of the current PresenterActivity and context, but would like to explore Dagger for this end goal.
 
-- More integrity checks on the Database system.
+- More integrity checks on the Database system. Ex: The Notes Tab is only pertinent to books that are currently checked out in the Prolific api, but books that have since been deleted from the api will be retained in the Notes database. A better approach may be to use one database table for all books ever checked out, and another for the notes related to each of said books.
 
 - Acceptance testing and Performance testing
 
