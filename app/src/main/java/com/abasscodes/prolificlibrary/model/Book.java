@@ -22,27 +22,20 @@ import java.util.Map;
 /**
  * Class representing a book
  */
+
 /**
- "author": "Jason Morris",
- "categories": "interface, ui, android",
- "lastCheckedOut": null,
- "lastCheckedOutBy": null,
- "publisher": "Dummy Publishing",
- "title": "Android User Interface Development: Beginner's Guide",
- "url": "/books/1"
+ * "author": "Jason Morris",
+ * "categories": "interface, ui, android",
+ * "lastCheckedOut": null,
+ * "lastCheckedOutBy": null,
+ * "publisher": "Dummy Publishing",
+ * "title": "Android User Interface Development: Beginner's Guide",
+ * "url": "/books/1"
  */
 
 public class Book implements Parcelable, Comparable<Book> {
 
     private static final String TAG = Book.class.getSimpleName();
-    public Map<Integer, PageNote> pageNoteMap = new HashMap<>();
-
-    public static final Comparator<Book> COMPARATOR = new Comparator<Book>() {
-        @Override
-        public int compare(Book book, Book book2) {
-            return book.compareTo(book2);
-        }
-    };
 
 
     @SerializedName("id")
@@ -68,11 +61,6 @@ public class Book implements Parcelable, Comparable<Book> {
 
     @SerializedName("url")
     private String url;
-    private boolean isComplete = false;
-    transient boolean archived;
-
-    public boolean notesVisible = false;
-    public String comment;
 
     public Book() {
     }
@@ -88,9 +76,9 @@ public class Book implements Parcelable, Comparable<Book> {
         this.author = result.getAuthor();
         this.publisher = result.getPublisher();
         List<RanksHistory> ranks = result.getRanksHistory();
-        if(ranks.size() > 0){
+        if (ranks.size() > 0) {
             this.categories = ranks.get(0).getDisplayName();
-        }else{
+        } else {
             this.categories = "New York Times Best Seller";
         }
 
@@ -117,7 +105,7 @@ public class Book implements Parcelable, Comparable<Book> {
     }
 
     public String getTitle() {
-        if(title == null) {
+        if (title == null) {
             return "";
         }
         return String.valueOf(title);
@@ -151,7 +139,7 @@ public class Book implements Parcelable, Comparable<Book> {
         this.lastCheckedOutBy = lastCheckedOutBy;
     }
 
-    public void returnCheckOut(){
+    public void returnCheckOut() {
         this.lastCheckedOutBy = "";
         this.lastCheckedOut = null;
     }
@@ -170,13 +158,12 @@ public class Book implements Parcelable, Comparable<Book> {
 
     @Override
     public String toString() {
-        return TextUtils.join(" ", new String[] {
+        return TextUtils.join(" ", new String[]{
                 title, author, publisher, categories
         });
     }
 
 
-    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -248,31 +235,10 @@ public class Book implements Parcelable, Comparable<Book> {
         return title.compareTo(book.getTitle());
     }
 
-    public boolean isComplete() {
-        return isComplete;
-    }
 
     public boolean isCheckedOut() {
-        if(lastCheckedOutBy == null) return false;
+        if (lastCheckedOutBy == null) return false;
         return !lastCheckedOutBy.isEmpty();
-    }
-
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public PageNote getPageNote(int idx) {
-        if(pageNoteMap.containsKey(idx)) {
-            return pageNoteMap.get(idx);
-        }else {
-            PageNote note = new PageNote(idx, "", id);
-            pageNoteMap.put(idx, note);
-            return note;
-        }
-    }
-
-    public boolean hasPageNote(int pageNum) {
-        return pageNoteMap.containsKey(pageNum);
     }
 
 

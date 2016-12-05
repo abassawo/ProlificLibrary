@@ -53,7 +53,7 @@ public class ShowNoteDialog extends SupportBlurDialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.note_detail, container, false);
+        View view = inflater.inflate(R.layout.nyt_note_detail, container, false);
         TextView tv = (TextView) view.findViewById(R.id.note_detail);
         tv.setText(note);
         return view;
