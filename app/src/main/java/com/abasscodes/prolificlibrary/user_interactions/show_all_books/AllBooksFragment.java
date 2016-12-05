@@ -176,11 +176,10 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
 
     @Override
     public void refreshContent() {
+        super.refreshContent();
         if (ConnectionUtil.isConnected()) {
             new BookRepository(this).fetchBooks();
         }
-        if (swipeLayout != null)
-            swipeLayout.setRefreshing(false);
     }
 
 

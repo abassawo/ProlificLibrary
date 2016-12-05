@@ -76,22 +76,24 @@ public class AddNoteDialog extends DialogFragment {
                         if (TextUtilHelper.isValidNote(pageField, noteField)) {
                             int pageNum = Integer.parseInt(pageField.getText().toString());
                             String note = noteField.getText().toString();
-                            PageNote pageNote = new PageNote(pageNum, note, book.getId());
-                            bookProvider.savePageNote(pageNote);
-                            pageNote.append(note);
-                            listener.onNoteAdded();
+                            PageNote pageNote = bookProvider.getNoteForBook(book, pageNum);
+                            if (pageNote != null) {
+                                pageNote.append(note);
+                                bookProvider.updatePageNote(pageNote);
+                                listener.onNoteAdded();
+                            } else {
+                                pageNote = new PageNote(pageNum, note, book.getId());
+                                bookProvider.savePageNote(pageNote);
+                                listener.onNoteAdded();
+                            }
+
                         } else {
                             Toast.makeText(ctx, "Please verify all forms", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 }
 
-        );
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-
-                {
+        ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // No action - Dismiss.
                     }

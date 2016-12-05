@@ -7,6 +7,7 @@ import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.PageNote;
 
 import java.util.ArrayList;
@@ -59,9 +60,10 @@ public class BookContentProvider {
 
     public void updatePageNote(PageNote pageNote) {
         ContentValues cv = getContentValues(pageNote);
-        String selection = Cols._ID + " LIKE " + pageNote.getId();
-        String[] selectionArgs = {String.valueOf(pageNote.getId())};
-        database.update(NAME, cv, selection, null);
+        int id = pageNote.getId();
+        String selection = Cols.BOOK_ID + "=" + pageNote.getBookId() + " AND "
+                + Cols.PAGE + "=" + pageNote.getPageNumber();
+        database.update(NAME, cv, selection, new String[]{});
     }
 
 
@@ -91,6 +93,28 @@ public class BookContentProvider {
         return notes;
     }
 
+    public List<PageNote> getNotesForBook(Book book, int page) {
+        List<PageNote> notes = new ArrayList<>();
+        NoteCursorWrapper cursor = queryNotes(NAME, null, null);
+        if (cursor.getCount() <= 0) return notes;
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                PageNote note = cursor.getNextNote();
+                if (note.getBookId() == book.getId() &&
+                        note.getPageNumber() == page) {
+                    notes.add(cursor.getNextNote());
+                }
+
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        Collections.sort(notes);
+        return notes;
+    }
+
 
     public NoteCursorWrapper queryNotes(String tableName, String whereClause, String[] whereArgs) {
         Cursor cursor = database.query(
@@ -106,6 +130,13 @@ public class BookContentProvider {
 
     }
 
+    public PageNote getNoteForBook(Book book, int pageNum) {
+        List<PageNote> notes = getNotesForBook(book, pageNum);
+        if (notes == null) return null;
+        return notes.isEmpty() ? null : notes.get(0);
+
+    }
+
 
     public class NoteCursorWrapper extends CursorWrapper {
         public NoteCursorWrapper(Cursor cursor) {
@@ -117,8 +148,7 @@ public class BookContentProvider {
             int pageNum = getInt(getColumnIndex(Cols.PAGE));
             int bookId = getInt(getColumnIndex(Cols.BOOK_ID));
             String note = getString(getColumnIndex(Cols.NOTE));
-            PageNote pageNote;
-            pageNote = new PageNote(pageNum, note, bookId);
+            PageNote pageNote = new PageNote(pageNum, note, bookId);
             pageNote.setId(id);
             return pageNote;
         }
