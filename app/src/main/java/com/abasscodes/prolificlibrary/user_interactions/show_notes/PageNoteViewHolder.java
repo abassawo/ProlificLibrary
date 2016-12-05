@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.PageNote;
 import com.abasscodes.prolificlibrary.user_interactions.explore_nyt_books.NYTNoteDialog;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

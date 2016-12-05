@@ -4,7 +4,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.AbstractPresenter;
@@ -17,10 +16,8 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 public class DetailPresenter extends AbstractPresenter implements Presenter {
 
     private static DetailPresenter instance;
-    private static DetailActivity detailActivity;
 
     public static DetailPresenter getInstance(BasePresenterActivity activity) {
-        detailActivity = (DetailActivity) activity;
         if (instance == null) {
             instance = new DetailPresenter(activity);
         }
@@ -60,9 +57,4 @@ public class DetailPresenter extends AbstractPresenter implements Presenter {
         toolbar.setTitle(book.getTitle());
     }
 
-
-    @Override
-    public void onConnectionFailure() {
-
-    }
 }

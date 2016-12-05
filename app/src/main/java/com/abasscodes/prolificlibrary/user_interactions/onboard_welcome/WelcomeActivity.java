@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.FloatRange;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
-
 import agency.tango.materialintroscreen.MaterialIntroActivity;
 import agency.tango.materialintroscreen.MessageButtonBehaviour;
 import agency.tango.materialintroscreen.SlideFragment;

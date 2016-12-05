@@ -97,7 +97,7 @@ public abstract class RecyclerViewFragment extends Fragment implements SwipeRefr
     public void showEmptyView() {
         recyclerView.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
-        ConnectionUtil.showConnecitonError();
+        ConnectionUtil.showConnecitonError(getView());
     }
 
 

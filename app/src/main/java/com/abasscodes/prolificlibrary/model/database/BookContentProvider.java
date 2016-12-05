@@ -5,15 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.PageNote;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.*;
+import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.Cols;
+import static com.abasscodes.prolificlibrary.model.database.DBSchema.NotesTable.NAME;
 
 /**
  * Created by C4Q on 12/1/16.

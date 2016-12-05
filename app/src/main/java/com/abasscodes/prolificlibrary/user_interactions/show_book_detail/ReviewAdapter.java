@@ -2,10 +2,8 @@ package com.abasscodes.prolificlibrary.user_interactions.show_book_detail;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.CriticReview;
-
 import java.util.ArrayList;
 import java.util.List;
 

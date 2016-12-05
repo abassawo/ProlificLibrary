@@ -33,6 +33,7 @@ public class DreamApiClient {
         if(api == null) {
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .setLenient()
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(API_URL)

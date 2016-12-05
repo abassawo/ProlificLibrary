@@ -3,17 +3,7 @@ package com.abasscodes.prolificlibrary.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-
-import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.model.Book;
-import com.abasscodes.prolificlibrary.model.PageNote;
-import com.google.gson.Gson;
-
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

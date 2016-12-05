@@ -3,7 +3,6 @@ package com.abasscodes.prolificlibrary.helpers;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.facebook.stetho.Stetho;
 

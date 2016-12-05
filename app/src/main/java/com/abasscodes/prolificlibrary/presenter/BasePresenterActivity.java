@@ -6,13 +6,11 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
-import com.abasscodes.prolificlibrary.user_interactions.show_book_detail.DetailActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
-
+import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
+import com.abasscodes.prolificlibrary.user_interactions.show_book_detail.DetailActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

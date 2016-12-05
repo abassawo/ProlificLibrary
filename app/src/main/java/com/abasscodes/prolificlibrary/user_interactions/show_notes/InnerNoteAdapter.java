@@ -2,9 +2,7 @@ package com.abasscodes.prolificlibrary.user_interactions.show_notes;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import com.abasscodes.prolificlibrary.model.PageNote;
-
 import java.util.List;
 
 /**

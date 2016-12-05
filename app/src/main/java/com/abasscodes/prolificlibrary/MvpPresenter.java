@@ -7,18 +7,8 @@ import com.abasscodes.prolificlibrary.model.BookRepository;
  * Created by C4Q on 11/15/16.
  */
 
-public interface Mvp {
+public interface MvpPresenter {
 
-    public interface Model{
-
-    }
-
-    public interface View{
-
-    }
-
-    public interface Presenter{
-        void onConnectionFailure();
         void showNetworkSettings();
-    }
+
 }

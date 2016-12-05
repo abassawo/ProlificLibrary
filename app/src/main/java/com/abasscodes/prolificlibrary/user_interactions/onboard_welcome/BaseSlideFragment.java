@@ -1,7 +1,6 @@
 package com.abasscodes.prolificlibrary.user_interactions.onboard_welcome;
 
 import com.abasscodes.prolificlibrary.R;
-
 import agency.tango.materialintroscreen.SlideFragment;
 
 /**

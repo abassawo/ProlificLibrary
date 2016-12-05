@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,20 +12,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.abasscodes.prolificlibrary.MainTabsActivity;
 import com.abasscodes.prolificlibrary.R;
-import com.abasscodes.prolificlibrary.helpers.ConnectionUtil;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.idreambooks.DreamApiClient;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.CriticReview;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.ReviewResponse;
-import com.abasscodes.prolificlibrary.user_interactions.checkout_book.CheckoutDialogFragment;
-import com.abasscodes.prolificlibrary.user_interactions.checkout_book.ReturnDialogFragment;
 import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 
 import java.util.List;
@@ -41,7 +35,7 @@ import retrofit2.Response;
 /**
  * Created by C4Q on 11/11/16.
  */
-public class DetailFragment extends Fragment{
+public class DetailFragment extends Fragment {
 
     @Bind(R.id.book_title)
     TextView titleTV;
@@ -95,7 +89,7 @@ public class DetailFragment extends Fragment{
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
                 llm.getOrientation());
         criticsRV.addItemDecoration(dividerItemDecoration);
-        if(!book.isCheckedOut()) lastCheckedOutTV.setVisibility(View.INVISIBLE);
+        if (!book.isCheckedOut()) lastCheckedOutTV.setVisibility(View.INVISIBLE);
         showBookReviews(book);
         return view;
     }
@@ -110,7 +104,8 @@ public class DetailFragment extends Fragment{
     }
 
     public void showBookReviews(final Book book) {
-        Call<ReviewResponse> call = DreamApiClient.getInstance(getActivity()).getBookReview(book.getTitle().toLowerCase());
+        String search = book.getAuthor();
+        Call<ReviewResponse> call = DreamApiClient.getInstance(getActivity()).getBookReview(search);
         call.enqueue(new Callback<ReviewResponse>() {
             @Override
             public void onResponse(Call<ReviewResponse> call, Response<ReviewResponse> response) {
@@ -133,7 +128,7 @@ public class DetailFragment extends Fragment{
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
-                Log.d(TAG, "Failure retrofitting " + t);
+                Log.d(TAG, "failure" + t);
                 ((DetailActivity) getActivity()).minimizeToolbar();
             }
         });
@@ -169,16 +164,5 @@ public class DetailFragment extends Fragment{
         Intent intent = EditActivity.createEditIntent(getActivity(), book.getId(), book);
         startActivity(intent);
     }
-
-
-
-
-
-
-    public interface DetailFragmentListener{
-        void checkout(Book book);
-        void returnBook(Book book);
-    }
-
 
 }

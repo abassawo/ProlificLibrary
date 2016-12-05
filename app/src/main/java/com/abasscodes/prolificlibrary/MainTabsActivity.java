@@ -5,15 +5,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
 import com.abasscodes.prolificlibrary.user_interactions.explore_nyt_books.ExplorerFragment;
 import com.abasscodes.prolificlibrary.user_interactions.show_all_books.AllBooksFragment;
 import com.abasscodes.prolificlibrary.view.adapters.TabAdapter;
-
 import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -48,7 +45,6 @@ public class MainTabsActivity extends BasePresenterActivity implements AllBooksF
     public void initializeViews() {
         ButterKnife.bind(this);
         setupActionBar();
-
     }
 
 

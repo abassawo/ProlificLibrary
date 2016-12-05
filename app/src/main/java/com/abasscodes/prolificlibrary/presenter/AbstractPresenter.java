@@ -2,14 +2,14 @@ package com.abasscodes.prolificlibrary.presenter;
 
 import android.content.Intent;
 
-import com.abasscodes.prolificlibrary.Mvp;
+import com.abasscodes.prolificlibrary.MvpPresenter;
 import com.abasscodes.prolificlibrary.user_interactions.edit_book.EditActivity;
 
 /**
  * Created by C4Q on 11/15/16.
  */
 
-public abstract class AbstractPresenter implements Mvp.Presenter{
+public abstract class AbstractPresenter implements MvpPresenter{
     protected static BasePresenterActivity activity;
 
 

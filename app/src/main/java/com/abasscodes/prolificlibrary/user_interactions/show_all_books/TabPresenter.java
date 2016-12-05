@@ -12,7 +12,7 @@ import com.abasscodes.prolificlibrary.presenter.BasePresenterActivity;
  * Created by C4Q on 11/15/16.
  */
 
-public class TabPresenter extends AbstractPresenter implements Presenter {
+public class TabPresenter extends AbstractPresenter{
 
     private static final String TAG = TabPresenter.class.getSimpleName();
     private static TabPresenter instance;
@@ -21,7 +21,6 @@ public class TabPresenter extends AbstractPresenter implements Presenter {
 
     public TabPresenter(BasePresenterActivity activity) {
         super(activity);
-
     }
 
 

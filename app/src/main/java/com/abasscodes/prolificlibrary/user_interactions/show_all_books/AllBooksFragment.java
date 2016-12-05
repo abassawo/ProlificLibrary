@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.RegisterActivity;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
@@ -25,10 +24,8 @@ import com.abasscodes.prolificlibrary.helpers.TextUtilHelper;
 import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.BookRepository;
 import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -214,7 +211,7 @@ public class AllBooksFragment extends RecyclerViewFragment implements BookReposi
     @Override
     public void onDownloadFail() {
         if (isAdded()) {
-            ConnectionUtil.showConnecitonError();
+            ConnectionUtil.showConnecitonError(getView());
         }
     }
 

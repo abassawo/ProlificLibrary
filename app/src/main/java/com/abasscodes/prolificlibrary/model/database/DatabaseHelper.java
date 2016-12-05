@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.abasscodes.prolificlibrary.model.Book;
 
 /**
  * Created by C4Q on 12/1/16.

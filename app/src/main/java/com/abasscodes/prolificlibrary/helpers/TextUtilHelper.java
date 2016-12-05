@@ -1,12 +1,8 @@
 package com.abasscodes.prolificlibrary.helpers;
 
 import android.text.TextUtils;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import com.abasscodes.prolificlibrary.model.Book;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +16,6 @@ public class TextUtilHelper {
         return !TextUtils.isEmpty(editText.getText());
     }
 
-    public static boolean isEmpty(EditText editText) {
-        return !hasText(editText);
-    }
 
     public static boolean hasValidIntText(EditText editText) {
         if (!hasText(editText)) return false;

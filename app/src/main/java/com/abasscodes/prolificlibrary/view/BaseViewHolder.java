@@ -1,12 +1,9 @@
 package com.abasscodes.prolificlibrary.view;
 
-import android.support.annotation.RawRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 /**
  * Created by C4Q on 11/21/16.

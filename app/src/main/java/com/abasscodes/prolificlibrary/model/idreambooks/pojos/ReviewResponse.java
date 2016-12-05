@@ -16,30 +16,22 @@ public class ReviewResponse {
     @Expose
     private Book book;
 
-    /**
-     * @return The totalResults
-     */
+
     public Integer getTotalResults() {
         return totalResults;
     }
 
-    /**
-     * @param totalResults The total_results
-     */
+
     public void setTotalResults(Integer totalResults) {
         this.totalResults = totalResults;
     }
 
-    /**
-     * @return The book
-     */
+
     public Book getBook() {
         return book;
     }
 
-    /**
-     * @param book The book
-     */
+   
     public void setBook(Book book) {
         this.book = book;
     }

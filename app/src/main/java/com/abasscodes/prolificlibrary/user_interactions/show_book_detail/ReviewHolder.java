@@ -5,12 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.CriticReview;
 import com.abasscodes.prolificlibrary.model.idreambooks.pojos.ReviewResponse;
 import com.abasscodes.prolificlibrary.view.BaseViewHolder;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

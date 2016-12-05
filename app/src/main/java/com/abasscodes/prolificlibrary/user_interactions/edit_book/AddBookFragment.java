@@ -13,12 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.MainTabsActivity;
-import com.abasscodes.prolificlibrary.model.prolific.APIClient;
+import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.model.Book;
-
+import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;

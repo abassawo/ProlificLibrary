@@ -5,15 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.abasscodes.prolificlibrary.R;
+import com.abasscodes.prolificlibrary.model.Book;
 import com.abasscodes.prolificlibrary.model.prolific.APIClient;
 import com.abasscodes.prolificlibrary.view.RecyclerViewFragment;
-import com.abasscodes.prolificlibrary.model.Book;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

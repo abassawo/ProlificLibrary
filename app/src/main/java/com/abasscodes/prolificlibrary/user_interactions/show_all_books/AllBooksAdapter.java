@@ -3,9 +3,7 @@ package com.abasscodes.prolificlibrary.user_interactions.show_all_books;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 import com.abasscodes.prolificlibrary.model.Book;
-
 import java.util.List;
 
 /**

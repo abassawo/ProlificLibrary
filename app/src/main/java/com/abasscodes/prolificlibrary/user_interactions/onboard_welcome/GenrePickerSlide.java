@@ -7,13 +7,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.abasscodes.prolificlibrary.R;
 import com.abasscodes.prolificlibrary.helpers.PreferenceHelper;
-
 import java.util.Arrays;
 import java.util.Set;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
