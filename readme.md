@@ -24,9 +24,9 @@ The detail page utilizes the IDreamBooks Api to query the selected book for reco
 
 - Caching - This application is a bit data intense, as it uses a number of Api's to further the user's experience.
 
-- Dependency management was a challenge for this project given. I used a global scope in my Application to keep track of the current PresenterActivity and context, but would like to explore Dagger for this end goal.
+- Dependency management was a challenge for this project. I used a global scope in my Application to keep track of the current PresenterActivity and context, but would like to explore Dagger for this end goal.
 
-- More integrity checks on the Database system.
+- More integrity checks on the Database system. Ex: The Notes Tab is only pertinent to books that are currently checked out in the Prolific api, but books that have since been deleted from the api will be retained in the Notes database. A better approach may be to use one database table for all books ever checked out, and another for the notes related to each of said books.
 
 - Acceptance testing and Performance testing
 
