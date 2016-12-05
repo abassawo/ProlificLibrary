@@ -22,6 +22,7 @@
             android:name=".user_interactions.edit_book.EditActivity"
             android:parentActivityName=".MainTabsActivity"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".user_interactions.show_book_detail.DetailActivity"
             android:parentActivityName=".MainTabsActivity"></activity>
         <activity
