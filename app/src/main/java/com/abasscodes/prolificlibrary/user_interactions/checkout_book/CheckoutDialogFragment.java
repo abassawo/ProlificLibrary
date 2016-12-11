@@ -104,7 +104,9 @@ public class CheckoutDialogFragment extends DialogFragment {
         call.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
-                listener.onCheckoutChange(book);
+                if(listener != null) {
+                    listener.onCheckoutChange(book);
+                }
                 dismiss();
             }
 
